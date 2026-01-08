@@ -12,6 +12,14 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Unity Library (project inside subfolder)
+OuterWhispers/[Ll]ibrary/
+OuterWhispers/[Tt]emp/
+OuterWhispers/[Oo]bj/
+OuterWhispers/[Ll]ogs/
+OuterWhispers/[Uu]ser[Ss]ettings/
+
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
