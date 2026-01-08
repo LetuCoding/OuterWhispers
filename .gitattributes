@@ -1,0 +1,52 @@
+# =========================
+# Unity - Git LFS
+# =========================
+
+# Text files (mergeables)
+*.cs            text
+*.shader        text
+*.compute       text
+*.cginc         text
+*.hlsl          text
+*.json          text
+*.xml           text
+*.yml           text
+*.yaml          text
+*.md            text
+
+# Unity meta files
+*.meta          text
+
+# =========================
+# Art / Audio (LFS)
+# =========================
+
+# Images
+*.png           filter=lfs diff=lfs merge=lfs -text
+*.jpg           filter=lfs diff=lfs merge=lfs -text
+*.jpeg          filter=lfs diff=lfs merge=lfs -text
+*.psd           filter=lfs diff=lfs merge=lfs -text
+*.tga           filter=lfs diff=lfs merge=lfs -text
+
+# Spritesheets / Atlases
+*.spriteatlas   filter=lfs diff=lfs merge=lfs -text
+
+# Audio
+*.wav           filter=lfs diff=lfs merge=lfs -text
+*.mp3           filter=lfs diff=lfs merge=lfs -text
+*.ogg           filter=lfs diff=lfs merge=lfs -text
+
+# =========================
+# Animations / Unity assets
+# =========================
+
+*.anim          filter=lfs diff=lfs merge=lfs -text
+*.controller    filter=lfs diff=lfs merge=lfs -text
+*.fbx           filter=lfs diff=lfs merge=lfs -text
+
+# =========================
+# Video / Misc
+# =========================
+
+*.mp4           filter=lfs diff=lfs merge=lfs -text
+*.mov           filter=lfs diff=lfs merge=lfs -text
