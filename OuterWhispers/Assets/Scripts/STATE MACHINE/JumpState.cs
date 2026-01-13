@@ -6,15 +6,17 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
     public class JumpState : PlayerState
     {
         public JumpState(PlayerStateMachine fsm, Player player) : base(fsm, player) {}
-
+        public Animator Animator { get; private set; }
         
         //Al entrar al estado realizamos el salto.
         public override void Enter()
         {
             Debug.Log("Enter Jump State");
             Player._rigidbody2D.Jump(Player.jumpForce);
-        }
+            Player._animator.Play("Jump_Right");
 
+        }
+        
         public override void LogicUpdate()
         {
             //Si Dasheamos y "_canDashAir" es true, dashea

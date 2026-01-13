@@ -8,8 +8,7 @@ using UnityEngine;
         public override void Enter()
         {
             //Aquí pondríamos animación de caída.
-            
-            //Player._animator.Play("Fall");
+            Player._animator.Play("Fall_Right");
         }
 
         public override void LogicUpdate()
