@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ffc9ee93e103ca46181265ff4d9f16d9
+guid: b07b171d406e56841bed73d7597ce28e
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -103,9 +103,9 @@ TextureImporter:
       name: JOHN_WALK_4_0
       rect:
         serializedVersion: 2
-        x: 13
+        x: 11
         y: 2
-        width: 21
+        width: 26
         height: 41
       alignment: 0
       pivot: {x: 0, y: 0}

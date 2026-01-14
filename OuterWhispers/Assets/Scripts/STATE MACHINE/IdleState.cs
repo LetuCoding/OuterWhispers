@@ -15,6 +15,20 @@ using UnityEngine;
 
         public override void LogicUpdate()
         {
+            if (Player._moveInput == 1)
+            {
+                Player._animator.Play("Walk_Right");
+
+            }
+            else if (Player._moveInput == -1)
+            {
+                Player._animator.Play("Walk_Left");
+
+            }
+            else if (Player._moveInput == 0)
+            {
+                Player._animator.Play("Idle");
+            }
             
             //Apretamos Dash y lo hace
             if (Player.dashPressed)

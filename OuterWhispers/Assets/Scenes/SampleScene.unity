@@ -503,7 +503,7 @@ MonoBehaviour:
   wallCheckRadius: 0.1
   wallJumpForceX: 8
   wallJumpForceY: 8
-  speed: 8.5
+  speed: 3
   jumpForce: 20
   _dashDuration: 0.25
   _dashSpeed: 2

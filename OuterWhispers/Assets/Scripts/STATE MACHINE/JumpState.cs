@@ -13,7 +13,16 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
         {
             Debug.Log("Enter Jump State");
             Player._rigidbody2D.Jump(Player.jumpForce);
-            Player._animator.Play("Jump_Right");
+            if (Player._rigidbody2D.linearVelocity.x >= 0)
+            {
+                Player._animator.Play("Jump_Right");
+            }
+            else
+            {
+                Player._animator.Play("Jump_Left");
+            }
+            
+            
 
         }
         
