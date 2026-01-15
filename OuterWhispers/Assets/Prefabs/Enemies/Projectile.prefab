@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef4d0f3ec465bd4caa9de355cd7eb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  speed: 2
+  speed: 4
 --- !u!50 &-8317701775138738418
 Rigidbody2D:
   serializedVersion: 5

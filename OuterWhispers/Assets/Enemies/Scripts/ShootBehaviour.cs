@@ -1,25 +1,57 @@
-using System;
 using UnityEngine;
 using System.Collections;
-using Enemies.Interfaces;
 
 public class ShootBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform shootZone;
     [SerializeField] private float timeBetweenShots = 1f;
 
-    private void Start()
+    private Transform player;
+    private Coroutine shootCoroutine;
+    
+    public void SetPlayer(Transform playerTransform)
     {
-        StartCoroutine(Shoot());
+        player = playerTransform;
     }
 
+    public void StartShooting()
+    {
+        if (shootCoroutine == null)
+            shootCoroutine = StartCoroutine(ShootRoutine());
+    }
 
-    IEnumerator Shoot()
+    public void StopShooting()
+    {
+        if (shootCoroutine != null)
+        {
+            StopCoroutine(shootCoroutine);
+            shootCoroutine = null;
+        }
+    }
+
+    private IEnumerator ShootRoutine()
     {
         while (true)
         {
+            Shoot();
             yield return new WaitForSeconds(timeBetweenShots);
-            Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         }
+    }
+
+    private void Shoot()
+    {
+        if (player == null || projectilePrefab == null || shootZone == null)
+            return;
+
+        GameObject projectile = Instantiate(
+            projectilePrefab,
+            shootZone.position,
+            shootZone.rotation
+        );
+
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
+            proj.Initialize(player);
     }
 }

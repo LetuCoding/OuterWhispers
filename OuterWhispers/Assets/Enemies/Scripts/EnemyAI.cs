@@ -19,31 +19,30 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         if (canPatrol && patrolBehaviour != null)
-        {
             stateMachine.ChangeState(patrolBehaviour);
-        }
     }
 
     private void Update()
     {
-        if (player == null) return;
-        
-        if (!hasDetectedPlayer && Vector3.Distance(transform.position, player.position) <= stats.detectionDistance)
+        if (player == null || hasDetectedPlayer)
+            return;
+
+        if (Vector3.Distance(transform.position, player.position) <= stats.detectionDistance)
         {
             hasDetectedPlayer = true;
 
-            if (canChase && chaseBehaviour != null) 
+            if (canChase && chaseBehaviour != null)
             {
                 chaseBehaviour.SetPlayer(player);
                 stateMachine.ChangeState(chaseBehaviour);
             }
 
-            /*if (canShoot && shootBehaviour != null)
+            if (canShoot && shootBehaviour != null)
             {
+                stateMachine.ChangeState(null);
                 shootBehaviour.SetPlayer(player);
-                shootBehaviour.Enter();
-            }*/
+                shootBehaviour.StartShooting();
+            }
         }
     }
-    
 }

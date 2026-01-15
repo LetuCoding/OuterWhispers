@@ -2,22 +2,34 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    private Transform player;
+    [SerializeField] private float speed = 6f;
+    [SerializeField] private float lifeTime = 4f;
+
+    private Transform target;
     private Rigidbody2D rb;
+
+    public void Initialize(Transform targetTransform)
+    {
+        target = targetTransform;
+    }
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
-        player = FindObjectOfType<Player>().transform;
-        rb = GetComponent<Rigidbody2D>();
+        if (target != null)
             LaunchProjectile();
+        
+        Destroy(gameObject, lifeTime);
     }
 
     private void LaunchProjectile()
     {
-        Vector2 directionToTarget = (player.position - transform.position).normalized;
-        rb.linearVelocity = directionToTarget * speed;
-        
+        Vector2 direction = (target.position - transform.position).normalized;
+        rb.linearVelocity = direction * speed;
     }
 
     private void OnCollisionEnter2D()
