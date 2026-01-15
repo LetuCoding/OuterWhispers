@@ -11,7 +11,12 @@ using UnityEngine;
             Player._wallSliding = true;
             
             //Pondríamos la animación de sliding
-            //Player._animator.Play("WallSlide");
+            if(Player._isOnRightWall)
+            Player._animator.Play("Slide_Right");
+            else
+            {
+                Player._animator.Play("Slide_Left");
+            }
             
             //Reseteamos el DashAreo
             Player._canDashAir = true;

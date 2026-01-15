@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     
     public float _moveInput;
+    public float _lastInput;
     public bool _isGrounded;
     public bool _jumpCutting;
     public bool _canDashAir;
@@ -124,10 +125,15 @@ public class Player : MonoBehaviour
         jumpReleased  = _playerInputActions.Player.Jump.WasReleasedThisFrame();
         dashPressed   = _playerInputActions.Player.Dash.WasPressedThisFrame();
         _moveInput    = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
-       
-        
-        
-        GroundCheck();
+
+        if (_moveInput != 0)
+        {
+            _lastInput = _moveInput;
+        }
+
+
+
+            GroundCheck();
         WallCheck();
         StateMachine.CurrentState.LogicUpdate();
     }

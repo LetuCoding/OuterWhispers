@@ -14,8 +14,16 @@ using UnityEngine;
         public override void Enter()
         {
 
-            if (!Player._isGrounded && !Player._canDashAir) ExitDash();
             
+            if (!Player._isGrounded && !Player._canDashAir) ExitDash();
+            if (Player._rigidbody2D.linearVelocity.x >= 0)
+            {
+                Player._animator.Play("Dash_Right");
+            }
+            else
+            {
+                Player._animator.Play("Dash_Left");
+            }
             dashTimer = 0f;
 
             Player._isDashing = true;
@@ -29,6 +37,7 @@ using UnityEngine;
                 ? Mathf.Sign(Player._moveInput)
                 : Mathf.Sign(Player.transform.localScale.x);
 
+            
             Player._rigidbody2D.linearVelocity = new Vector2(
                 direction * Player.speed * Player._dashSpeed,
                 0f

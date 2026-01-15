@@ -8,8 +8,14 @@ using UnityEngine;
         public override void Enter()
         {
             //Aquí pondríamos animación de caída.
-            
-            //Player._animator.Play("Fall");
+            if (Player._rigidbody2D.linearVelocity.x >= 0)
+            {
+                Player._animator.Play("Fall_Right");
+            }
+            else
+            {
+                Player._animator.Play("Fall_Left");
+            }
         }
 
         public override void LogicUpdate()
