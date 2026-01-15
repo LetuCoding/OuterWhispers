@@ -1,0 +1,57 @@
+using UnityEngine;
+using System.Collections;
+
+public class ShootBehaviour : MonoBehaviour
+{
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform shootZone;
+    [SerializeField] private float timeBetweenShots = 1f;
+
+    private Transform player;
+    private Coroutine shootCoroutine;
+    
+    public void SetPlayer(Transform playerTransform)
+    {
+        player = playerTransform;
+    }
+
+    public void StartShooting()
+    {
+        if (shootCoroutine == null)
+            shootCoroutine = StartCoroutine(ShootRoutine());
+    }
+
+    public void StopShooting()
+    {
+        if (shootCoroutine != null)
+        {
+            StopCoroutine(shootCoroutine);
+            shootCoroutine = null;
+        }
+    }
+
+    private IEnumerator ShootRoutine()
+    {
+        while (true)
+        {
+            Shoot();
+            yield return new WaitForSeconds(timeBetweenShots);
+        }
+    }
+
+    private void Shoot()
+    {
+        if (player == null || projectilePrefab == null || shootZone == null)
+            return;
+
+        GameObject projectile = Instantiate(
+            projectilePrefab,
+            shootZone.position,
+            shootZone.rotation
+        );
+
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
+            proj.Initialize(player);
+    }
+}
