@@ -53,8 +53,6 @@ public class Player : MonoBehaviour
     [SerializeField] internal float wallSlideGravity { get; } = 1f; 
     [SerializeField] private float wallJumpForceX;
     [SerializeField] private float wallJumpForceY;
-    
-    
     private float _wallJumpLockTime = .125f;
     
     
@@ -128,12 +126,10 @@ public class Player : MonoBehaviour
 
         if (_moveInput != 0)
         {
-            _lastInput = _moveInput;
+        _lastInput = _moveInput;
         }
 
-
-
-            GroundCheck();
+        GroundCheck();
         WallCheck();
         StateMachine.CurrentState.LogicUpdate();
     }
@@ -251,7 +247,6 @@ public class Player : MonoBehaviour
 
         
     }
-    
     
     //Dibuja esferas en los objetos que se usan para detectar los checks anteriores, groundcheck, wallcheck... (se ven en el editor)
     private void OnDrawGizmosSelected()

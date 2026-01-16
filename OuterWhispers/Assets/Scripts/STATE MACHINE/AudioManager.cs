@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip slide;
     public AudioClip falling;
 
-    public float minPlayTime = 1f;
+    public float minPlayTime = 5f;
 
     private float loopTimer;
 
@@ -60,20 +60,17 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayWalk()
     {
-     if (!sfxSource.isPlaying)
+            if (!sfxSource.isPlaying)
         {
+            sfxSource.loop = true;
+            sfxSource.pitch = 0.5f;
             sfxSource.Play();
-            loopTimer = minPlayTime;
         }
-        else
-        {
-            loopTimer = Mathf.Max(loopTimer, minPlayTime * 0.25f);
-        }
-}
+    }
 
-public void StopWalk()
-{
-    if (sfxSource.isPlaying)
-        sfxSource.Stop();
-}
+    public void StopWalk()
+    {
+        if (sfxSource.isPlaying)
+            sfxSource.Stop();
+    }
 }

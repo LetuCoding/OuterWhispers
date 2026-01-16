@@ -235,6 +235,7 @@ MonoBehaviour:
   _rigidbody2D: {fileID: 234247089}
   _animator: {fileID: 234247088}
   _moveInput: 0
+  _lastInput: 0
   _isGrounded: 0
   _jumpCutting: 0
   _canDashAir: 0
@@ -310,7 +311,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -696,6 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShootBehaviour
   projectilePrefab: {fileID: 8154993726608017182, guid: f8f6aef2a278d81e29e8df58ee971eb7, type: 3}
+  shootZone: {fileID: 0}
   timeBetweenShots: 1
 --- !u!1 &479169584
 GameObject:

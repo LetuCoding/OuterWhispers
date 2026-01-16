@@ -15,7 +15,7 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
              if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySFX(AudioManager.Instance.jump);
             Player._rigidbody2D.Jump(Player.jumpForce);
-            if (Player._rigidbody2D.linearVelocity.x >= 0)
+            if (Player._lastInput == 1)
             {
                 Player._animator.Play("Jump_Right");
             }

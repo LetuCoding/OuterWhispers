@@ -84,8 +84,10 @@ using UnityEngine;
             Player._rigidbody2D.linearVelocity = Vector2.zero;
 
             // Elegir siguiente estado
-            if (Player._isGrounded)
+            if (Player._isGrounded){
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.footstep);
                 fsm.ChangeState(Player.IdleState);
+            }
             else
                 fsm.ChangeState(Player.FallingState);
         }
