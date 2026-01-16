@@ -9,7 +9,9 @@ using UnityEngine;
         {
             //Decimos que estamos Slideando en el Wall
             Player._wallSliding = true;
-            
+            // 🔊 Sonido del dash (una vez)
+            if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.slide);
             //Pondríamos la animación de sliding
             if(Player._isOnRightWall)
             Player._animator.Play("Slide_Right");
@@ -39,17 +41,18 @@ using UnityEngine;
                 return;
             }
 
-            //Si nos dejamos caer de la pared, pasamos a FallingState.
-            if (!Player._isOnWall)
-            {
-                fsm.ChangeState(Player.FallingState);
+        //Si nos dejamos caer de la pared, pasamos a FallingState.
+        if (!Player._isOnWall)
+        {
+            fsm.ChangeState(Player.FallingState);
+
             }
         }
 
         //Cambiamos la gravedad del jugador para la pared y hacemos que se deslice.
         public override void PhysicsUpdate()
         {
-            
+
             Player.Gravity(Player.wallSlideGravity);
             Player._rigidbody2D.linearVelocity = new Vector2(
                 Player._rigidbody2D.linearVelocity.x,
