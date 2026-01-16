@@ -14,9 +14,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip jump;
     public AudioClip slide;
     public AudioClip falling;
-
-    public float minPlayTime = 5f;
-
+    public float pitchFootsteps = 0.5f;
     private float loopTimer;
 
     private void Awake()
@@ -63,7 +61,7 @@ public class AudioManager : MonoBehaviour
             if (!sfxSource.isPlaying)
         {
             sfxSource.loop = true;
-            sfxSource.pitch = 0.5f;
+            sfxSource.pitch = pitchFootsteps;
             sfxSource.Play();
         }
     }
