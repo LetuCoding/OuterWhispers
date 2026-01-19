@@ -27,7 +27,7 @@ namespace InventoryScripts
         {
             foreach (var slot in items)
             {
-                if (slot.IsEmtpy)
+                if (slot.IsEmpty)
                 {
                     slot.item = item;
                     return true;

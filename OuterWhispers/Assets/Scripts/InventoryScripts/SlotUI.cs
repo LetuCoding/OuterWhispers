@@ -17,7 +17,7 @@ namespace InventoryScripts
 
         public void UpdateUI()
         {
-            if (slot.IsEmtpy)
+            if (slot.IsEmpty)
             {
                 icon.enabled = false;
             }
@@ -30,7 +30,7 @@ namespace InventoryScripts
 
         public void OnSlotClicked()
         {
-            if (!slot.IsEmtpy)
+            if (!slot.IsEmpty)
             {
                 inventoryUI.ShowDetails(slot);
             }

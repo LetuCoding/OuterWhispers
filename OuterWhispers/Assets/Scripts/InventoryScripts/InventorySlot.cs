@@ -1,11 +1,9 @@
-using UnityEngine;
-
-public class InventorySlot : MonoBehaviour
+[System.Serializable]
+public class InventorySlot
 {
-   
     public ItemData item;
-    
-    public bool IsEmtpy => item == null;
+
+    public bool IsEmpty => item == null;
 
     public void Clear()
     {

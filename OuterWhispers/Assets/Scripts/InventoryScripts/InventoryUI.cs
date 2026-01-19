@@ -5,23 +5,33 @@ using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
-    [Header("Inventory")]
-    [SerializeField] private Inventory inventory;
+    [Header("Inventory")] [SerializeField] private Inventory inventory;
     [SerializeField] private Transform slotsParent;
     [SerializeField] private SlotUI slotPrefab;
 
-    [Header("Details Panel")]
-    [SerializeField] private Image detailIcon;
+    [Header("Details Panel")] [SerializeField]
+    private Image detailIcon;
+
     [SerializeField] private TMP_Text detailName;
     [SerializeField] private TMP_Text detailDescription;
     [SerializeField] private Button useButton;
 
     private InventorySlot selectedSlot;
+    [SerializeField] private GameObject inventoryRoot;
 
     private void Start()
     {
         BuildSlots();
         ClearDetails();
+        inventoryRoot.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ToggleInventory();
+        }
     }
 
 
@@ -44,18 +54,18 @@ public class InventoryUI : MonoBehaviour
         detailName.text = item.ItemName;
         detailDescription.text = item.Description;
 
-      
+
         useButton.gameObject.SetActive(item is UsableItemData);
     }
 
-   
+
     public void UseSelectedItem()
     {
         if (selectedSlot == null) return;
 
         if (selectedSlot.item is UsableItemData usable)
         {
-            
+
 
             if (usable.ConsumeOnUse)
             {
@@ -82,5 +92,13 @@ public class InventoryUI : MonoBehaviour
         detailName.text = "";
         detailDescription.text = "";
         useButton.gameObject.SetActive(false);
+    }
+
+
+    void ToggleInventory()
+    {
+        RefreshSlots();
+        inventoryRoot.SetActive(!inventoryRoot.activeSelf);
+        Debug.Log("Inventario toggle: " + inventoryRoot.activeSelf);
     }
 }
