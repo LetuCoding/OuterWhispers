@@ -6,34 +6,47 @@ using UnityEngine;
         private float dashTimer;
         private float dashDuration;
 
+
         public DashState(PlayerStateMachine fsm, Player player) : base(fsm, player)
         {
             dashDuration = player._dashDuration;
         }
 
-        public override void Enter()
+    public override void Enter()
+    {
+
+
+        if (!Player._isGrounded && !Player._canDashAir) ExitDash();
+
+        // 🔊 Sonido del dash (una vez)
+        if (AudioManager.Instance != null)
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.dash);
+
+        if (Player._rigidbody2D.linearVelocity.x >= 0)
         {
+            Player._animator.Play("Dash_Right");
+        }
+        else
+        {
+            Player._animator.Play("Dash_Left");
+        }
+        dashTimer = 0f;
+        Player._isDashing = true;
+        Player._canDashAir = false;
 
-            if (!Player._isGrounded && !Player._canDashAir) ExitDash();
-            
-            dashTimer = 0f;
+        // Guardamos gravedad
+        Player._rigidbody2D.gravityScale = 0f;
 
-            Player._isDashing = true;
-            Player._canDashAir = false;
+        // Dirección del dash
+        float direction = Player._moveInput != 0
+            ? Mathf.Sign(Player._moveInput)
+            : Mathf.Sign(Player.transform.localScale.x);
 
-            // Guardamos gravedad
-            Player._rigidbody2D.gravityScale = 0f;
 
-            // Dirección del dash
-            float direction = Player._moveInput != 0
-                ? Mathf.Sign(Player._moveInput)
-                : Mathf.Sign(Player.transform.localScale.x);
-
-            Player._rigidbody2D.linearVelocity = new Vector2(
-                direction * Player.speed * Player._dashSpeed,
-                0f
-            );
-
+        Player._rigidbody2D.linearVelocity = new Vector2(
+            direction * Player.speed * Player._dashSpeed,
+            0f
+        );
         
         }
 
@@ -71,8 +84,10 @@ using UnityEngine;
             Player._rigidbody2D.linearVelocity = Vector2.zero;
 
             // Elegir siguiente estado
-            if (Player._isGrounded)
+            if (Player._isGrounded){
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.footstep);
                 fsm.ChangeState(Player.IdleState);
+            }
             else
                 fsm.ChangeState(Player.FallingState);
         }

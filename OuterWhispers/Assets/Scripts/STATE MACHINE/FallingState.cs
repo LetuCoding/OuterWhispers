@@ -8,8 +8,14 @@ using UnityEngine;
         public override void Enter()
         {
             //Aquí pondríamos animación de caída.
-            
-            //Player._animator.Play("Fall");
+            if (Player._lastInput == 1)
+            {
+                Player._animator.Play("Fall_Right");
+            }
+            else
+            {
+                Player._animator.Play("Fall_Left");
+            }
         }
 
         public override void LogicUpdate()
@@ -25,6 +31,7 @@ using UnityEngine;
             //Si el jugador está en el suelo cambiamos a Idle
             if (Player._isGrounded)
             {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.footstep);
                 fsm.ChangeState(Player.IdleState);
                 return;
             }

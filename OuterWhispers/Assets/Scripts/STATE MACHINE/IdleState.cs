@@ -3,22 +3,57 @@ using UnityEngine;
 
     public class IdleState : PlayerState
     {
-        public IdleState(PlayerStateMachine fsm, Player player) : base(fsm, player) {}
-
-        //Al entrar reseteamos el JumpCutting
-        public override void Enter()
+    public IdleState(PlayerStateMachine fsm, Player player) : base(fsm, player) {}
+    public override void Enter()
+    {
+        Debug.Log("Entering Idle State");
+        if (Player._lastInput == -1)
         {
-            Debug.Log("Entering Idle State");
-            Player._animator.Play("Idle");
-            Player._jumpCutting = false;
+            Player._animator.Play("Idle_Left");
+        }
+        else
+        {
+            Player._animator.Play("Idle_Right");
+        }
+        Player._jumpCutting = false;
+    }
+
+    public override void LogicUpdate()
+    {
+        if (Player._moveInput == 1)
+        {
+            Player._animator.Play("Walk_Right");
+            AudioManager.Instance.PlayWalk();
+        }
+        else if (Player._moveInput == -1)
+        {
+            Player._animator.Play("Walk_Left");
+            AudioManager.Instance.PlayWalk();
         }
 
-        public override void LogicUpdate()
+
+        
+
+        else if (Player._moveInput == 0)
         {
+
+            if (Player._lastInput == -1)
+            {
+                Player._animator.Play("Idle_Left");
+                AudioManager.Instance.StopWalk();
+            }
+            else
+            {
+                Player._animator.Play("Idle_Right");
+                AudioManager.Instance.StopWalk();
+            }
+
+        }
             
             //Apretamos Dash y lo hace
             if (Player.dashPressed)
             {
+                AudioManager.Instance.StopWalk();
                 fsm.ChangeState(Player.DashState);
                 return;
             }
@@ -27,6 +62,7 @@ using UnityEngine;
             //Si estamos en el suelo y apretamos Dash, Dasheamos
             if (Player.jumpPressed && Player._isGrounded)
             {
+                AudioManager.Instance.StopWalk();
                 fsm.ChangeState(Player.JumpState);
                 return;
             }
@@ -46,4 +82,5 @@ using UnityEngine;
 
         public override void Exit() {}
     }
+    
 

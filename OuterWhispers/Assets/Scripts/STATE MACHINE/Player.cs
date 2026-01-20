@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     
     public float _moveInput;
+    public float _lastInput;
     public bool _isGrounded;
     public bool _jumpCutting;
     public bool _canDashAir;
@@ -52,8 +53,6 @@ public class Player : MonoBehaviour
     [SerializeField] internal float wallSlideGravity { get; } = 1f; 
     [SerializeField] private float wallJumpForceX;
     [SerializeField] private float wallJumpForceY;
-    
-    
     private float _wallJumpLockTime = .125f;
     
     
@@ -124,9 +123,12 @@ public class Player : MonoBehaviour
         jumpReleased  = _playerInputActions.Player.Jump.WasReleasedThisFrame();
         dashPressed   = _playerInputActions.Player.Dash.WasPressedThisFrame();
         _moveInput    = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
-       
-        
-        
+
+        if (_moveInput != 0)
+        {
+        _lastInput = _moveInput;
+        }
+
         GroundCheck();
         WallCheck();
         StateMachine.CurrentState.LogicUpdate();
@@ -245,7 +247,6 @@ public class Player : MonoBehaviour
 
         
     }
-    
     
     //Dibuja esferas en los objetos que se usan para detectar los checks anteriores, groundcheck, wallcheck... (se ven en el editor)
     private void OnDrawGizmosSelected()
