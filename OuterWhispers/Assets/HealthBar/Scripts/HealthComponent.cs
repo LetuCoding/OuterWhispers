@@ -1,8 +1,9 @@
 using UnityEngine;
 using System;
 using Core.Interfaces;
+using Interfaces;
 
-public class HealthComponent : MonoBehaviour, IDamageable
+public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
 {
     [SerializeField] private PlayerStats stats;
     
@@ -45,4 +46,5 @@ public class HealthComponent : MonoBehaviour, IDamageable
         OnDeath?.Invoke();
         Debug.Log($"{gameObject.name} ha muerto.");
     }
+    
 }

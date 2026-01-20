@@ -2,6 +2,6 @@ namespace Interfaces
 {
     public interface IEffectTarget
     {
-        void ApplyEffect(UsableItemData item);
+        public void Heal(float amount);
     }
 }

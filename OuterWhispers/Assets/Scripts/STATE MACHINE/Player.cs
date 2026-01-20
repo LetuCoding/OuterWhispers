@@ -1,4 +1,5 @@
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
+using Interfaces;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -258,4 +259,5 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(_wallCheckLeft.position,wallCheckRadius );
         Gizmos.DrawWireSphere(_wallCheckRight.position, wallCheckRadius);
     }
+    
 }

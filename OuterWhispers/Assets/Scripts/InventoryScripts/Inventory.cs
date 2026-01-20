@@ -10,8 +10,8 @@ namespace InventoryScripts
         
         [SerializeField]private int slotCount;
         
-        [SerializeField]private GameObject owner;
-        public GameObject Owner => owner;
+        [SerializeField]private HealthComponent owner;
+        public HealthComponent Owner => owner;
         
         public List<InventorySlot>  items = new List<InventorySlot>();
 
