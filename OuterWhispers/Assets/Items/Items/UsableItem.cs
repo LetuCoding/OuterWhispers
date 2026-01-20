@@ -1,12 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Usable Item")]
-public class UsableItemData : ItemData
+public abstract class UsableItemData : ItemData
 {
     [Header("Effect")]
-    [SerializeField] private int value;
+    
     [SerializeField] private bool consumeOnUse = true;
-
-    public int Value => value;
+    
     public bool ConsumeOnUse => consumeOnUse;
+
+
+    public abstract void Use();
 }

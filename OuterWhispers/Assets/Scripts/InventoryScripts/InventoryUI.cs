@@ -65,8 +65,8 @@ public class InventoryUI : MonoBehaviour
 
         if (selectedSlot.item is UsableItemData usable)
         {
-
-
+            usable.Use();
+            
             if (usable.ConsumeOnUse)
             {
                 inventory.RemoveItem(selectedSlot);
