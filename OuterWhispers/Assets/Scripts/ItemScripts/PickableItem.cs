@@ -34,6 +34,7 @@ public class PickableItem : MonoBehaviour
             if (inv != null)
             {
                 inv.AddItem(item);
+                Destroy(gameObject);
             }
         }
     }
