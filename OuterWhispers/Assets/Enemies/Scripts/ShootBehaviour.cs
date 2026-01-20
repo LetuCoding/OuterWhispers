@@ -6,6 +6,7 @@ public class ShootBehaviour : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform shootZone;
     [SerializeField] private float timeBetweenShots = 1f;
+    public Animator _animator;
 
     private Transform player;
     private Coroutine shootCoroutine;
@@ -17,6 +18,7 @@ public class ShootBehaviour : MonoBehaviour
 
     public void StartShooting()
     {
+        _animator.Play("Attack_Left");
         if (shootCoroutine == null)
             shootCoroutine = StartCoroutine(ShootRoutine());
     }
@@ -35,6 +37,7 @@ public class ShootBehaviour : MonoBehaviour
         while (true)
         {
             Shoot();
+            _animator.Play("Attack_Left_Final");
             yield return new WaitForSeconds(timeBetweenShots);
         }
     }
