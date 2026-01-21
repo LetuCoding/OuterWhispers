@@ -605,6 +605,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289264739}
   m_CullTransparentMesh: 1
+--- !u!1001 &790038778
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 951704160869029400, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3953766498763477603, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1921075809}
+    - target: {fileID: 3953766498763477603, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: canChase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3953766498763477603, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: canPatrol
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.863572
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.0295303
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998841553538407188, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
 --- !u!1 &823131622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,6 +1778,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!4 &1921075809 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5222287651823829663, guid: 15d621b79dcd46cbc8676455f0935134, type: 3}
+  m_PrefabInstance: {fileID: 3891805507742423068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2039635015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,7 +1958,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2859772083268168474, guid: 15d621b79dcd46cbc8676455f0935134, type: 3}
       propertyPath: speed
-      value: 4.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5222287651823829663, guid: 15d621b79dcd46cbc8676455f0935134, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1953,3 +2027,4 @@ SceneRoots:
   - {fileID: 1449808296}
   - {fileID: 2039635019}
   - {fileID: 1792634460}
+  - {fileID: 790038778}
