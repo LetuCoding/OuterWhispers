@@ -1,7 +1,8 @@
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
+using Interfaces;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IEffectTarget
 {
      //=====================================================================================================
     // COMPONENTS & INPUT
@@ -266,5 +267,10 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(_wallCheckRight.position, wallCheckRadius);
         
         Gizmos.DrawWireCube(attackPoint.position,stats.attackRange);
+    }
+
+    public void Heal(float amount)
+    {
+       Debug.Log("Healing " + amount);
     }
 }

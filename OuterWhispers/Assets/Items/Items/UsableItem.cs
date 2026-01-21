@@ -1,13 +1,22 @@
+using Interfaces;
 using UnityEngine;
 
-public abstract class UsableItemData : ItemData
+[CreateAssetMenu(fileName = "UsableItem", menuName = "Items/UsableItem")]
+public class UsableItemData : ItemData
 {
     [Header("Effect")]
+    
+    public EffectData effect;
     
     [SerializeField] private bool consumeOnUse = true;
     
     public bool ConsumeOnUse => consumeOnUse;
 
+    
 
-    public abstract void Use();
+    public void Use(IEffectTarget target)
+    {
+        effect.Apply(target);    
+    }
+    
 }
