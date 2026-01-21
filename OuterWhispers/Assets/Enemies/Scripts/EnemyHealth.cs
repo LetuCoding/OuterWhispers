@@ -12,19 +12,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         currentHealth = stats.maxHealth;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("PlayerAttack"))
-        {
-            PlayerStats playerStats = collision.GetComponentInParent<Player>().stats;
-            
-            if (playerStats != null)
-            {
-                TakeDamage(playerStats.attackDamage);
-            }
-        }
-    }
     
     public void TakeDamage(float damage)
     {
