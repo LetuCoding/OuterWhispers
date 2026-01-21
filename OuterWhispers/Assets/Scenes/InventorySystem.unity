@@ -646,8 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryScripts.Inventory
   slotCount: 2
-  items:
-  - item: {fileID: 0}
+  items: []
 --- !u!1001 &922408410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1480,7 +1479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8faa4cdb358d6d749b84aa1d0c7bc3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickableItem
-  item: {fileID: 11400000, guid: f721c8c6da2f15846b9456ecd2e7c439, type: 2}
+  item: {fileID: 0}
 --- !u!61 &1792634463
 BoxCollider2D:
   m_ObjectHideFlags: 0

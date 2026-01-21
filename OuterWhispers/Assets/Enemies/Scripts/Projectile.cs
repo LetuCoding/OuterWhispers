@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -32,8 +33,12 @@ public class Projectile : MonoBehaviour
         rb.linearVelocity = direction * speed;
     }
 
-    private void OnCollisionEnter2D()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.TryGetComponent(out IDamageable damageableTarget))
+        {
+            damageableTarget.TakeDamage(20f); 
+        }
         Destroy(gameObject);
     }
 }

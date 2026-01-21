@@ -31,7 +31,10 @@ using UnityEngine;
             AudioManagerPlayer.Instance.PlayWalk();
         }
 
-
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            fsm.ChangeState(Player.AttackState);
+        }
         
 
         else if (Player._moveInput == 0)
