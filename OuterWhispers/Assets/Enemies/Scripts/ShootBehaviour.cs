@@ -7,6 +7,7 @@ public class ShootBehaviour : MonoBehaviour
     [SerializeField] private Transform shootZone;
     [SerializeField] private float timeBetweenShots = 1f;
     [SerializeField] private float shootOffset = 1f;
+    public Animator _animator;
 
     private Transform player;
     private Coroutine shootCoroutine;
@@ -18,6 +19,7 @@ public class ShootBehaviour : MonoBehaviour
 
     public void StartShooting()
     {
+        AudioManagerEnemy.Instance.StopWalk();
         if (shootCoroutine == null)
             shootCoroutine = StartCoroutine(ShootRoutine());
     }
@@ -36,6 +38,9 @@ public class ShootBehaviour : MonoBehaviour
         while (true)
         {
             UpdateShootZonePosition();
+            if (AudioManagerEnemy.Instance != null)
+                AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
+            _animator.Play("Attack_Left");
             Shoot();
             yield return new WaitForSeconds(timeBetweenShots);
         }

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManagerEnemy : MonoBehaviour
 {
-    public static AudioManager Instance;
+    public static AudioManagerEnemy Instance;
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource sfxSource;
@@ -10,10 +10,9 @@ public class AudioManager : MonoBehaviour
 
     [Header("SFX Clips")]
     public AudioClip footstep;
-    public AudioClip dash;
-    public AudioClip jump;
-    public AudioClip slide;
-    public AudioClip falling;
+    public AudioClip shoot;
+    public AudioClip damage;
+    public AudioClip dead;
 
     public float minPlayTime = 5f;
 
