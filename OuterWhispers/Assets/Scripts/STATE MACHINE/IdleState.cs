@@ -23,12 +23,12 @@ using UnityEngine;
         if (Player._moveInput == 1)
         {
             Player._animator.Play("Walk_Right");
-            AudioManager.Instance.PlayWalk();
+            AudioManagerPlayer.Instance.PlayWalk();
         }
         else if (Player._moveInput == -1)
         {
             Player._animator.Play("Walk_Left");
-            AudioManager.Instance.PlayWalk();
+            AudioManagerPlayer.Instance.PlayWalk();
         }
 
 
@@ -40,12 +40,12 @@ using UnityEngine;
             if (Player._lastInput == -1)
             {
                 Player._animator.Play("Idle_Left");
-                AudioManager.Instance.StopWalk();
+                AudioManagerPlayer.Instance.StopWalk();
             }
             else
             {
                 Player._animator.Play("Idle_Right");
-                AudioManager.Instance.StopWalk();
+                AudioManagerPlayer.Instance.StopWalk();
             }
 
         }
@@ -53,7 +53,7 @@ using UnityEngine;
             //Apretamos Dash y lo hace
             if (Player.dashPressed)
             {
-                AudioManager.Instance.StopWalk();
+                AudioManagerPlayer.Instance.StopWalk();
                 fsm.ChangeState(Player.DashState);
                 return;
             }
@@ -62,7 +62,7 @@ using UnityEngine;
             //Si estamos en el suelo y apretamos Dash, Dasheamos
             if (Player.jumpPressed && Player._isGrounded)
             {
-                AudioManager.Instance.StopWalk();
+                AudioManagerPlayer.Instance.StopWalk();
                 fsm.ChangeState(Player.JumpState);
                 return;
             }

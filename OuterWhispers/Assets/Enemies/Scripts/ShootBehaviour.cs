@@ -18,7 +18,7 @@ public class ShootBehaviour : MonoBehaviour
 
     public void StartShooting()
     {
-        _animator.Play("Attack_Left");
+        AudioManagerEnemy.Instance.StopWalk();
         if (shootCoroutine == null)
             shootCoroutine = StartCoroutine(ShootRoutine());
     }
@@ -36,8 +36,10 @@ public class ShootBehaviour : MonoBehaviour
     {
         while (true)
         {
+            if (AudioManagerEnemy.Instance != null)
+                AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
+            _animator.Play("Attack_Left");
             Shoot();
-            _animator.Play("Attack_Left_Final");
             yield return new WaitForSeconds(timeBetweenShots);
         }
     }

@@ -39,11 +39,13 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour
         {
             direction = true;
             _animator.Play("Walk_Right");
+            AudioManagerEnemy.Instance.PlayWalk();
         }
         else if (dirX < 0f)
         {
             direction = false;
             _animator.Play("Walk_Left");
+            AudioManagerEnemy.Instance.PlayWalk();
         }
         enemyTransform.position = Vector2.MoveTowards(
             enemyTransform.position,
@@ -59,6 +61,7 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour
 
     private IEnumerator WaitAndNextWaypoint()
     {
+        AudioManagerEnemy.Instance.StopWalk();
         if (direction == true)
         {
             _animator.Play("Idle_Right");
