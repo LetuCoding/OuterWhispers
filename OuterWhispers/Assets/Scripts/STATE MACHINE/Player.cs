@@ -31,7 +31,13 @@ public class Player : MonoBehaviour
     public bool _wallJumping;
     public bool _wallSliding;
     
-    
+    [Header("Attack Settings")]
+    public PlayerStats stats;
+    public Transform attackPoint;
+    public LayerMask enemyLayer;
+
+    public AttackState AttackState { get; private set; }
+    public bool attackPressed;
     //=====================================================================================================
     // GROUND CHECK SETTINGS
     //=====================================================================================================
@@ -104,6 +110,7 @@ public class Player : MonoBehaviour
         WallSlideState = new WallSlideState(StateMachine, this);
         FallingState = new FallingState(StateMachine, this);
         DashState = new DashState(StateMachine, this);
+        AttackState = new AttackState(StateMachine, this);
     }
     
     
@@ -257,5 +264,7 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(_groundCheck.position, groundCheckRadius);
         Gizmos.DrawWireSphere(_wallCheckLeft.position,wallCheckRadius );
         Gizmos.DrawWireSphere(_wallCheckRight.position, wallCheckRadius);
+        
+        Gizmos.DrawWireCube(attackPoint.position,stats.attackRange);
     }
 }
