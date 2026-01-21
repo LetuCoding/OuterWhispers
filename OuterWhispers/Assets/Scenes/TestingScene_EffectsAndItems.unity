@@ -669,7 +669,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289264739}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD:OuterWhispers/Assets/Scenes/TestingScene_EffectsAndItems.unity
 --- !u!1001 &790038778
+=======
+--- !u!1001 &596486302
+>>>>>>> dev:OuterWhispers/Assets/Scenes/InventorySystem.unity
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -677,6 +681,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD:OuterWhispers/Assets/Scenes/TestingScene_EffectsAndItems.unity
     - target: {fileID: 951704160869029400, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -733,11 +738,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+=======
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.07889547
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.17751479
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566472200803501241, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+>>>>>>> dev:OuterWhispers/Assets/Scenes/InventorySystem.unity
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
+<<<<<<< HEAD:OuterWhispers/Assets/Scenes/TestingScene_EffectsAndItems.unity
   m_SourcePrefab: {fileID: 100100000, guid: 6a3301ccf26dee21c8c378428b93c7d7, type: 3}
+=======
+  m_SourcePrefab: {fileID: 100100000, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+>>>>>>> dev:OuterWhispers/Assets/Scenes/InventorySystem.unity
 --- !u!1 &823131622
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,6 +930,7 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+<<<<<<< HEAD:OuterWhispers/Assets/Scenes/TestingScene_EffectsAndItems.unity
 --- !u!1 &902846597 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5566472200803501241, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
@@ -911,6 +967,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
   m_PrefabInstance: {fileID: 172568486}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> dev:OuterWhispers/Assets/Scenes/InventorySystem.unity
 --- !u!1 &937066489
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,7 +1625,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ffc0b016324e3c9fa1d07fef91659f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
+<<<<<<< HEAD:OuterWhispers/Assets/Scenes/TestingScene_EffectsAndItems.unity
   inventory: {fileID: 902846598}
+=======
+  inventory: {fileID: 0}
+>>>>>>> dev:OuterWhispers/Assets/Scenes/InventorySystem.unity
   slotsParent: {fileID: 1247556251}
   slotPrefab: {fileID: 3161141479325665385, guid: f820d666776ea9440927c7217be688a4, type: 3}
   detailIcon: {fileID: 937066491}
@@ -2030,5 +2092,9 @@ SceneRoots:
   - {fileID: 1449808296}
   - {fileID: 2039635019}
   - {fileID: 1792634460}
+<<<<<<< HEAD:OuterWhispers/Assets/Scenes/TestingScene_EffectsAndItems.unity
   - {fileID: 790038778}
   - {fileID: 172568486}
+=======
+  - {fileID: 596486302}
+>>>>>>> dev:OuterWhispers/Assets/Scenes/InventorySystem.unity
