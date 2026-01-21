@@ -13,11 +13,12 @@ public class AttackState : PlayerState
         stateTimer = Player.stats.attackCooldown; 
 
         Player._rigidbody2D.linearVelocity = Vector2.zero;
+               
+        Vector3 newPosition = new Vector3(Player._lastInput * 0.3f, 0, 0);
+        Player.attackPoint.transform.localPosition = newPosition;
         
         Player.attackPoint.gameObject.SetActive(true);
-        
-        Vector3 newPosition = new Vector3(Player._lastInput * 0.3f, 0, 0);
-        Player.attackPoint.transform.localPosition = newPosition;;
+ 
     }
 
     public override void LogicUpdate()
