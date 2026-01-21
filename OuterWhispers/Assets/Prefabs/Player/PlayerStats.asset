@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   maxHealth: 100
+  attackDamage: 20
+  attackCooldown: 0.5
+  attackRange: {x: 1, y: 0.7}
