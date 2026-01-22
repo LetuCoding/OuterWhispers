@@ -4,6 +4,7 @@ using Core.Interfaces;
 public class AttackState : PlayerState
 {
     private float stateTimer;
+    private bool attackChange = true;
 
     public AttackState(PlayerStateMachine fsm, Player player) : base(fsm, player) { }
 
@@ -15,6 +16,12 @@ public class AttackState : PlayerState
             AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.punch);
         if (Player._lastInput == -1)
         {
+            if (Player._animator.GetBool("attack") == true)
+                Player._animator.SetBool("attack",attackChange);
+            else
+            {
+                Player._animator.SetBool("attack",attackChange);
+            }
             Player._animator.Play("Attack_Left");
         }
         else
