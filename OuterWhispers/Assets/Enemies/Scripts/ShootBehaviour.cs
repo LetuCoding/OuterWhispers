@@ -9,6 +9,7 @@ public class ShootBehaviour : MonoBehaviour
     [SerializeField] private float shootOffset = 1f;
     public Animator _animator;
 
+    private bool shootDirection = false;
     private Transform player;
     private Coroutine shootCoroutine;
     
@@ -38,9 +39,18 @@ public class ShootBehaviour : MonoBehaviour
         while (true)
         {
             UpdateShootZonePosition();
-            if (AudioManagerEnemy.Instance != null)
-                AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
-            _animator.Play("Attack_Left");
+            if (shootDirection == false)
+            {
+                if (AudioManagerEnemy.Instance != null)
+                    AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
+                _animator.Play("Attack_Left");
+            }
+            else
+            {
+                if (AudioManagerEnemy.Instance != null)
+                    AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
+                _animator.Play("Attack_Right");
+            }
             Shoot();
             yield return new WaitForSeconds(timeBetweenShots);
         }
@@ -49,9 +59,8 @@ public class ShootBehaviour : MonoBehaviour
     private void UpdateShootZonePosition()
     {
         if (player == null || shootZone == null) return;
-
         float direction = (player.position.x > transform.position.x) ? 1f : -1f;
-        
+        shootDirection = direction > 0f;
         shootZone.localPosition = new Vector3(direction * shootOffset, shootZone.localPosition.y, 0);
         
         shootZone.right = (player.position - shootZone.position).normalized;

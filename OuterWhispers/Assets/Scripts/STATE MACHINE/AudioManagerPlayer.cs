@@ -13,6 +13,7 @@ public class AudioManagerPlayer : MonoBehaviour
     public AudioClip dash;
     public AudioClip jump;
     public AudioClip slide;
+    public AudioClip punch;
 
     public float minPlayTime = 5f;
 
