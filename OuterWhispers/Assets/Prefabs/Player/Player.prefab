@@ -148,7 +148,6 @@ MonoBehaviour:
   dash: {fileID: 8300000, guid: f971ded5a0a1c43db87331883c93e071, type: 3}
   jump: {fileID: 8300000, guid: 2558a622f57554193958bf08e647d56e, type: 3}
   slide: {fileID: 8300000, guid: 9b9d2374eedd4aa27960942adce22720, type: 3}
-  falling: {fileID: 0}
   minPlayTime: 5
 --- !u!1 &1257504448085541610
 GameObject:
@@ -160,6 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6776131623504177640}
   - component: {fileID: 8057615516450447901}
+  - component: {fileID: 564125227167801041}
   m_Layer: 0
   m_Name: AttackZone
   m_TagString: PlayerAttack
@@ -228,6 +228,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &564125227167801041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257504448085541610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a849c5f52bff4de968f67b0b3668eb94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHitbox
+  player: {fileID: 2349091239875696405}
 --- !u!1 &4540136452015942456
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,9 +318,10 @@ GameObject:
   - component: {fileID: 5824234412805578279}
   - component: {fileID: 624940459949169800}
   - component: {fileID: 5162535366802341029}
+  - component: {fileID: 966639831666262910}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -549,6 +563,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   stats: {fileID: 11400000, guid: bc2317df6dacd75e9adf0d97e4307f55, type: 2}
+--- !u!114 &966639831666262910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566472200803501241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378a96cfd93f49fc8737d1eeb9044f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryScripts.Inventory
+  slotCount: 8
+  owner: {fileID: 5162535366802341029}
+  items: []
 --- !u!1 &6941453889200826798
 GameObject:
   m_ObjectHideFlags: 0

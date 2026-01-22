@@ -33,8 +33,9 @@ public class Projectile : MonoBehaviour
         rb.linearVelocity = direction * speed;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.TryGetComponent(out IDamageable damageableTarget))
         {
             damageableTarget.TakeDamage(20f); 
