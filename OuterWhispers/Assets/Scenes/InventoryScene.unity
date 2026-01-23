@@ -220,6 +220,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378a96cfd93f49fc8737d1eeb9044f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryScripts.Inventory
+--- !u!1 &238927603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 238927604}
+  m_Layer: 0
+  m_Name: Waypoint 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &238927604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238927603}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.78, y: -2.91, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1078448654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &258970874
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +416,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &259664424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 259664425}
+  m_Layer: 0
+  m_Name: Waypoint 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &259664425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259664424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.39, y: -2.68, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1078448654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &280454954
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +684,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ffc0b016324e3c9fa1d07fef91659f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
+--- !u!1 &1078448653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1078448654}
+  m_Layer: 0
+  m_Name: Waypoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1078448654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078448653}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 259664425}
+  - {fileID: 238927604}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139613137
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,6 +821,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Minion
       objectReference: {fileID: 0}
+    - target: {fileID: 5978996984228342584, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
+      propertyPath: 'waypoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 259664425}
+    - target: {fileID: 5978996984228342584, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
+      propertyPath: 'waypoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 238927604}
     - target: {fileID: 8122641887716757299, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
       propertyPath: player
       value: 
@@ -924,7 +1027,7 @@ PrefabInstance:
     - target: {fileID: 5514313169030060573, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1503084534}
+      objectReference: {fileID: 0}
     - target: {fileID: 5514313169030060573, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1081,7 +1184,32 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 187159214}
-    m_RemovedComponents: []
+    - target: {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
+      propertyPath: useButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
+      propertyPath: detailIcon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
+      propertyPath: detailName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
+      propertyPath: slotsParent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
+      propertyPath: inventoryRoot
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
+      propertyPath: detailDescription
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
     m_RemovedGameObjects:
     - {fileID: 535087516576424935, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
     m_AddedGameObjects:
@@ -1095,17 +1223,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7561067854147084851, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
   m_PrefabInstance: {fileID: 1503084532}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1503084534 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8193317189423378205, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
-  m_PrefabInstance: {fileID: 1503084532}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ffc0b016324e3c9fa1d07fef91659f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
 --- !u!1001 &2103541728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1487,3 +1604,4 @@ SceneRoots:
   - {fileID: 1174963954}
   - {fileID: 280454957}
   - {fileID: 1173484452}
+  - {fileID: 1078448654}
