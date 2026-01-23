@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d3cbb65a5828e226aac06edb63fc20f1
+guid: 3e0c256fc8a948681836a370fb9170c9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8324642193352413207
-    second: GANSTER_ATTACK_1_0
+      213: 1626943887292160085
+    second: JOHN_ATTACK_1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GANSTER_ATTACK_1_0
+      name: JOHN_ATTACK_1_0
       rect:
         serializedVersion: 2
-        x: 13
+        x: 11
         y: 2
-        width: 30
+        width: 23
         height: 41
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 710dff018f1178370800000000000000
-      internalID: 8324642193352413207
+      spriteID: 558da8778d0149610800000000000000
+      internalID: 1626943887292160085
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f37b0db9544bb84fabd3fa2026d98167
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GANSTER_ATTACK_1_0: 8324642193352413207
+      JOHN_ATTACK_1_0: 1626943887292160085
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
