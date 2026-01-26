@@ -83,7 +83,12 @@ using UnityEngine;
             Player.Gravity(3.5f);
         }
 
-        public override void Exit() {}
+
+
+        public override void Exit()
+        {
+            AudioManagerPlayer.Instance.StopWalk();
+        }
     }
     
 
