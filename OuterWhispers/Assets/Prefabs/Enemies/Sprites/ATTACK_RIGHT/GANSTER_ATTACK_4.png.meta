@@ -103,9 +103,9 @@ TextureImporter:
       name: GANSTER_ATTACK_4_0
       rect:
         serializedVersion: 2
-        x: 14
+        x: 0
         y: 2
-        width: 34
+        width: 48
         height: 46
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -130,7 +130,7 @@ TextureImporter:
         width: 3
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
