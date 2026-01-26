@@ -45,6 +45,7 @@ public class AudioManagerEnemy : MonoBehaviour
     // 🔊 Reproduce un efecto
     public void PlaySFX(AudioClip clip)
     {
+        sfxSource.pitch = 1.0f;
         if (clip == null) return;
         sfxSource.PlayOneShot(clip);
     }

@@ -4,7 +4,6 @@ using Core.Interfaces;
 public class AttackState : PlayerState
 {
     private float stateTimer;
-    private bool attackChange = true;
 
     public AttackState(PlayerStateMachine fsm, Player player) : base(fsm, player) { }
 
@@ -17,15 +16,21 @@ public class AttackState : PlayerState
         if (Player._lastInput == -1)
         {
             if (Player._animator.GetBool("attack") == true)
-                Player._animator.SetBool("attack",attackChange);
+                Player._animator.SetBool("attack",false);
             else
             {
-                Player._animator.SetBool("attack",attackChange);
+                Player._animator.SetBool("attack",true);
             }
             Player._animator.Play("Attack_Left");
         }
         else
         {
+            if (Player._animator.GetBool("attack") == true)
+                Player._animator.SetBool("attack",false);
+            else
+            {
+                Player._animator.SetBool("attack",true);
+            }
             Player._animator.Play("Attack_Right");
         }
         Player._rigidbody2D.linearVelocity = Vector2.zero;
