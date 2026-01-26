@@ -773,6 +773,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 267971647}
+    - target: {fileID: 8122641887716757299, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
+      propertyPath: canChase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8122641887716757299, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
+      propertyPath: canShoot
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8122641887716757299, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
+      propertyPath: canPatrol
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8238835793693995031, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.42
