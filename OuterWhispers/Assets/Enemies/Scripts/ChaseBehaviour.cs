@@ -5,12 +5,17 @@ public class ChaseBehaviour : MonoBehaviour, IEnemyBehaviour
 {
     [SerializeField] private EnemyStats stats;
     [SerializeField] private Transform detectionArea;
+    [SerializeField] private MeleeBehaviour meleeBehaviour;
+    [SerializeField] private Animator _animator;
+    
     private Transform player;
     private Transform enemyTransform;
+    private bool isInRange = false;
 
     public void SetPlayer(Transform playerTransform)
     {
         player = playerTransform;
+        if (meleeBehaviour != null) meleeBehaviour.SetPlayer(player);
     }
 
     public void Enter()
@@ -20,32 +25,76 @@ public class ChaseBehaviour : MonoBehaviour, IEnemyBehaviour
 
     public void Execute()
     {
-        if (player == null)
-            return;
+        if (player == null) return;
 
-        enemyTransform.position = new Vector3(Vector2.MoveTowards(
-            enemyTransform.position,
-            player.position,
-            stats.speed * Time.deltaTime
-        ).x, enemyTransform.position.y, 0);
-        
-        bool shouldFaceRight = player.position.x > enemyTransform.position.x;
-        if ((shouldFaceRight && enemyTransform.localScale.x < 0) ||
-            (!shouldFaceRight && enemyTransform.localScale.x > 0))
+        float distanceToPlayer = Vector2.Distance(enemyTransform.position, player.position);
+
+        if (distanceToPlayer <= stats.attackRange.x)
         {
-            Vector3 scale = enemyTransform.localScale;
-            scale.x *= -1;
-            enemyTransform.localScale = scale;
+            if (!isInRange)
+            {
+                isInRange = true;
+                if (meleeBehaviour != null) meleeBehaviour.StartAttacking();
+            }
+        }
+        else
+        {
+            if (isInRange)
+            {
+                isInRange = false;
+                if (meleeBehaviour != null) meleeBehaviour.StopAttacking();
+            }
+            
+            enemyTransform.position = new Vector3(Vector2.MoveTowards(
+                enemyTransform.position,
+                player.position,
+                stats.speed * Time.deltaTime
+            ).x, enemyTransform.position.y, 0);
+            UpdateWalkAnimation();
+        }
+
+        UpdateFacingDirection();
+    }
+    
+    private void UpdateWalkAnimation()
+    {
+        if (_animator == null) return;
+
+        if (player.position.x > enemyTransform.position.x)
+        {
+            _animator.Play("Walk_Right");
+        }
+        else
+        {
+            _animator.Play("Walk_Left");
+        }
+    }
+
+    private void UpdateFacingDirection()
+    {
+        bool shouldFaceRight = player.position.x > enemyTransform.position.x;
+        if (meleeBehaviour != null)
+        {
+            meleeBehaviour.UpdateHitboxSide(shouldFaceRight);
         }
     }
 
     public void Exit()
     {
+        if (isInRange)
+        {
+            if (meleeBehaviour != null) meleeBehaviour.StopAttacking();
+            isInRange = false;
+        }
     }
     
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(detectionArea.position, stats.detectionDistance);
+        if (detectionArea != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(detectionArea.position, stats.detectionDistance);
+        }
+
     }
 }

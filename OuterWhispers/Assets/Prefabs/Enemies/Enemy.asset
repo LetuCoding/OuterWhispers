@@ -15,3 +15,7 @@ MonoBehaviour:
   speed: 3
   detectionDistance: 5
   patrolWaitTime: 1
+  maxHealth: 100
+  attackRange: {x: 1.1, y: 0.7}
+  attackDamage: 20
+  attackCooldown: 1
