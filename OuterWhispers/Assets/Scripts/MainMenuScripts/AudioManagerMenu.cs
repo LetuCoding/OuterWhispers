@@ -1,18 +1,19 @@
 using UnityEngine;
 
-public class AudioManagerEnemy : MonoBehaviour
+public class AudioManagerMenu : MonoBehaviour
 {
-    public static AudioManagerEnemy Instance;
+    public static AudioManagerMenu Instance;
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource rainSource;
+
 
     [Header("SFX Clips")]
-    public AudioClip footstep;
-    public AudioClip shoot;
-    public AudioClip damage;
-    public AudioClip dead;
+    public AudioClip rain;
+    public AudioClip menuMusic;
+    public AudioClip clickSound;
 
     [Range(0f, 1f)] public float musicVolume = 1f;
     [Range(0f, 1f)] public float soundVolume = 1f;
@@ -28,8 +29,9 @@ public class AudioManagerEnemy : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        ApplyVolumes();
+
         Instance = this;
+        ApplyVolumes();
         DontDestroyOnLoad(gameObject);
     }
     private void Update()
@@ -37,12 +39,6 @@ public class AudioManagerEnemy : MonoBehaviour
         // Contamos hacia atrás el tiempo mínimo que debe sonar
         if (loopTimer > 0f)
             loopTimer -= Time.deltaTime;
-
-        // Si NO queremos caminar y ya pasó el mínimo, paramos el loop
-        if (!footstep && loopTimer <= 0f && sfxSource.isPlaying)
-        {
-            sfxSource.Stop();
-        }
     }
 
     // 🔊 Reproduce un efecto
@@ -61,21 +57,16 @@ public class AudioManagerEnemy : MonoBehaviour
         musicSource.loop = loop;
         musicSource.Play();
     }
-    public void PlayWalk()
+    
+    //Lluvia
+    public void PlayRain(AudioClip clip, bool loop = true)
     {
-            if (!sfxSource.isPlaying)
-        {
-            sfxSource.loop = true;
-            sfxSource.pitch = 0.5f;
-            sfxSource.Play();
-        }
+        if (clip == null) return;
+        rainSource.clip = clip;
+        rainSource.loop = loop;
+        rainSource.Play();
     }
-
-    public void StopWalk()
-    {
-        if (sfxSource.isPlaying)
-            sfxSource.Stop();
-    }
+    
     public void SetMusicVolume(float value)
     {
         musicVolume = value;
@@ -86,6 +77,7 @@ public class AudioManagerEnemy : MonoBehaviour
     {
         soundVolume = value;
         sfxSource.volume = soundVolume;
+        rainSource.volume = soundVolume;
 
     }
 
@@ -93,5 +85,7 @@ public class AudioManagerEnemy : MonoBehaviour
     {
         musicSource.volume = musicVolume;
         sfxSource.volume = soundVolume;
+        rainSource.volume = soundVolume;
     }
+    
 }
