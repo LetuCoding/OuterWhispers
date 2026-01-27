@@ -14,6 +14,8 @@ public class AudioManagerPlayer : MonoBehaviour
     public AudioClip jump;
     public AudioClip slide;
     public AudioClip punch;
+    public AudioClip die;
+    public AudioClip damage;
 
     public float minPlayTime = 5f;
 
@@ -46,6 +48,7 @@ public class AudioManagerPlayer : MonoBehaviour
     // 🔊 Reproduce un efecto
     public void PlaySFX(AudioClip clip)
     {
+        sfxSource.pitch = 1f;
         if (clip == null) return;
         sfxSource.PlayOneShot(clip);
     }

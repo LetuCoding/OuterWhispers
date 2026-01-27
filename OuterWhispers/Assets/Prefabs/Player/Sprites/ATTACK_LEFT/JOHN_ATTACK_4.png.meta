@@ -142,12 +142,12 @@ TextureImporter:
       name: JOHN_ATTACK_4_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 2
-        width: 30
+        width: 48
         height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6c006b345674028df9ebed4bb65d4caa
     internalID: 0
     vertices: []
     indices: 
