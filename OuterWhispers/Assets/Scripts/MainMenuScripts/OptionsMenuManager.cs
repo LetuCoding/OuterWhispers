@@ -56,11 +56,23 @@ public class OptionsMenuManager : MonoBehaviour
     private void OnSliderSoundChanged(ChangeEvent<int> evt)
     {
         float vol = evt.newValue / 100f;
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.SetSoundVolume(vol);
+        if (AudioManagerEnemy.Instance != null)
+            AudioManagerEnemy.Instance.SetSoundVolume(vol);
+        if (AudioManagerPlayer.Instance != null)
+            AudioManagerPlayer.Instance.SetSoundVolume(vol);
     }
 
     private void OnSliderMusicChanged(ChangeEvent<int> evt)
     {
         float vol = evt.newValue / 100f;
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.SetMusicVolume(vol);
+        if (AudioManagerEnemy.Instance != null)
+            AudioManagerEnemy.Instance.SetMusicVolume(vol);
+        if (AudioManagerPlayer.Instance != null)
+            AudioManagerPlayer.Instance.SetMusicVolume(vol);
     }
     private void OnCloseClicked()
     {

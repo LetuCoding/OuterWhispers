@@ -15,7 +15,8 @@ public class AudioManagerMenu : MonoBehaviour
     public AudioClip menuMusic;
     public AudioClip clickSound;
 
-    
+    [Range(0f, 1f)] public float musicVolume = 1f;
+    [Range(0f, 1f)] public float soundVolume = 1f;
     
     public float minPlayTime = 5f;
 
@@ -30,6 +31,7 @@ public class AudioManagerMenu : MonoBehaviour
         }
 
         Instance = this;
+        ApplyVolumes();
         DontDestroyOnLoad(gameObject);
     }
     private void Update()
@@ -63,6 +65,27 @@ public class AudioManagerMenu : MonoBehaviour
         rainSource.clip = clip;
         rainSource.loop = loop;
         rainSource.Play();
+    }
+    
+    public void SetMusicVolume(float value)
+    {
+        musicVolume = value;
+        musicSource.volume = musicVolume;
+    }
+
+    public void SetSoundVolume(float value)
+    {
+        soundVolume = value;
+        sfxSource.volume = soundVolume;
+        rainSource.volume = soundVolume;
+
+    }
+
+    private void ApplyVolumes()
+    {
+        musicSource.volume = musicVolume;
+        sfxSource.volume = soundVolume;
+        rainSource.volume = soundVolume;
     }
     
 }
