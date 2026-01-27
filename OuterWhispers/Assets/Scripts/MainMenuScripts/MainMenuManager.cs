@@ -13,7 +13,10 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
-        
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlayMusic(AudioManagerMenu.Instance.menuMusic);
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlayRain(AudioManagerMenu.Instance.rain);
     }
     void OnEnable()
     {
@@ -37,17 +40,23 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnStartClicked()
     {
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         UiLoadMenu.SetActive(true);
     }
 
     private void OnQuitClicked()
     {
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         Application.Quit();
     }
 
     private void OnOptionsClicked()
     {
         // Activa el UI Options
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         UiOptions.SetActive(true);
 
     }

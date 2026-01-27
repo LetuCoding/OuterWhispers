@@ -61,15 +61,21 @@ public class LoadMenuManager : MonoBehaviour
     
     private void OnCloseClicked()
     {
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         UiOptions.SetActive(false);
     }
     private void OnLoadClicked()
     {
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         SceneManager.LoadScene("");
     }
 
     private void OnNewGameClicked()
     {
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         SceneManager.LoadScene("");
     }
 

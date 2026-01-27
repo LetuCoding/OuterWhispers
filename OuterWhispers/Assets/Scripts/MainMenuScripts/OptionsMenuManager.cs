@@ -36,10 +36,6 @@ public class OptionsMenuManager : MonoBehaviour
         CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
 
     }
-    private void OnReturnClicked()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
     void OnHoverEnterClose(MouseEnterEvent evt)
     {
         CloseButton.style.backgroundColor = new StyleColor(Color.grey);
@@ -68,7 +64,8 @@ public class OptionsMenuManager : MonoBehaviour
     }
     private void OnCloseClicked()
     {
-
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         UiOptions.SetActive(false);
 
     }
