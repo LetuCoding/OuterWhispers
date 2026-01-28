@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   speed: 2.5
   detectionDistance: 5
-  patrolWaitTime: 1
+  patrolWaitTime: 3
   maxHealth: 100
   attackRange: {x: 1, y: 0.7}
   attackDamage: 20
