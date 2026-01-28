@@ -9,6 +9,7 @@ public class MeleeBehaviour : MonoBehaviour
     [SerializeField] private float attackOffset = 0.5f;
 
     private bool shouldFaceRight;
+    private bool IsHitboxOnRight;
     private Animator _animator;
     private Transform player;
     private Coroutine attackCoroutine;
@@ -32,7 +33,18 @@ public class MeleeBehaviour : MonoBehaviour
 
     public void StartAttacking()
     {
+        AudioManagerEnemy.Instance.StopWalk();
         if (attackCoroutine == null)
+            if (IsHitboxOnRight == false)
+            {
+                _animator.Play("Attack_Left_Final");
+            }
+            else
+            {
+                _animator.Play("Attack_Right_Final");
+            }
+            if (AudioManagerEnemy.Instance != null)
+                AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
             attackCoroutine = StartCoroutine(AttackRoutine());
     }
 
@@ -49,7 +61,7 @@ public class MeleeBehaviour : MonoBehaviour
     private IEnumerator AttackRoutine()
     {
         SetHitbox();
-        
+ 
         EnemyAttackHitbox hitboxScript = hitboxObject.GetComponent<EnemyAttackHitbox>();
         
         while (true)
@@ -61,16 +73,37 @@ public class MeleeBehaviour : MonoBehaviour
             if (hitboxScript != null) hitboxScript.PrepareForAttack();
         
             hitboxObject.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
+            if (IsHitboxOnRight == false)
+            {
+                _animator.Play("Attack_Left");
+            }
+            else
+            {
+                _animator.Play("Attack_Right");
+            } 
             hitboxObject.SetActive(false);
 
             yield return new WaitForSeconds(stats.attackCooldown);
+            if (IsHitboxOnRight == false)
+            {
+                _animator.Play("Attack_Left_Final");
+            }
+            else
+            {
+                _animator.Play("Attack_Right_Final");
+            }
+            if (AudioManagerEnemy.Instance != null)
+                AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
+
+
         }
     }
     
     public void UpdateHitboxSide(bool faceRight)
     {
         if (hitboxObject == null) return;
+        IsHitboxOnRight = faceRight;
         float direction = faceRight ? 1f : -1f;
         hitboxObject.transform.localPosition = new Vector3(direction * attackOffset, 0, 0);
     }

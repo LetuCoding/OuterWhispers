@@ -11,6 +11,7 @@ public class ChaseBehaviour : MonoBehaviour, IEnemyBehaviour
     private Transform player;
     private Transform enemyTransform;
     private bool isInRange = false;
+    private bool isWalking = false;
 
     public void SetPlayer(Transform playerTransform)
     {
@@ -21,12 +22,18 @@ public class ChaseBehaviour : MonoBehaviour, IEnemyBehaviour
     public void Enter()
     {
         enemyTransform = transform;
+
     }
 
     public void Execute()
     {
         if (player == null) return;
-
+        if (isWalking == false)
+        {
+            AudioManagerEnemy.Instance.PlayWalk();
+            isWalking = true;
+        }
+        
         float distanceToPlayer = Vector2.Distance(enemyTransform.position, player.position);
 
         if (distanceToPlayer <= stats.attackRange.x)
@@ -86,6 +93,8 @@ public class ChaseBehaviour : MonoBehaviour, IEnemyBehaviour
             if (meleeBehaviour != null) meleeBehaviour.StopAttacking();
             isInRange = false;
         }
+        if (isWalking == true)
+            AudioManagerEnemy.Instance.StopWalk();
     }
     
     private void OnDrawGizmosSelected()

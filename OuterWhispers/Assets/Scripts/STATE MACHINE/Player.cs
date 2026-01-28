@@ -277,7 +277,10 @@ public class Player : MonoBehaviour, IEffectTarget
 
     public void TakeDamage()
     {
+        if (AudioManagerPlayer.Instance != null)
+            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.damage);
         StartCoroutine(HitEffect());
+;
     }
 
     private IEnumerator HitEffect()
@@ -286,10 +289,7 @@ public class Player : MonoBehaviour, IEffectTarget
 
         if (sr != null)
             sr.color = Color.red;
-
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.damage);
-
+        
         yield return new WaitForSeconds(0.25f);
 
         if (sr != null)
