@@ -148,6 +148,11 @@ MonoBehaviour:
   dash: {fileID: 8300000, guid: f971ded5a0a1c43db87331883c93e071, type: 3}
   jump: {fileID: 8300000, guid: 2558a622f57554193958bf08e647d56e, type: 3}
   slide: {fileID: 8300000, guid: 9b9d2374eedd4aa27960942adce22720, type: 3}
+  punch: {fileID: 8300000, guid: bfa636410610b84dfa5d83c26d109265, type: 3}
+  die: {fileID: 0}
+  damage: {fileID: 8300000, guid: 5b24af6220de802aabac259142ba6356, type: 3}
+  musicVolume: 1
+  soundVolume: 1
   minPlayTime: 5
 --- !u!1 &1257504448085541610
 GameObject:
@@ -447,7 +452,7 @@ MonoBehaviour:
   _wallCheckRight: {fileID: 646865249079184832}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 64
   wallCheckRadius: 0.1
   wallJumpForceX: 8
   wallJumpForceY: 8
@@ -563,6 +568,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   stats: {fileID: 11400000, guid: bc2317df6dacd75e9adf0d97e4307f55, type: 2}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2349091239875696405}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: TakeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &966639831666262910
 MonoBehaviour:
   m_ObjectHideFlags: 0
