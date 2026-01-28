@@ -18,8 +18,8 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        if (canPatrol && patrolBehaviour != null)
-            stateMachine.ChangeState(patrolBehaviour);
+        //if (canPatrol && patrolBehaviour != null)
+            //stateMachine.ChangeState(patrolBehaviour);
     }
 
     private void Update()
@@ -34,7 +34,7 @@ public class EnemyAI : MonoBehaviour
             if (canChase && chaseBehaviour != null)
             {
                 chaseBehaviour.SetPlayer(player);
-                stateMachine.ChangeState(chaseBehaviour);
+                //stateMachine.ChangeState(chaseBehaviour);
             }
 
             if (canShoot && shootBehaviour != null)
