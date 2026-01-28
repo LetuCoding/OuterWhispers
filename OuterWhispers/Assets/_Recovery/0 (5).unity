@@ -622,7 +622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362076541886081782, guid: c7e58fc00589d9908a436abeea286176, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5569792457104653674, guid: c7e58fc00589d9908a436abeea286176, type: 3}
       propertyPath: dead
@@ -1230,7 +1230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3902611466427174771, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5978996984228342584, guid: da4b9df2b1a3e92069e342c3857a9a3f, type: 3}
       propertyPath: 'waypoints.Array.data[0]'

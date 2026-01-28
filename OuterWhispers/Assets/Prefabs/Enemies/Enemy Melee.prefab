@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 2527977367316343237}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.306179, y: 0.34127235, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,7 +76,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -174,11 +174,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerEnemy
   sfxSource: {fileID: 5757755678724055152}
-  musicSource: {fileID: 0}
+  musicSource: {fileID: 5757755678724055152}
   footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
-  shoot: {fileID: 8300000, guid: 8ab52f0c67df15aeba85b62c45148afe, type: 3}
-  damage: {fileID: 0}
-  dead: {fileID: 0}
+  shoot: {fileID: 8300000, guid: bfa636410610b84dfa5d83c26d109265, type: 3}
+  damage: {fileID: 8300000, guid: 5b24af6220de802aabac259142ba6356, type: 3}
+  dead: {fileID: 8300000, guid: 44712f855edf4afb8a9ed2169d89bf72, type: 3}
+  musicVolume: 1
+  soundVolume: 1
   minPlayTime: 5
 --- !u!1 &4325752527415711888
 GameObject:
@@ -365,7 +367,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -7673151166614659833, guid: 9428215f6f627b70b8e05ce925931740, type: 3}
+  m_Sprite: {fileID: -8479810848188833700, guid: a6483748ab0c56725baca450125877fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -441,7 +443,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.59375, y: 1.28125}
+    oldSize: {x: 0.65625, y: 1.25}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -542,7 +544,7 @@ Animator:
   m_GameObject: {fileID: 5362076541886081782}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba6851726a1b082a08da07924e38b050, type: 2}
+  m_Controller: {fileID: 9100000, guid: c4c992356b9a58713bcc09ed4bf721cd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -581,7 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeAttackBehaviour
   stats: {fileID: 11400000, guid: 754186b0755092617bec7dccc2659c76, type: 2}
   hitboxObject: {fileID: 4325752527415711888}
-  attackOffset: 0.5
+  attackOffset: 2
 --- !u!1 &8382659691150010394
 GameObject:
   m_ObjectHideFlags: 0
