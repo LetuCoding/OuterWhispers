@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f28608697cba3ebf2923baf234d0d392
+guid: ce58bfb1d894022468ee5347c9828f72
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8555406010182679048
-    second: GANSTER_WALK_7_0
+      213: -8768441639995801425
+    second: ATTACK_RIGHT_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,23 +139,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GANSTER_WALK_7_0
+      name: ATTACK_RIGHT_2_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 2
-        width: 26
+        x: 0
+        y: 1
+        width: 48
         height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 80a3e221078eab670800000000000000
-      internalID: 8555406010182679048
+      spriteID: fa08e4e19cc305680800000000000000
+      internalID: -8768441639995801425
       vertices: []
       indices: 
       edges: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 229a90aac6324d64d95e035abee4b68e
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GANSTER_WALK_7_0: 8555406010182679048
+      ATTACK_RIGHT_2_0: -8768441639995801425
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
