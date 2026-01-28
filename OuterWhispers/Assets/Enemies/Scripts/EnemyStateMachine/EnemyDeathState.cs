@@ -9,7 +9,6 @@ public class EnemyDeathState : EnemyState
         enemy.StopMovement();
 
         // 2. Reproducir animación de muerte
-        // ¡Asegúrate de crear esta animación en tu Animator!
         //enemy.animator.Play("Death");
 
         enemy.DisablePhysics();
