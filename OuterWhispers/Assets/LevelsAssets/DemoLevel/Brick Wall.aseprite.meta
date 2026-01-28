@@ -102,7 +102,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639051390744402420
+  platformSettingsDirtyTick: 639052165353823720
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -141,7 +141,7 @@ ScriptedImporter:
       y: 4
       width: 32
       height: 32
-    spriteID: 9daed7b264a271a93b0383ad55770130
+    spriteID: c38f573c79b0cb2d1b9f931e071560db
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -162,7 +162,7 @@ ScriptedImporter:
       y: 44
       width: 32
       height: 32
-    spriteID: cce7ff7cf693994e7a03f3ffa8a551f7
+    spriteID: 4faeed1dbe3ac03ea8c30ddc19972d24
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -183,7 +183,7 @@ ScriptedImporter:
       y: 84
       width: 32
       height: 32
-    spriteID: ab2402340f95f5e6494e1e8684225fdb
+    spriteID: 572bd746ae658e2e192109ea3e8ef5f7
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -204,7 +204,7 @@ ScriptedImporter:
       y: 4
       width: 32
       height: 32
-    spriteID: ed2918cf764c58867aa452f092ec6db1
+    spriteID: 7631836fc4457c65f96cbe871512378f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -250,25 +250,25 @@ ScriptedImporter:
         x: 32
         y: 32
       name: Tileset_0_1
-      spriteId: 9daed7b264a271a93b0383ad55770130
+      spriteId: c38f573c79b0cb2d1b9f931e071560db
     - tileId: 2
       size:
         x: 32
         y: 32
       name: Tileset_0_2
-      spriteId: cce7ff7cf693994e7a03f3ffa8a551f7
+      spriteId: 4faeed1dbe3ac03ea8c30ddc19972d24
     - tileId: 3
       size:
         x: 32
         y: 32
       name: Tileset_0_3
-      spriteId: ab2402340f95f5e6494e1e8684225fdb
+      spriteId: 572bd746ae658e2e192109ea3e8ef5f7
     - tileId: 4
       size:
         x: 32
         y: 32
       name: Tileset_0_4
-      spriteId: ed2918cf764c58867aa452f092ec6db1
+      spriteId: 7631836fc4457c65f96cbe871512378f
     guid: -1102077067
   platformSettings:
   - name: DefaultTexturePlatform
