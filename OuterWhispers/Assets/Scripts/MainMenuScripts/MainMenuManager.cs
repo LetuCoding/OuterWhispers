@@ -66,7 +66,7 @@ public class MainMenuManager : MonoBehaviour
     }
     void OnHoverExitStart(MouseLeaveEvent evt)
     {
-        StartButton.style.backgroundColor = new StyleColor(Color.black);
+        StartButton.style.backgroundColor = new StyleColor(new Color(0f, 0f, 0f, 0f));
     }
     void OnHoverEnterQuit(MouseEnterEvent evt)
     {
@@ -74,7 +74,7 @@ public class MainMenuManager : MonoBehaviour
     }
     void OnHoverExitQuit(MouseLeaveEvent evt)
     {
-        QuitButton.style.backgroundColor = new StyleColor(Color.black);
+        QuitButton.style.backgroundColor = new StyleColor(new Color(0f, 0f, 0f, 0f));
     }
     void OnHoverEnterOptions(MouseEnterEvent evt)
     {
@@ -82,6 +82,6 @@ public class MainMenuManager : MonoBehaviour
     }
     void OnHoverExitOptions(MouseLeaveEvent evt)
     {
-        OptionsButton.style.backgroundColor = new StyleColor(Color.black);
+        OptionsButton.style.backgroundColor = new StyleColor(new Color(0f, 0f, 0f, 0f));
     }
 }

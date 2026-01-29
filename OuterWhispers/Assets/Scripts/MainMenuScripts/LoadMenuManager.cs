@@ -69,7 +69,12 @@ public class LoadMenuManager : MonoBehaviour
     {
         if (AudioManagerMenu.Instance != null)
             AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
-        SceneManager.LoadScene("");
+        UiOptions.SetActive(false);
+        FindObjectOfType<ScreenFader>().FadeToBlackAndPlayTexts();
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.PlayMusic(AudioManagerMenu.Instance.introMusic);
+        if (AudioManagerMenu.Instance != null)
+            AudioManagerMenu.Instance.StopRain();
     }
 
     private void OnNewGameClicked()
