@@ -33,16 +33,7 @@ public class EnemyMeleeState : EnemyState
 
         if (timer >= attackCooldown)
         {
-            float distanceToPlayer = Vector2.Distance(enemy.transform.position, enemy.playerTransform.position);
-
-            if (distanceToPlayer <= enemy.stats.attackRange.x)
-            {
-                stateMachine.ChangeState(enemy.MeleeState); 
-            }
-            else
-            {
-                stateMachine.ChangeState(enemy.ChaseState);
-            }
+            enemy.DecideNextCombatAction(); 
         }
     }
 
