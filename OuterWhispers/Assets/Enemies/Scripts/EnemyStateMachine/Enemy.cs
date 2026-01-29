@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public EnemyIdleState IdleState { get; private set; }
     public EnemyStunState StunState { get; private set; }
     public EnemyDeathState DeathState { get; private set; }
+    public EnemyHeavyAttackState HeavyAttackState { get; private set; }
+    public EnemyLowKickState LowKickState { get; private set; }
     #endregion
 
     #region Components
@@ -35,9 +37,16 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     [Header("Melee Settings")]
     public GameObject meleeHitbox;
     public float meleeAttackOffset = 0.5f;
+    public float lowKickYOffset = -0.5f;
     
     [Header("Combat Settings")]
     public float stunDuration = 0.8f;
+    public bool canBeStunned = true;
+    
+    [Header("Special Attacks Settings")]
+    public bool canUseHeavyAttack = false; 
+    public bool canUseLowKick = false;
+    
     
     [Header("Shoot Settings")]
     public GameObject projectilePrefab;
@@ -70,6 +79,8 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         IdleState = new EnemyIdleState(StateMachine, this);
         StunState = new EnemyStunState(StateMachine, this);
         DeathState = new EnemyDeathState(StateMachine, this);
+        HeavyAttackState = new EnemyHeavyAttackState(StateMachine, this);
+        LowKickState = new EnemyLowKickState(StateMachine, this);
     }
 
     private void Start()
@@ -112,6 +123,41 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         StateMachine.ChangeState(DeathState);
     }
     
+    public void DecideNextCombatAction()
+    {
+        if (playerTransform == null)
+        {
+            StateMachine.ChangeState(PatrolState);
+            return;
+        }
+
+        float distance = Vector2.Distance(transform.position, playerTransform.position);
+   
+        if (distance > stats.attackRange.x)
+        {
+            StateMachine.ChangeState(ChaseState);
+            return;
+        }
+        
+        float chance = Random.value;
+
+        if (canUseHeavyAttack && HeavyAttackState != null && chance <= 0.4f)
+        {
+            Debug.Log("Ataque Pesado");
+            StateMachine.ChangeState(HeavyAttackState);
+        }
+        else if (canUseLowKick && LowKickState != null && chance > 0.4f && chance <= 0.75f)
+        {
+            Debug.Log("Patada Baja");
+            StateMachine.ChangeState(LowKickState);
+        }
+        else
+        {
+            Debug.Log("Ataque Melee");
+            StateMachine.ChangeState(MeleeState);
+        }
+    }
+    
     public void DisablePhysics()
     {
         Collider2D col = GetComponent<Collider2D>();
@@ -123,6 +169,16 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
             rb.bodyType = RigidbodyType2D.Static; 
         }
         if (meleeHitbox != null) meleeHitbox.SetActive(false);
+    }
+    
+    public void SetColor(Color color)
+    {
+        if (spriteRenderer != null) spriteRenderer.color = color;
+    }
+
+    public void ResetColor()
+    {
+        if (spriteRenderer != null) spriteRenderer.color = Color.white;
     }
     
     public void TriggerStun()
