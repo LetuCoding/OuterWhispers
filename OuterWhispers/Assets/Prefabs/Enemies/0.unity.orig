@@ -311,17 +311,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScreenFader
   fadePanel: {fileID: 988620408}
   fadeText: {fileID: 1301606626}
-  screenFadeDuration: 3
-  textFadeDuration: 1
-  textHoldTime: 4
-  texts:
-  - Chicago \n 1921 \n February 21
-  - Smuggling and crime are rampant. \n  The local police are overwhelmed
-  - In the midst of all this chaos, something strange happens \n Many disappearances
-    are being reported
-  - A police detective named John David is in charge of the investigation
-  - Following a fresh trail leads to the manhole cover \n John himself will go down
-    there to get to the bottom of this matter...
+  fadeDuration: 3
+  texts: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,7 +1034,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 600}
+  m_SizeDelta: {x: 700, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1301606626
 MonoBehaviour:
@@ -1094,14 +1085,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 120
+  m_fontSizeBase: 120
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1311,8 +1302,8 @@ MonoBehaviour:
   menuMusic: {fileID: 8300000, guid: 9351a70dc5e69c240b3430aaa6cafb6f, type: 3}
   introMusic: {fileID: 8300000, guid: 34723c87c71309b4abcccc833951de26, type: 3}
   clickSound: {fileID: 8300000, guid: 4d1251d3584f3534a9287fc24218f233, type: 3}
-  musicVolume: 0.5
-  soundVolume: 0.5
+  musicVolume: 1
+  soundVolume: 1
   minPlayTime: 5
 --- !u!4 &1614008715
 Transform:
