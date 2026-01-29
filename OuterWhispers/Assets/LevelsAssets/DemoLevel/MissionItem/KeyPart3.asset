@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b87dac81406b86b709bf59f952a4d099, type: 3}
+  m_Name: KeyPart3
+  m_EditorClassIdentifier: Assembly-CSharp::KeyItem
+  itemName: God's eye
+  description: I feel like something is really watching me...
+  icon: {fileID: 6452963684907819741, guid: c8e1706612ade4f8d860fc92ceac137e, type: 3}
+  itemType: 1
+  keyID: 3
