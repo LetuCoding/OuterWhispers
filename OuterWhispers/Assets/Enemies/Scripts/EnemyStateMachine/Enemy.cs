@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 
     #region State Variables
     public bool hasDetectedPlayer;
+    public bool EnemyDirection;
     #endregion
 
     private void Awake()

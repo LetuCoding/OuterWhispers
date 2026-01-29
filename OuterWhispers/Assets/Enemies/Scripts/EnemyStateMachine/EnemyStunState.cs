@@ -9,7 +9,16 @@ public class EnemyStunState : EnemyState
     public override void Enter()
     {
         enemy.StopMovement();
-        //enemy.animator.Play("Hurt"); 
+        if (AudioManagerEnemy.Instance != null)
+            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.damage);
+        if (enemy.EnemyDirection == true)
+        {
+            enemy.animator.Play("Damage_Right"); 
+        }
+        else
+        {
+            enemy.animator.Play("Damage_Left"); 
+        }
         stunTimer = enemy.stunDuration;
     }
 

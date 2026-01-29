@@ -483,7 +483,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   canPatrol: 1
   canChase: 1
-  canShoot: 0
+  canShoot: 1
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -497,6 +497,7 @@ MonoBehaviour:
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
   hasDetectedPlayer: 0
+  EnemyDirection: 0
 --- !u!70 &2009538933500312857
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

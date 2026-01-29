@@ -53,6 +53,19 @@ public class EnemyMeleeState : EnemyState
 
     private void PerformAttack()
     {
+        bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
+        enemy.EnemyDirection = isPlayerRight;
+        if (AudioManagerEnemy.Instance != null)
+            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
+        
+        if (isPlayerRight)
+        {
+            enemy.animator.Play("Attack_Right");
+        }
+        else
+        {
+            enemy.animator.Play("Attack_Left");
+        }
         if (enemy.meleeHitbox != null)
         {
             enemy.meleeHitbox.transform.localScale = new Vector3(enemy.stats.attackRange.x, enemy.stats.attackRange.y, 0);

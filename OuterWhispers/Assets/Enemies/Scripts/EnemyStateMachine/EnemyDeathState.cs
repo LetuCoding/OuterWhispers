@@ -8,8 +8,16 @@ public class EnemyDeathState : EnemyState
     {
         enemy.StopMovement();
 
-        // 2. Reproducir animación de muerte
-        //enemy.animator.Play("Death");
+        if (AudioManagerEnemy.Instance != null)
+            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.dead);
+        if (enemy.EnemyDirection == true)
+        {
+            enemy.animator.Play("Death_Right"); 
+        }
+        else
+        {
+            enemy.animator.Play("Death_Left"); 
+        }
 
         enemy.DisablePhysics();
     }

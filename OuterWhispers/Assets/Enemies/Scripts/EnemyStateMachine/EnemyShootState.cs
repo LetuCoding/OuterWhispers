@@ -38,6 +38,7 @@ public class EnemyShootState : EnemyState
         isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
         float direction = isPlayerRight ? 1f : -1f;
         
+        
         if (enemy.shootPoint != null)
         {
             enemy.shootPoint.localPosition = new Vector3(direction * enemy.shootOffset, enemy.shootPoint.localPosition.y, 0);
@@ -54,7 +55,7 @@ public class EnemyShootState : EnemyState
         
         if (AudioManagerEnemy.Instance != null)
             AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
-        
+        enemy.EnemyDirection = isPlayerRight;
         if (isPlayerRight)
         {
             enemy.animator.Play("Attack_Right");

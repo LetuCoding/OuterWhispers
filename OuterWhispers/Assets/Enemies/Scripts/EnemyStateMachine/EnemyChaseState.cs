@@ -18,6 +18,14 @@ public class EnemyChaseState : EnemyState
 
         if (distanceToPlayer > enemy.stats.detectionDistance * 1.5f)
         {
+            if (enemy.EnemyDirection)
+            {
+                enemy.animator.Play("Stop_Attack_Right");
+            }
+            else
+            {
+                enemy.animator.Play("Stop_Attack_Left");
+            }
             enemy.hasDetectedPlayer = false;
             stateMachine.ChangeState(enemy.PatrolState);
             return;
