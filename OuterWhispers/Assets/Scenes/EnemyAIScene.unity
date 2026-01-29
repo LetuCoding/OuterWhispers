@@ -699,6 +699,10 @@ PrefabInstance:
       propertyPath: damage
       value: 
       objectReference: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
+    - target: {fileID: 8017884205538869988, guid: d689d91cc7a81669e9d9194855088943, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7f3a205b363668b57806bf6627e8fc36, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1034,6 +1038,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1491320799073332389, guid: 288f77145b4647b4f9064a78da80c6fc, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 06d45e763ac8116c39be61e90b08f0d4, type: 2}
     - target: {fileID: 2551560311155651124, guid: 288f77145b4647b4f9064a78da80c6fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.42
