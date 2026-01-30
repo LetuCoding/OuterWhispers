@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         lastDamageTime = -damageCooldown;
         enemy = GetComponent<Enemy>();
     }
-    
+
     public void TakeDamage(float damage)
     {
         if (isDead || Time.time - lastDamageTime < damageCooldown) return;
@@ -28,13 +28,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         currentHealth -= damage;
         enemy.PlayHitFlash();
         Debug.Log("Vida actual enemigo:" + currentHealth);
+        if (enemy.canBeStunned)
+        {
+            enemy.TriggerStun();
+        }
+        
         if (currentHealth <= 0)
         {
             Die();
-        }
-        else
-        {
-            if (enemy != null) enemy.TriggerStun();
         }
     }
 

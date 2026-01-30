@@ -12,7 +12,7 @@ public class EnemyChaseState : EnemyState
 
         if (distanceToPlayer <= enemy.stats.attackRange.x)
         {
-            stateMachine.ChangeState(enemy.MeleeState);
+            enemy.DecideNextCombatAction();
             return;
         }
 
