@@ -174,14 +174,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerEnemy
   sfxSource: {fileID: 3745894351054756296}
-  musicSource: {fileID: 3745894351054756296}
   footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
   shoot: {fileID: 8300000, guid: 60e9eb66651f2a7db9d53a2e48a9fb68, type: 3}
   damage: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
   dead: {fileID: 8300000, guid: 553eb7fea8068a77eb3a2c97f41c4028, type: 3}
-  musicVolume: 1
+  chains: {fileID: 0}
+  smash: {fileID: 0}
   soundVolume: 1
-  minPlayTime: 5
+  soundPitch: 1
 --- !u!1 &4002075207194950034
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +410,7 @@ Animator:
   m_GameObject: {fileID: 8300790511472205849}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c4c992356b9a58713bcc09ed4bf721cd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 06d45e763ac8116c39be61e90b08f0d4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -458,13 +458,18 @@ MonoBehaviour:
   - {fileID: 0}
   meleeHitbox: {fileID: 4002075207194950034}
   meleeAttackOffset: 0.5
+  lowKickYOffset: -0.5
   stunDuration: 0.8
+  canBeStunned: 1
+  canUseHeavyAttack: 0
+  canUseLowKick: 0
   projectilePrefab: {fileID: 8154993726608017182, guid: f8f6aef2a278d81e29e8df58ee971eb7, type: 3}
   shootPoint: {fileID: 5361965437410091394}
   shootOffset: 0.8
   spriteRenderer: {fileID: 8115144961330365562}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
   hasDetectedPlayer: 0
   EnemyDirection: 0
 --- !u!70 &3303320205171351078
