@@ -6,7 +6,6 @@ public class AudioManagerPlayer : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource sfxSource;
-    [SerializeField] private AudioSource musicSource;
 
     [Header("SFX Clips")]
     public AudioClip footstep;
@@ -17,7 +16,6 @@ public class AudioManagerPlayer : MonoBehaviour
     public AudioClip die;
     public AudioClip damage;
 
-    [Range(0f, 1f)] public float musicVolume = 1f;
     [Range(0f, 1f)] public float soundVolume = 1f;
     
     public float minPlayTime = 5f;
@@ -56,15 +54,7 @@ public class AudioManagerPlayer : MonoBehaviour
         if (clip == null) return;
         sfxSource.PlayOneShot(clip);
     }
-
-    // 🎵 Música
-    public void PlayMusic(AudioClip clip, bool loop = true)
-    {
-        if (clip == null) return;
-        musicSource.clip = clip;
-        musicSource.loop = loop;
-        musicSource.Play();
-    }
+    
     public void PlayWalk()
     {
             if (!sfxSource.isPlaying)
@@ -80,11 +70,6 @@ public class AudioManagerPlayer : MonoBehaviour
         if (sfxSource.isPlaying)
             sfxSource.Stop();
     }
-    public void SetMusicVolume(float value)
-    {
-        musicVolume = value;
-        musicSource.volume = musicVolume;
-    }
 
     public void SetSoundVolume(float value)
     {
@@ -95,7 +80,6 @@ public class AudioManagerPlayer : MonoBehaviour
 
     private void ApplyVolumes()
     {
-        musicSource.volume = musicVolume;
         sfxSource.volume = soundVolume;
     }
 }

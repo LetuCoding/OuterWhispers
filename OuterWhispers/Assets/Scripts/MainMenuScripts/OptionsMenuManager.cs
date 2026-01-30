@@ -69,10 +69,6 @@ public class OptionsMenuManager : MonoBehaviour
         float vol = evt.newValue / 100f;
         if (AudioManagerMenu.Instance != null)
             AudioManagerMenu.Instance.SetMusicVolume(vol);
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.SetMusicVolume(vol);
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.SetMusicVolume(vol);
     }
     private void OnCloseClicked()
     {

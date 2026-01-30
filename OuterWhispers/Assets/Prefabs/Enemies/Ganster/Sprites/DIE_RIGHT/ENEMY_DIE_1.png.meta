@@ -142,12 +142,12 @@ TextureImporter:
       name: ENEMY_DIE_1_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 0
         y: 2
-        width: 28
-        height: 35
+        width: 47
+        height: 46
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 73eaadb124e34ec4d85dc16950c7cabb
     internalID: 0
     vertices: []
     indices: 

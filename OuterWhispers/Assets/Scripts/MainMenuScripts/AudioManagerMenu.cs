@@ -13,6 +13,7 @@ public class AudioManagerMenu : MonoBehaviour
     [Header("SFX Clips")]
     public AudioClip rain;
     public AudioClip menuMusic;
+    public AudioClip introMusic;
     public AudioClip clickSound;
 
     [Range(0f, 1f)] public float musicVolume = 1f;
@@ -65,6 +66,11 @@ public class AudioManagerMenu : MonoBehaviour
         rainSource.clip = clip;
         rainSource.loop = loop;
         rainSource.Play();
+    }
+
+    public void StopRain()
+    {
+        rainSource.Stop();
     }
     
     public void SetMusicVolume(float value)

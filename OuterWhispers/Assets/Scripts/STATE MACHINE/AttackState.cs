@@ -37,7 +37,7 @@ public class AttackState : PlayerState
                
         Vector3 newPosition = new Vector3(Player._lastInput * 0.3f, 0, 0);
         Player.attackPoint.transform.localPosition = newPosition;
-        
+        Player.attackPoint.localScale = new Vector3(Player.stats.attackRange.x, Player.stats.attackRange.y, 0);
         Player.attackPoint.gameObject.SetActive(true);
  
     }

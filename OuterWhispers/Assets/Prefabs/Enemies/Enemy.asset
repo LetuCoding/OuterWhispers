@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce720a22b4714131b5586826fff3fa2, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  speed: 3
+  speed: 2.5
   detectionDistance: 5
   patrolWaitTime: 3
   maxHealth: 100
-  attackRange: {x: 1.1, y: 0.7}
+  attackRange: {x: 1, y: 0.7}
   attackDamage: 20
   attackCooldown: 1
