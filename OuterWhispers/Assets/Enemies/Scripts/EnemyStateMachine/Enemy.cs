@@ -73,7 +73,8 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         health = GetComponent<EnemyHealth>();
 
         StateMachine = new EnemyStateMachine();
-        
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
         PatrolState = new EnemyPatrolState(StateMachine, this);
         ChaseState = new EnemyChaseState(StateMachine, this);
         MeleeState = new EnemyMeleeState(StateMachine, this);

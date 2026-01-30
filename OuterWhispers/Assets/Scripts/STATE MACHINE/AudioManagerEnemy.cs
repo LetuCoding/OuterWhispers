@@ -13,11 +13,11 @@ public class AudioManagerEnemy : MonoBehaviour
     public AudioClip damage;
     public AudioClip dead;
     public AudioClip chains;
-
+    public AudioClip smash;
 
     [Range(0f, 1f)] public float soundVolume = 1f;
     
-    public float minPlayTime = 5f;
+    public float soundPitch = 1f;
 
     private float loopTimer;
 
@@ -48,7 +48,7 @@ public class AudioManagerEnemy : MonoBehaviour
     // 🔊 Reproduce un efecto
     public void PlaySFX(AudioClip clip)
     {
-        sfxSource.pitch = 1.0f;
+        sfxSource.pitch = soundPitch;
         if (clip == null) return;
         sfxSource.PlayOneShot(clip);
     }

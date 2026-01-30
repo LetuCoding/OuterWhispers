@@ -23,10 +23,7 @@ public class EnemyHeavyAttackState : EnemyState
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
         if (isPlayerRight) enemy.animator.Play("Heavy_Attack_Right");
         else enemy.animator.Play("Heavy_Attack_Left");
-
         
-        enemy.SetColor(new Color(1f, 0.5f, 0f));
-
         if (enemy.meleeHitbox != null) enemy.meleeHitbox.SetActive(false);
     }
 
