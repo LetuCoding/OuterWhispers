@@ -312,7 +312,7 @@ MonoBehaviour:
   fadePanel: {fileID: 988620408}
   fadeText: {fileID: 1301606626}
   screenFadeDuration: 3
-  textFadeDuration: 1
+  textFadeDuration: 3
   textHoldTime: 3
   texts:
   - Chicago \n 1902 \n Febaruary 21
@@ -668,7 +668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &774980705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,7 +1628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1944588233
 MonoBehaviour:
   m_ObjectHideFlags: 0

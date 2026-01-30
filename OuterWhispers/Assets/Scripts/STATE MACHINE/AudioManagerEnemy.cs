@@ -12,8 +12,9 @@ public class AudioManagerEnemy : MonoBehaviour
     public AudioClip shoot;
     public AudioClip damage;
     public AudioClip dead;
+    public AudioClip chains;
 
-    [Range(0f, 1f)] public float musicVolume = 1f;
+
     [Range(0f, 1f)] public float soundVolume = 1f;
     
     public float minPlayTime = 5f;

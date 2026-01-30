@@ -4,13 +4,10 @@ public class EnemyLowKickState : EnemyState
 {
     private float timer;
     private bool hasPerformedStrike;
-    
     private float chargeDuration = 0.5f;
     private float hitboxActiveTime = 0.3f; 
     private float recoveryTime = 0.7f;
-
     private float damageMultiplier = 1.5f;
-
     private float scaleXMultiplier = 2.2f; 
     private float scaleYMultiplier = 0.5f; 
 
