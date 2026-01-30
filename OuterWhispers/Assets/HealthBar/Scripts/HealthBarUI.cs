@@ -12,7 +12,7 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField] private Gradient colorGradient;
     
     [Range(0f, 1f)]
-    [SerializeField] private float flashThreshold = 0.25f;
+    [SerializeField] private float flashThreshold = 0.3f;
     [SerializeField] private float flashSpeed = 5f;
 
     [SerializeField] private float shakeDuration = 0.2f;
