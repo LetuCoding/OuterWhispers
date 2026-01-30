@@ -632,10 +632,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 483656240547558329, guid: d689d91cc7a81669e9d9194855088943, type: 3}
-      propertyPath: canShoot
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 483656240547558329, guid: d689d91cc7a81669e9d9194855088943, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1567009071701667761}
@@ -695,22 +691,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7851233543133550522, guid: d689d91cc7a81669e9d9194855088943, type: 3}
-      propertyPath: dead
-      value: 
-      objectReference: {fileID: 8300000, guid: 44712f855edf4afb8a9ed2169d89bf72, type: 3}
-    - target: {fileID: 7851233543133550522, guid: d689d91cc7a81669e9d9194855088943, type: 3}
-      propertyPath: damage
-      value: 
-      objectReference: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
-    - target: {fileID: 7851233543133550522, guid: d689d91cc7a81669e9d9194855088943, type: 3}
-      propertyPath: soundPitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8017884205538869988, guid: d689d91cc7a81669e9d9194855088943, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 7f3a205b363668b57806bf6627e8fc36, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1076,14 +1056,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1026000243957677667, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1026000243957677667, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1026000243957677667, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.42
       objectReference: {fileID: 0}
@@ -1123,46 +1095,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1400164201022462372, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1400164201022462372, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: m_Color.g
-      value: 0.29803923
-      objectReference: {fileID: 0}
-    - target: {fileID: 1400164201022462372, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: m_Color.r
-      value: 0.1882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 3368901906604306564, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: smash
-      value: 
-      objectReference: {fileID: 8300000, guid: 5df85fbb00336a2d7aa97a2bcd12d459, type: 3}
-    - target: {fileID: 3368901906604306564, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: chains
-      value: 
-      objectReference: {fileID: 8300000, guid: b99f5f9d19da49380b531e1d6649a8de, type: 3}
-    - target: {fileID: 3368901906604306564, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: soundPitch
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5576422638798923847, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: originalColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5576422638798923847, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: originalColor.b
-      value: 0.019935878
-      objectReference: {fileID: 0}
-    - target: {fileID: 5576422638798923847, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: originalColor.g
-      value: 0.3018868
-      objectReference: {fileID: 0}
-    - target: {fileID: 5576422638798923847, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: originalColor.r
-      value: 0.19850479
-      objectReference: {fileID: 0}
     - target: {fileID: 5576422638798923847, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
       propertyPath: playerTransform
       value: 
@@ -1175,10 +1107,6 @@ PrefabInstance:
       propertyPath: 'waypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 109865194}
-    - target: {fileID: 7956981050505273547, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: ff0543625aea423e7b08e1e28657d7a3, type: 2}
     - target: {fileID: 8564354479509007166, guid: b0ca35a099e6ab5de8a79167419996a6, type: 3}
       propertyPath: m_Name
       value: Enemy_Grunt
