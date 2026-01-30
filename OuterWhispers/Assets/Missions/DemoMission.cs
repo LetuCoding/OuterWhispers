@@ -1,3 +1,4 @@
+using System;
 using InventoryScripts;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class DemoMission : MonoBehaviour
     [SerializeField] private ItemData keyPart2;
     [SerializeField] private ItemData keyPart3;
     [SerializeField] private ItemData combinedItem;
-
+    [SerializeField] private GameObject door;
     private bool combined;
 
     private void OnEnable()
@@ -44,6 +45,7 @@ public class DemoMission : MonoBehaviour
 
     void RemoveItem(Inventory inventory, ItemData item)
     {
+        
         foreach (var slot in inventory.items)
         {
             if (slot.item == item)
@@ -53,4 +55,14 @@ public class DemoMission : MonoBehaviour
             }
         }
     }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player") && combined)
+        {
+            door.SetActive(false);
+        }
+    }
+
+    
 }
