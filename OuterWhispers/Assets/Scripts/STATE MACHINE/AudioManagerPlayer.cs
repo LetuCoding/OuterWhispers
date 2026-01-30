@@ -13,7 +13,13 @@ public class AudioManagerPlayer : MonoBehaviour
     public AudioClip dash;
     public AudioClip jump;
     public AudioClip slide;
+    public AudioClip punch;
+    public AudioClip die;
+    public AudioClip damage;
 
+    [Range(0f, 1f)] public float musicVolume = 1f;
+    [Range(0f, 1f)] public float soundVolume = 1f;
+    
     public float minPlayTime = 5f;
 
     private float loopTimer;
@@ -26,6 +32,7 @@ public class AudioManagerPlayer : MonoBehaviour
             return;
         }
 
+        ApplyVolumes();
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -45,6 +52,7 @@ public class AudioManagerPlayer : MonoBehaviour
     // 🔊 Reproduce un efecto
     public void PlaySFX(AudioClip clip)
     {
+        sfxSource.pitch = 1f;
         if (clip == null) return;
         sfxSource.PlayOneShot(clip);
     }
@@ -71,5 +79,23 @@ public class AudioManagerPlayer : MonoBehaviour
     {
         if (sfxSource.isPlaying)
             sfxSource.Stop();
+    }
+    public void SetMusicVolume(float value)
+    {
+        musicVolume = value;
+        musicSource.volume = musicVolume;
+    }
+
+    public void SetSoundVolume(float value)
+    {
+        soundVolume = value;
+        sfxSource.volume = soundVolume;
+
+    }
+
+    private void ApplyVolumes()
+    {
+        musicSource.volume = musicVolume;
+        sfxSource.volume = soundVolume;
     }
 }

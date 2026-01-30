@@ -1,14 +1,17 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using Core.Interfaces;
 using Interfaces;
+using UnityEngine.Events;
 
 public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
 {
     [SerializeField] private PlayerStats stats;
     
     public event Action<float, float> OnHealthChanged;
-    public event Action OnDeath;
+    public UnityEvent OnDeath;
+    public UnityEvent OnDamage;
 
     private float currentHealth;
 
@@ -27,7 +30,11 @@ public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
         currentHealth = Mathf.Clamp(currentHealth, 0, stats.maxHealth);
 
         OnHealthChanged?.Invoke(currentHealth, stats.maxHealth);
-
+        
+        //StartCoroutine(StopTimeOnDamage());
+        
+        OnDamage?.Invoke();
+            
         if (currentHealth <= 0)
         {
             Die();
@@ -41,10 +48,18 @@ public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
         OnHealthChanged?.Invoke(currentHealth, stats.maxHealth);
     }
 
-    private void Die()
+    public void Die()
     {
         OnDeath?.Invoke();
         Debug.Log($"{gameObject.name} ha muerto.");
+    }
+    
+    public IEnumerator StopTimeOnDamage()
+    {
+        Time.timeScale = 0.25f;
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 1;
+        Debug.Log("StopTime.");
     }
     
 }
