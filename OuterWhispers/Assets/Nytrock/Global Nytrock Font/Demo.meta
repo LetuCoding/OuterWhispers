@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:OuterWhispers/Assets/LevelsAssets/DemoLevel/Pipes/Pipes_0.asset.meta
+guid: cd87b5c542e1fd94cb3627da51bb8add
+NativeFormatImporter:
+========
 guid: cd51795bef62c8b48bba5ad4116e6499
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> dev:OuterWhispers/Assets/Nytrock/Global Nytrock Font/Demo.meta
   externalObjects: {}
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
