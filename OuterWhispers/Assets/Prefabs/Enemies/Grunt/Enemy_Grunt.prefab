@@ -174,7 +174,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerEnemy
   sfxSource: {fileID: 3745894351054756296}
-  musicSource: {fileID: 3745894351054756296}
   footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
   shoot: {fileID: 8300000, guid: 60e9eb66651f2a7db9d53a2e48a9fb68, type: 3}
   damage: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
@@ -399,7 +398,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 5
 --- !u!95 &1491320799073332389
 Animator:
   serializedVersion: 7
@@ -458,7 +457,11 @@ MonoBehaviour:
   - {fileID: 0}
   meleeHitbox: {fileID: 4002075207194950034}
   meleeAttackOffset: 0.5
+  lowKickYOffset: -0.5
   stunDuration: 0.8
+  canBeStunned: 1
+  canUseHeavyAttack: 0
+  canUseLowKick: 0
   projectilePrefab: {fileID: 8154993726608017182, guid: f8f6aef2a278d81e29e8df58ee971eb7, type: 3}
   shootPoint: {fileID: 5361965437410091394}
   shootOffset: 0.8
