@@ -249,15 +249,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   sfxSource: {fileID: 813753300955191762}
-  musicSource: {fileID: 813753300955191762}
   footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
   dash: {fileID: 8300000, guid: f971ded5a0a1c43db87331883c93e071, type: 3}
   jump: {fileID: 8300000, guid: 2558a622f57554193958bf08e647d56e, type: 3}
   slide: {fileID: 8300000, guid: 9b9d2374eedd4aa27960942adce22720, type: 3}
   punch: {fileID: 8300000, guid: 60e9eb66651f2a7db9d53a2e48a9fb68, type: 3}
-  die: {fileID: 0}
-  damage: {fileID: 0}
-  musicVolume: 1
+  die: {fileID: 8300000, guid: 44712f855edf4afb8a9ed2169d89bf72, type: 3}
+  damage: {fileID: 8300000, guid: 5b24af6220de802aabac259142ba6356, type: 3}
   soundVolume: 1
   minPlayTime: 5
 --- !u!1 &5032333072931698672
@@ -584,10 +582,34 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: bc2317df6dacd75e9adf0d97e4307f55, type: 2}
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3018897621388535784}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Die
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3018897621388535784}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: TakeDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4271518122542823904
 MonoBehaviour:
   m_ObjectHideFlags: 0

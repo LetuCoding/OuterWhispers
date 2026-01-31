@@ -147,9 +147,10 @@ MonoBehaviour:
   shoot: {fileID: 8300000, guid: 60e9eb66651f2a7db9d53a2e48a9fb68, type: 3}
   damage: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
   dead: {fileID: 8300000, guid: 553eb7fea8068a77eb3a2c97f41c4028, type: 3}
-  musicVolume: 1
+  chains: {fileID: 8300000, guid: b99f5f9d19da49380b531e1d6649a8de, type: 3}
+  smash: {fileID: 8300000, guid: 5df85fbb00336a2d7aa97a2bcd12d459, type: 3}
   soundVolume: 1
-  minPlayTime: 5
+  soundPitch: 0.5
 --- !u!1 &4814686548004517802
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +337,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.42, y: -4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 64329515503377223}
@@ -393,7 +394,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: -8479810848188833700, guid: a6483748ab0c56725baca450125877fd, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.1882353, g: 0.29803923, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -440,7 +441,7 @@ Animator:
   m_GameObject: {fileID: 8564354479509007166}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c4c992356b9a58713bcc09ed4bf721cd, type: 2}
+  m_Controller: {fileID: 9100000, guid: ff0543625aea423e7b08e1e28657d7a3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -499,6 +500,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1400164201022462372}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
+  originalColor: {r: 0.19850479, g: 0.3018868, b: 0.019935878, a: 1}
   hasDetectedPlayer: 0
   EnemyDirection: 0
 --- !u!70 &7021948805454137875
