@@ -1,23 +1,19 @@
 using UnityEngine;
 
-public class AudioManagerMenu : MonoBehaviour
+public class AudioManagerLevel : MonoBehaviour
 {
-    public static AudioManagerMenu Instance;
+    public static AudioManagerLevel Instance;
 
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource rainSource;
-
-
+    [SerializeField] private AudioSource ambienceSource;
+    
     [Header("SFX Clips")]
-    public AudioClip rain;
-    public AudioClip menuMusic;
-    public AudioClip introMusic;
-    public AudioClip clickSound;
+    public AudioClip musicAmbience;
+    public AudioClip musicBoss;
+    public AudioClip ambienceSound;
 
     [Range(0f, 1f)] public float musicVolume = 0.5f;
-    [Range(0f, 1f)] public float soundVolume = 0.5f;
     
     public float minPlayTime = 5f;
 
@@ -33,20 +29,14 @@ public class AudioManagerMenu : MonoBehaviour
 
         Instance = this;
         ApplyVolumes();
+        PlayMusic(musicAmbience);
+        PlayAmbience(ambienceSound);
     }
     private void Update()
     {
         // Contamos hacia atrás el tiempo mínimo que debe sonar
         if (loopTimer > 0f)
             loopTimer -= Time.deltaTime;
-    }
-
-    // 🔊 Reproduce un efecto
-    public void PlaySFX(AudioClip clip)
-    {
-        sfxSource.pitch = 1.0f;
-        if (clip == null) return;
-        sfxSource.PlayOneShot(clip);
     }
 
     // 🎵 Música
@@ -58,18 +48,22 @@ public class AudioManagerMenu : MonoBehaviour
         musicSource.Play();
     }
     
-    //Lluvia
-    public void PlayRain(AudioClip clip, bool loop = true)
+    public void PlayAmbience(AudioClip clip, bool loop = true)
     {
         if (clip == null) return;
-        rainSource.clip = clip;
-        rainSource.loop = loop;
-        rainSource.Play();
+        ambienceSource.clip = clip;
+        ambienceSource.loop = loop;
+        ambienceSource.Play();
     }
 
-    public void StopRain()
+    public void StopMusic()
     {
-        rainSource.Stop();
+        musicSource.Stop();
+    }
+
+    public void StopAmbience()
+    {
+        ambienceSource.Stop();
     }
     
     public void SetMusicVolume(float value)
@@ -77,20 +71,10 @@ public class AudioManagerMenu : MonoBehaviour
         musicVolume = value;
         musicSource.volume = musicVolume;
     }
-
-    public void SetSoundVolume(float value)
-    {
-        soundVolume = value;
-        sfxSource.volume = soundVolume;
-        rainSource.volume = soundVolume;
-
-    }
+    
 
     private void ApplyVolumes()
     {
         musicSource.volume = musicVolume;
-        sfxSource.volume = soundVolume;
-        rainSource.volume = soundVolume;
     }
-    
 }

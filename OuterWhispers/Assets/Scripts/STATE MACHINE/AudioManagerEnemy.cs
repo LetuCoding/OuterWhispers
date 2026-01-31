@@ -15,7 +15,7 @@ public class AudioManagerEnemy : MonoBehaviour
     public AudioClip chains;
     public AudioClip smash;
 
-    [Range(0f, 1f)] public float soundVolume = 1f;
+    [Range(0f, 1f)] public float soundVolume = 0.5f;
     
     public float soundPitch = 1f;
 
