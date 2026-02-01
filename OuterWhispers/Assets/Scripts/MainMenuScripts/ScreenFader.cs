@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScreenFader : MonoBehaviour
@@ -64,9 +65,8 @@ public class ScreenFader : MonoBehaviour
 
             fadeText.gameObject.SetActive(false);
         }
-
-        // 3) (Opcional) Volver desde negro
-        // yield return FadePanelTo(0f, screenFadeDuration);
+        yield return new WaitForSecondsRealtime(textHoldTime);
+        SceneManager.LoadScene("DemoLevel");
     }
 
     private IEnumerator FadePanelTo(float targetAlpha, float duration)

@@ -81,7 +81,6 @@ public class LoadMenuManager : MonoBehaviour
     {
         if (AudioManagerMenu.Instance != null)
             AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
-        SceneManager.LoadScene("");
     }
 
 
