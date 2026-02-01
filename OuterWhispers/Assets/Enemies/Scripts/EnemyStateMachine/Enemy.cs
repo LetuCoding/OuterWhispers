@@ -58,6 +58,8 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public SpriteRenderer spriteRenderer;
     public Color hitColor = Color.red;
     public float flashDuration = 0.1f;
+    public Color originalColor;
+    
 
     #region State Variables
     public bool hasDetectedPlayer;
@@ -71,7 +73,8 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         health = GetComponent<EnemyHealth>();
 
         StateMachine = new EnemyStateMachine();
-        
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color;
         PatrolState = new EnemyPatrolState(StateMachine, this);
         ChaseState = new EnemyChaseState(StateMachine, this);
         MeleeState = new EnemyMeleeState(StateMachine, this);
@@ -178,7 +181,7 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 
     public void ResetColor()
     {
-        if (spriteRenderer != null) spriteRenderer.color = Color.white;
+        if (spriteRenderer != null) spriteRenderer.color = originalColor;
     }
     
     public void TriggerStun()
@@ -205,7 +208,6 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 
     private System.Collections.IEnumerator FlashRoutine()
     {
-        Color originalColor = Color.white;
         spriteRenderer.color = hitColor;
         yield return new WaitForSeconds(flashDuration);
         spriteRenderer.color = originalColor;

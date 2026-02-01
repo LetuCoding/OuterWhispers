@@ -4,13 +4,10 @@ public class EnemyLowKickState : EnemyState
 {
     private float timer;
     private bool hasPerformedStrike;
-    
     private float chargeDuration = 0.5f;
     private float hitboxActiveTime = 0.3f; 
     private float recoveryTime = 0.7f;
-
     private float damageMultiplier = 1.5f;
-
     private float scaleXMultiplier = 2.2f; 
     private float scaleYMultiplier = 0.5f; 
 
@@ -25,11 +22,9 @@ public class EnemyLowKickState : EnemyState
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
         enemy.EnemyDirection = isPlayerRight;
         
-        if (isPlayerRight) enemy.animator.Play("Attack_Right"); 
-        else enemy.animator.Play("Attack_Left");
+        if (isPlayerRight) enemy.animator.Play("Smash_Attack_Right"); 
+        else enemy.animator.Play("Smash_Attack_Left");
         
-        enemy.SetColor(new Color(0.8f, 0.8f, 0f));
-
         if (enemy.meleeHitbox != null) enemy.meleeHitbox.SetActive(false);
     }
 
@@ -73,11 +68,11 @@ public class EnemyLowKickState : EnemyState
     private void PerformStrike()
     {
         if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);
+            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.smash);
         
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
-        if (isPlayerRight) enemy.animator.Play("Attack_Right");
-        else enemy.animator.Play("Attack_Left");
+        if (isPlayerRight) enemy.animator.Play("Smash_Attack_Right_Execution");
+        else enemy.animator.Play("Smash_Attack_Left_Execution");
         
         if (enemy.meleeHitbox != null)
         {
