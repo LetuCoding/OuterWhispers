@@ -12,24 +12,18 @@ public class AudioManagerEnemy : MonoBehaviour
     public AudioClip shoot;
     public AudioClip damage;
     public AudioClip dead;
+    public AudioClip chains;
+    public AudioClip smash;
 
-    [Range(0f, 1f)] public float musicVolume = 1f;
-    [Range(0f, 1f)] public float soundVolume = 1f;
+    [Range(0f, 1f)] public float soundVolume = 0.5f;
     
-    public float minPlayTime = 5f;
+    public float soundPitch = 1f;
 
     private float loopTimer;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        ApplyVolumes();
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+     
     }
     private void Update()
     {
@@ -47,7 +41,7 @@ public class AudioManagerEnemy : MonoBehaviour
     // 🔊 Reproduce un efecto
     public void PlaySFX(AudioClip clip)
     {
-        sfxSource.pitch = 1.0f;
+        sfxSource.pitch = soundPitch;
         if (clip == null) return;
         sfxSource.PlayOneShot(clip);
     }

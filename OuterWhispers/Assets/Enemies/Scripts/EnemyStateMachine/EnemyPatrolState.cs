@@ -74,16 +74,25 @@ public class EnemyPatrolState : EnemyState
                 lastDirectionRight = true;
                 enemy.animator.Play("Walk_Right");
                 
-                if (AudioManagerEnemy.Instance != null)
-                    AudioManagerEnemy.Instance.PlayWalk();
+              
+               if (enemy.audioManager != null)
+               {
+                    
+                   enemy.audioManager.PlayWalk();
+               }
             }
             else
             {
                 lastDirectionRight = false;
                 enemy.animator.Play("Walk_Left");
 
-                if (AudioManagerEnemy.Instance != null)
-                    AudioManagerEnemy.Instance.PlayWalk();
+                /**if (AudioManagerEnemy.Instance != null)
+                    AudioManagerEnemy.Instance.PlayWalk();*/
+                if (enemy.audioManager != null)
+                {
+                    
+                enemy.audioManager.PlayWalk();
+                }
             }
         }
         
@@ -101,8 +110,8 @@ public class EnemyPatrolState : EnemyState
 
     private void StartWaiting()
     {
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.StopWalk();
+        if (enemy.audioManager != null)
+            enemy.audioManager.StopWalk();
 
         if (lastDirectionRight == true)
         {
@@ -119,7 +128,7 @@ public class EnemyPatrolState : EnemyState
     
     public override void Exit()
     {
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.StopWalk();
+        if (enemy.audioManager != null)
+            enemy.audioManager.StopWalk();
     }
 }

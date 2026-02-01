@@ -16,8 +16,8 @@ public class AudioManagerMenu : MonoBehaviour
     public AudioClip introMusic;
     public AudioClip clickSound;
 
-    [Range(0f, 1f)] public float musicVolume = 1f;
-    [Range(0f, 1f)] public float soundVolume = 1f;
+    [Range(0f, 1f)] public float musicVolume = 0.5f;
+    [Range(0f, 1f)] public float soundVolume = 0.5f;
     
     public float minPlayTime = 5f;
 
@@ -33,7 +33,6 @@ public class AudioManagerMenu : MonoBehaviour
 
         Instance = this;
         ApplyVolumes();
-        DontDestroyOnLoad(gameObject);
     }
     private void Update()
     {
