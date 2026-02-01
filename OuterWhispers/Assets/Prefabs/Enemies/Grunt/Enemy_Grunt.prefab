@@ -425,7 +425,7 @@ Animator:
   m_GameObject: {fileID: 8300790511472205849}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c4c992356b9a58713bcc09ed4bf721cd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 06d45e763ac8116c39be61e90b08f0d4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -485,6 +485,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8115144961330365562}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
   hasDetectedPlayer: 0
   EnemyDirection: 0
 --- !u!70 &3303320205171351078

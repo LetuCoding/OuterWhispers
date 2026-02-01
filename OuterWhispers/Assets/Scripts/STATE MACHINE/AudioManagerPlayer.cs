@@ -16,7 +16,7 @@ public class AudioManagerPlayer : MonoBehaviour
     public AudioClip die;
     public AudioClip damage;
 
-    [Range(0f, 1f)] public float soundVolume = 1f;
+    [Range(0f, 1f)] public float soundVolume = 0.5f;
     
     public float minPlayTime = 5f;
 

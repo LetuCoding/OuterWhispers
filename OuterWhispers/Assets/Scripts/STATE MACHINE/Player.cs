@@ -77,7 +77,9 @@ public class Player : MonoBehaviour, IEffectTarget
     public WallSlideState WallSlideState { get; private set; }
 
     public DashState DashState { get; private set; }
+    public event System.Action OnDeath;
 
+    private bool _isDead;
 
     //=====================================================================================================
     // PUBLIC CONFIGURATION
@@ -127,6 +129,7 @@ public class Player : MonoBehaviour, IEffectTarget
     // Update is called once per frame
     void Update()
     {
+        if (_isDead) return;
         //Suscribimos ciertos checks al inputActions del jugador
         jumpPressed = _playerInputActions.Player.Jump.WasPressedThisFrame();
         jumpReleased = _playerInputActions.Player.Jump.WasReleasedThisFrame();
@@ -145,6 +148,7 @@ public class Player : MonoBehaviour, IEffectTarget
 
     void FixedUpdate()
     {
+        if (_isDead) return;
 
         // Para evitar conflictos de físicas, si estamos dasheando no aplicamos movimiento y volvemos.
         if (_isDashing)
@@ -277,16 +281,47 @@ public class Player : MonoBehaviour, IEffectTarget
 
     public void TakeDamage()
     {
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.damage);
+
         StartCoroutine(HitEffect());
 ;
+    }
+    public void Die()
+    {
+        if (_isDead) return;
+        _isDead = true;
+        if (_lastInput == 1)
+        {
+            _animator.Play("Die_Right");
+        }
+        else
+        {
+            _animator.Play("Die_Left");
+        }
+        FreezePlayer();
+        if (AudioManagerPlayer.Instance != null)
+            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.die);
+        
+    }
+    private void FreezePlayer()
+    {
+        // Desactiva lectura de input
+        if (_playerInputActions != null)
+            _playerInputActions.Disable();
+
+        // Para el movimiento
+        if (_rigidbody2D != null)
+        {
+            _rigidbody2D.linearVelocity = Vector2.zero;
+            _rigidbody2D.angularVelocity = 0f;
+            _rigidbody2D.bodyType = RigidbodyType2D.Static; // opcional: congela total
+        }
     }
 
     private IEnumerator HitEffect()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
-
+        if (AudioManagerPlayer.Instance != null)
+            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.damage);
         if (sr != null)
             sr.color = Color.red;
         
