@@ -7,11 +7,9 @@ public class EnemyDeathState : EnemyState
     public override void Enter()
     {
         enemy.StopMovement();
-        bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
-        enemy.EnemyDirection = isPlayerRight;
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.dead);
-        if (isPlayerRight)
+
+       
+        if (enemy.EnemyDirection == true)
         {
             enemy.animator.Play("Death_Right"); 
         }

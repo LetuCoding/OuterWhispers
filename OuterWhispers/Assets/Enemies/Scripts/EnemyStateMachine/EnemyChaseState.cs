@@ -46,15 +46,22 @@ public class EnemyChaseState : EnemyState
         {
             enemy.animator.Play("Walk_Right");
             
-            if (AudioManagerEnemy.Instance != null) 
-                AudioManagerEnemy.Instance.PlayWalk();
+            if (enemy.audioManager != null)
+            {
+                    
+                enemy.audioManager.PlayWalk();
+            }
+          
         }
         else
         {
             enemy.animator.Play("Walk_Left");
             
-            if (AudioManagerEnemy.Instance != null) 
-                AudioManagerEnemy.Instance.PlayWalk();
+            if (enemy.audioManager != null)
+            {
+                    
+                enemy.audioManager.PlayWalk();
+            }
         }
         
         if (enemy.meleeHitbox != null)
@@ -66,7 +73,10 @@ public class EnemyChaseState : EnemyState
 
     public override void Exit()
     {
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.StopWalk();
+        if (enemy.audioManager != null)
+        {
+                    
+            enemy.audioManager.StopWalk();
+        }
     }
 }
