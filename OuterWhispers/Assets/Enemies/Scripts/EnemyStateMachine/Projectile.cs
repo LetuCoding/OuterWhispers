@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject.TryGetComponent(out IDamageable damageableTarget))
         {
-            damageableTarget.TakeDamage(20f); 
+            damageableTarget.TakeDamage(10f); 
         }
         Destroy(gameObject);
     }

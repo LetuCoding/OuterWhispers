@@ -13,13 +13,16 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private bool canPatrol = true;
     [SerializeField] private bool canChase = true;
     [SerializeField] private bool canShoot = false;
-
+    
+    
+    
     private bool hasDetectedPlayer = false;
 
     private void Start()
     {
         //if (canPatrol && patrolBehaviour != null)
             //stateMachine.ChangeState(patrolBehaviour);
+          
     }
 
     private void Update()
