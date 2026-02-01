@@ -22,14 +22,7 @@ public class AudioManagerEnemy : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        ApplyVolumes();
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+     
     }
     private void Update()
     {

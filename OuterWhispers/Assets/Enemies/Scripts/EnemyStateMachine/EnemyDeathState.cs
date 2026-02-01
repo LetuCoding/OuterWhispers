@@ -8,8 +8,7 @@ public class EnemyDeathState : EnemyState
     {
         enemy.StopMovement();
 
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.dead);
+       
         if (enemy.EnemyDirection == true)
         {
             enemy.animator.Play("Death_Right"); 

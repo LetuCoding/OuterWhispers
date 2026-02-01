@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4822243778876344029}
   - component: {fileID: 1752815328110798724}
-  - component: {fileID: 3368901906604306564}
   m_Layer: 0
   m_Name: Audio Source
   m_TagString: Untagged
@@ -55,9 +54,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -65,23 +64,59 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.05
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -20.007967
+      outSlope: -20.007967
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.1
+      value: 0.5
+      inSlope: -5.0019917
+      outSlope: -5.0019917
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.2
+      value: 0.25
+      inSlope: -1.2504979
+      outSlope: -1.2504979
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.4
+      value: 0.125
+      inSlope: -0.31262448
+      outSlope: -0.31262448
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.8
+      value: 0.0625
+      inSlope: -0.07815612
+      outSlope: -0.07815612
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9734192
+      value: 0.0030639656
+      inSlope: -0.05001994
+      outSlope: -0.05001994
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -90,7 +125,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -130,26 +165,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3368901906604306564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3592085392557530187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4891c4a4ff5f495a1b77b6d8a796e08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerEnemy
-  sfxSource: {fileID: 1752815328110798724}
-  footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
-  shoot: {fileID: 8300000, guid: 60e9eb66651f2a7db9d53a2e48a9fb68, type: 3}
-  damage: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
-  dead: {fileID: 8300000, guid: 553eb7fea8068a77eb3a2c97f41c4028, type: 3}
-  musicVolume: 1
-  soundVolume: 1
-  minPlayTime: 5
 --- !u!1 &4814686548004517802
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +334,7 @@ GameObject:
   - component: {fileID: 2738201051470901867}
   - component: {fileID: 5576422638798923847}
   - component: {fileID: 7021948805454137875}
+  - component: {fileID: 9148572087756377554}
   m_Layer: 0
   m_Name: Enemy Final Boss
   m_TagString: Untagged
@@ -479,6 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   stats: {fileID: 11400000, guid: 754186b0755092617bec7dccc2659c76, type: 2}
+  audioManager: {fileID: 9148572087756377554}
   playerTransform: {fileID: 0}
   canPatrol: 1
   canChase: 1
@@ -538,3 +555,23 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 1.3}
   m_Direction: 0
+--- !u!114 &9148572087756377554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8564354479509007166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4891c4a4ff5f495a1b77b6d8a796e08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerEnemy
+  sfxSource: {fileID: 1752815328110798724}
+  footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
+  shoot: {fileID: 8300000, guid: 60e9eb66651f2a7db9d53a2e48a9fb68, type: 3}
+  damage: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
+  dead: {fileID: 8300000, guid: 553eb7fea8068a77eb3a2c97f41c4028, type: 3}
+  musicVolume: 1
+  soundVolume: 1
+  minPlayTime: 5
