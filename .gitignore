@@ -12,6 +12,12 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Unity editor temp / layout files
+*.dwlt
+*.dwlt.meta
+*.wlt
+*.layout
+
 # Unity Library (project inside subfolder)
 OuterWhispers/[Ll]ibrary/
 OuterWhispers/[Tt]emp/

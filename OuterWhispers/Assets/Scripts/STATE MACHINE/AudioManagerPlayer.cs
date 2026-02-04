@@ -1,0 +1,85 @@
+using UnityEngine;
+
+public class AudioManagerPlayer : MonoBehaviour
+{
+    public static AudioManagerPlayer Instance;
+
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource sfxSource;
+
+    [Header("SFX Clips")]
+    public AudioClip footstep;
+    public AudioClip dash;
+    public AudioClip jump;
+    public AudioClip slide;
+    public AudioClip punch;
+    public AudioClip die;
+    public AudioClip damage;
+
+    [Range(0f, 1f)] public float soundVolume = 1f;
+    
+    public float minPlayTime = 5f;
+
+    private float loopTimer;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        ApplyVolumes();
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+    private void Update()
+    {
+        // Contamos hacia atrás el tiempo mínimo que debe sonar
+        if (loopTimer > 0f)
+            loopTimer -= Time.deltaTime;
+
+        // Si NO queremos caminar y ya pasó el mínimo, paramos el loop
+        if (!footstep && loopTimer <= 0f && sfxSource.isPlaying)
+        {
+            sfxSource.Stop();
+        }
+    }
+
+    // 🔊 Reproduce un efecto
+    public void PlaySFX(AudioClip clip)
+    {
+        sfxSource.pitch = 1f;
+        if (clip == null) return;
+        sfxSource.PlayOneShot(clip);
+    }
+    
+    public void PlayWalk()
+    {
+            if (!sfxSource.isPlaying)
+        {
+            sfxSource.loop = true;
+            sfxSource.pitch = 0.5f;
+            sfxSource.Play();
+        }
+    }
+
+    public void StopWalk()
+    {
+        if (sfxSource.isPlaying)
+            sfxSource.Stop();
+    }
+
+    public void SetSoundVolume(float value)
+    {
+        soundVolume = value;
+        sfxSource.volume = soundVolume;
+
+    }
+
+    private void ApplyVolumes()
+    {
+        sfxSource.volume = soundVolume;
+    }
+}
