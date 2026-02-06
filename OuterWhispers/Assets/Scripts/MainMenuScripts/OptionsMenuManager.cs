@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using Zenject;
 
 public class OptionsMenuManager : MonoBehaviour
 {
@@ -9,8 +10,16 @@ public class OptionsMenuManager : MonoBehaviour
     public GameObject UiOptions;
     private SliderInt sliderSound;
     private SliderInt sliderMusic;
+    private IAudioSettings _audioSettings;
+    
+    [Inject]
+    public void Construct(IAudioSettings audioSettings)
+    {
+        _audioSettings = audioSettings;
+    }
     void Start()
     {
+        _audioSettings.Play();
         UiOptions.SetActive(false);
     }
     void OnEnable()
@@ -77,6 +86,7 @@ public class OptionsMenuManager : MonoBehaviour
         if (AudioManagerMenu.Instance != null)
             AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
         UiOptions.SetActive(false);
+        
 
     }
 }
