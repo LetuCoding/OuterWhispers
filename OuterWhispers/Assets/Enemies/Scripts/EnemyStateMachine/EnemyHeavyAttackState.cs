@@ -68,8 +68,7 @@ public class EnemyHeavyAttackState : EnemyState
     {
         if (enemy.audioManager != null)
         {
-                    
-            enemy.audioManager.PlaySFX(enemy.audioManager.shoot);
+            enemy.audioManager.PlaySFX(enemy.audioManager.chains);
         }
 
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;

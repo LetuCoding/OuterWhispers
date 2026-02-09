@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class AudioManagerEnemy : MonoBehaviour
 {
-    public static AudioManagerEnemy Instance;
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource sfxSource;
@@ -50,6 +49,7 @@ public class AudioManagerEnemy : MonoBehaviour
     {
             if (!sfxSource.isPlaying)
         {
+            sfxSource.clip = footstep;
             sfxSource.loop = true;
             sfxSource.pitch = 0.5f;
             sfxSource.Play();

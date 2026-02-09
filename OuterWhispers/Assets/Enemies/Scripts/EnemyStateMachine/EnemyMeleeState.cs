@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 public class EnemyMeleeState : EnemyState
 {
@@ -10,7 +11,11 @@ public class EnemyMeleeState : EnemyState
     private float attackCooldown; 
 
     public EnemyMeleeState(EnemyStateMachine stateMachine, Enemy enemy) : base(stateMachine, enemy) { }
+    private IAudioSettings _audio;
 
+    [Inject]
+    public void Construct(IAudioSettings audio) => _audio = audio;
+    
     public override void Enter()
     {
         enemy.StopMovement();

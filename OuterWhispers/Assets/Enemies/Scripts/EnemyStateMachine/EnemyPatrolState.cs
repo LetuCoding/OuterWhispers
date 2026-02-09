@@ -30,8 +30,8 @@ public class EnemyPatrolState : EnemyState
             {
                 enemy.hasDetectedPlayer = true;
                 
-                if (AudioManagerEnemy.Instance != null) 
-                    AudioManagerEnemy.Instance.StopWalk();
+                if (enemy.audioManager != null) 
+                    enemy.audioManager.StopWalk();
 
                 if (enemy.canShoot)
                 {

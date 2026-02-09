@@ -1,9 +1,8 @@
 using UnityEngine;
+using Zenject;
 
 public class AudioManagerLevel : MonoBehaviour
 {
-    public static AudioManagerLevel Instance;
-
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource ambienceSource;
@@ -21,13 +20,6 @@ public class AudioManagerLevel : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
         ApplyVolumes();
         PlayMusic(musicAmbience);
         PlayAmbience(ambienceSound);
@@ -68,11 +60,14 @@ public class AudioManagerLevel : MonoBehaviour
     
     public void SetMusicVolume(float value)
     {
-        musicVolume = value;
-        musicSource.volume = musicVolume;
+        musicSource.volume = value;
     }
     
-
+    public void SetSoundVolume(float value)
+    {
+        ambienceSource.volume = value;
+    }
+    
     private void ApplyVolumes()
     {
         musicSource.volume = musicVolume;

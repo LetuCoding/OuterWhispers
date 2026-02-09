@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public EnemyDeathState DeathState { get; private set; }
     public EnemyHeavyAttackState HeavyAttackState { get; private set; }
     public EnemyLowKickState LowKickState { get; private set; }
+
     #endregion
 
     #region Components
@@ -77,6 +78,9 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         StateMachine = new EnemyStateMachine();
         if (spriteRenderer != null)
             originalColor = spriteRenderer.color;
+        PatrolState = new EnemyPatrolState(StateMachine, this);
+        PatrolState = new EnemyPatrolState(StateMachine, this);
+        PatrolState = new EnemyPatrolState(StateMachine, this);
         PatrolState = new EnemyPatrolState(StateMachine, this);
         ChaseState = new EnemyChaseState(StateMachine, this);
         MeleeState = new EnemyMeleeState(StateMachine, this);
