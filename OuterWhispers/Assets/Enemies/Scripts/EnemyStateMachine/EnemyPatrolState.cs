@@ -14,7 +14,7 @@ public class EnemyPatrolState : EnemyState
     {
         isWaiting = false;
         
-        if (enemy.waypoints == null || enemy.waypoints.Length == 0)
+        if (enemy.PatrolZone.waypoints == null)
         {
             Debug.LogError("No hay waypoints asignados en " + enemy.name);
             stateMachine.ChangeState(new EnemyIdleState(stateMachine, enemy));
@@ -53,7 +53,7 @@ public class EnemyPatrolState : EnemyState
             if (waitTimer <= 0)
             {
                 isWaiting = false;
-                currentWaypointIndex = (currentWaypointIndex + 1) % enemy.waypoints.Length;
+                currentWaypointIndex = (currentWaypointIndex + 1) % enemy.PatrolZone.waypoints.Length;
             }
         }
         else
@@ -64,7 +64,7 @@ public class EnemyPatrolState : EnemyState
 
     private void MoveToWaypoint()
     {
-        Transform target = enemy.waypoints[currentWaypointIndex];
+        Transform target = enemy.PatrolZone.waypoints[currentWaypointIndex];
         float dirX = target.position.x - enemy.transform.position.x;
 
         if (Mathf.Abs(dirX) > 0.01f) 
@@ -86,8 +86,7 @@ public class EnemyPatrolState : EnemyState
                 lastDirectionRight = false;
                 enemy.animator.Play("Walk_Left");
 
-                /**if (AudioManagerEnemy.Instance != null)
-                    AudioManagerEnemy.Instance.PlayWalk();*/
+                
                 if (enemy.audioManager != null)
                 {
                     
