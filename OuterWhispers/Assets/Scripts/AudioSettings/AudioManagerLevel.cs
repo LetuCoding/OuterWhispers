@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class AudioManagerLevel : MonoBehaviour
+public class AudioManagerLevel : IAudioManagerLevel
 {
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;

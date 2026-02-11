@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AudioManagerMenu : MonoBehaviour
+public class AudioManagerMenu : IAudioManagerMenu
 {
     public static AudioManagerMenu Instance;
 
@@ -27,7 +27,6 @@ public class AudioManagerMenu : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
             return;
         }
 

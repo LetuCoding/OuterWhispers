@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AudioManagerEnemy : MonoBehaviour
+public class AudioManagerEnemy : IAudioManagerEnemy
 {
 
     [Header("Audio Sources")]

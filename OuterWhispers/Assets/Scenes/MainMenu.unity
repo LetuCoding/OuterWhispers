@@ -844,10 +844,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e40f3edd09c67b5c2bc1de1cbcf4c49e, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1304,16 +1304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f502546ababb3044e860bbfe92819549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManagerMenu
-  sfxSource: {fileID: 1555467445}
-  musicSource: {fileID: 1939788211}
-  rainSource: {fileID: 1016582137}
-  rain: {fileID: 8300000, guid: e40f3edd09c67b5c2bc1de1cbcf4c49e, type: 3}
-  menuMusic: {fileID: 8300000, guid: 9351a70dc5e69c240b3430aaa6cafb6f, type: 3}
-  introMusic: {fileID: 8300000, guid: 34723c87c71309b4abcccc833951de26, type: 3}
-  clickSound: {fileID: 8300000, guid: 4d1251d3584f3534a9287fc24218f233, type: 3}
-  musicVolume: 0.5
-  soundVolume: 0.5
-  minPlayTime: 5
 --- !u!4 &1614008715
 Transform:
   m_ObjectHideFlags: 0
@@ -1531,10 +1521,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 9351a70dc5e69c240b3430aaa6cafb6f, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

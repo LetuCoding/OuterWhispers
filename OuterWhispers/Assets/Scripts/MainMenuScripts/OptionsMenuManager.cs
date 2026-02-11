@@ -11,17 +11,22 @@ public class OptionsMenuManager : MonoBehaviour
     public GameObject UiOptions;
     private SliderInt sliderSound;
     private SliderInt sliderMusic;
-    private IAudioSettings _audioSettings;
+    private IAudioManagerMenu _audioManagerMenu;
+    private IAudioManagerEnemy _audioManagerEnemy;
+    private IAudioManagerLevel _audioManagerLevel;
+    private IAudioManagerPlayer _audioManagerPlayer;
     private bool isPaused = false;
     
     [Inject]
-    public void Construct(IAudioSettings audioSettings)
+    public void Construct(IAudioManagerMenu audioManagerMenu, IAudioManagerEnemy audioManagerEnemy, IAudioManagerLevel audioManagerLevel, IAudioManagerPlayer audioManagerPlayer)
     {
-        _audioSettings = audioSettings;
+        _audioManagerEnemy = audioManagerEnemy;
+        _audioManagerLevel = audioManagerLevel;
+        _audioManagerPlayer = audioManagerPlayer;
+        _audioManagerMenu = audioManagerMenu;
     }
     void Start()
     {
-        _audioSettings.Play();
         UiOptions.SetActive(false);
     }
     void Update()
@@ -82,20 +87,37 @@ public class OptionsMenuManager : MonoBehaviour
     private void OnSliderSoundChanged(ChangeEvent<int> evt)
     {
         float volume = evt.newValue / 100f;
-        if (_audioSettings == null)
-            return;
-        _audioSettings.SetVolumeSFX(volume);
+        if (_audioManagerEnemy != null)
+        {
+            _audioManagerEnemy.SetSoundVolume(volume);
+        }
+        if (_audioManagerLevel != null)
+        {
+            _audioManagerLevel.SetSoundVolume(volume);
+        }
+        if (_audioManagerPlayer != null)
+        {
+            _audioManagerPlayer.SetSoundVolume(volume);
+        }
+        if (_audioManagerMenu != null)
+        {
+            _audioManagerMenu.SetSoundVolume(volume);
+        }
     }
 
     private void OnSliderMusicChanged(ChangeEvent<int> evt)
     {
         float volume = evt.newValue / 100f;
 
-        if (_audioSettings == null)
+        if (_audioManagerMenu != null)
         {
-            return;
+            _audioManagerMenu.SetMusicVolume(volume);
         }
-        _audioSettings.SetVolumeMusic(volume);
+        if (_audioManagerLevel != null)
+        {
+            _audioManagerLevel.SetMusicVolume(volume);
+        }
+        
     }
 
     private void OnCloseClicked()

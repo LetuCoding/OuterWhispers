@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AudioManagerPlayer : MonoBehaviour
+public class AudioManagerPlayer : IAudioManagerPlayer
 {
     public static AudioManagerPlayer Instance;
 
@@ -26,13 +26,11 @@ public class AudioManagerPlayer : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
             return;
         }
 
         ApplyVolumes();
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
     private void Update()
     {
