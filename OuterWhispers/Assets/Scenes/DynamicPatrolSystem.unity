@@ -8748,6 +8748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1117651976}
   - component: {fileID: 1117651975}
+  - component: {fileID: 1117651977}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -8770,6 +8771,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1625504642}
+  - {fileID: 1117651977}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -8802,6 +8804,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1117651977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117651974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5016803f4b0c48c6874a8f45ebd1223a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameInstaller
 --- !u!1 &1191919270
 GameObject:
   m_ObjectHideFlags: 0
@@ -8857,6 +8871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1625504644}
   - component: {fileID: 1625504642}
+  - component: {fileID: 1625504645}
   m_Layer: 0
   m_Name: GameInjector
   m_TagString: Untagged
@@ -8891,6 +8906,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1625504645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625504641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5016803f4b0c48c6874a8f45ebd1223a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameInstaller
 --- !u!1 &1958247278
 GameObject:
   m_ObjectHideFlags: 0
