@@ -48,11 +48,7 @@ public class EnemyMeleeState : EnemyState
     {
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
         enemy.EnemyDirection = isPlayerRight;
-        /*if (enemy.audioManager != null)
-        {
-                    
-            enemy.audioManager.PlaySFX(enemy.audioManager.shoot);
-        }*/
+        enemy._audioManager.PlaySFX(enemy.shoot,enemy.audioSource,enemy.pitch);
         
         if (isPlayerRight)
         {

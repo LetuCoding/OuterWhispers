@@ -30,9 +30,8 @@ public class EnemyPatrolState : EnemyState
             {
                 enemy.hasDetectedPlayer = true;
                 
-                /*if (enemy.audioManager != null) 
-                    enemy.audioManager.StopWalk();*/
-
+                enemy._audioManager.StopWalk(enemy.audioSource);
+                
                 if (enemy.canShoot)
                 {
                     stateMachine.ChangeState(enemy.ShootState);
@@ -69,30 +68,17 @@ public class EnemyPatrolState : EnemyState
 
         if (Mathf.Abs(dirX) > 0.01f) 
         {
+            enemy._audioManager.PlayWalk(enemy.footstep,enemy.audioSource,enemy.pitch);
             if (dirX > 0f)
             {
                 lastDirectionRight = true;
                 enemy.animator.Play("Walk_Right");
-                
-              
-               /*if (enemy.audioManager != null)
-               {
-                    
-                   enemy.audioManager.PlayWalk();
-               }*/
             }
             else
             {
                 lastDirectionRight = false;
                 enemy.animator.Play("Walk_Left");
-
-                /*if (AudioManagerEnemy.Instance != null)
-                    AudioManagerEnemy.Instance.PlayWalk();
-                if (enemy.audioManager != null)
-                {
-                    
-                enemy.audioManager.PlayWalk();
-                }*/
+                
             }
         }
         
@@ -110,9 +96,7 @@ public class EnemyPatrolState : EnemyState
 
     private void StartWaiting()
     {
-        /*if (enemy.audioManager != null)
-            enemy.audioManager.StopWalk();*/
-
+        enemy._audioManager.StopWalk(enemy.audioSource);
         if (lastDirectionRight == true)
         {
             enemy.animator.Play("Idle_Right");
@@ -128,7 +112,6 @@ public class EnemyPatrolState : EnemyState
     
     public override void Exit()
     {
-        /*if (enemy.audioManager != null)
-            enemy.audioManager.StopWalk();*/
+        enemy._audioManager.StopWalk(enemy.audioSource);
     }
 }

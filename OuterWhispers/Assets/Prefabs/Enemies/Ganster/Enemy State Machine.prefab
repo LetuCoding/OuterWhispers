@@ -72,19 +72,19 @@ AudioSource:
   m_GameObject: {fileID: 4095711512279199441}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3843795193785307210, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 148
-  DopplerLevel: 1
-  MinDistance: 1
+  Priority: 174
+  DopplerLevel: 0.95
+  MinDistance: 0
   MaxDistance: 20
   Pan2D: 0
   rolloffMode: 2
@@ -316,7 +316,6 @@ GameObject:
   - component: {fileID: 4053680588270560344}
   - component: {fileID: 483656240547558329}
   - component: {fileID: 2009538933500312857}
-  - component: {fileID: 8108395003129498677}
   m_Layer: 0
   m_Name: Enemy State Machine
   m_TagString: Untagged
@@ -477,11 +476,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   stats: {fileID: 11400000, guid: 754186b0755092617bec7dccc2659c76, type: 2}
-  audioManager: {fileID: 8108395003129498677}
+  audioSource: {fileID: 3347786584223424144}
+  footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
+  shoot: {fileID: 8300000, guid: 8ab52f0c67df15aeba85b62c45148afe, type: 3}
+  dead: {fileID: 8300000, guid: 553eb7fea8068a77eb3a2c97f41c4028, type: 3}
+  chains: {fileID: 0}
+  smash: {fileID: 0}
+  damage: {fileID: 8300000, guid: 5b24af6220de802aabac259142ba6356, type: 3}
+  pitch: 1
   playerTransform: {fileID: 0}
   canPatrol: 1
   canChase: 1
-  canShoot: 0
+  canShoot: 1
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -538,23 +544,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 1.3}
   m_Direction: 0
---- !u!114 &8108395003129498677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7843389408967255437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4891c4a4ff5f495a1b77b6d8a796e08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerEnemy
-  sfxSource: {fileID: 3347786584223424144}
-  footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
-  shoot: {fileID: 8300000, guid: 8ab52f0c67df15aeba85b62c45148afe, type: 3}
-  damage: {fileID: 0}
-  dead: {fileID: 0}
-  musicVolume: 1
-  soundVolume: 1
-  minPlayTime: 5

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Zenject;
 
 public class ShootBehaviour : MonoBehaviour
 {
@@ -12,7 +13,13 @@ public class ShootBehaviour : MonoBehaviour
     private bool shootDirection = false;
     private Transform player;
     private Coroutine shootCoroutine;
-    
+    private Enemy _enemy;
+
+    [Inject]
+    public void Construct(Enemy enemy)
+    {
+        this._enemy = enemy;
+    }
     public void SetPlayer(Transform playerTransform)
     {
         player = playerTransform;
@@ -20,7 +27,7 @@ public class ShootBehaviour : MonoBehaviour
 
     public void StartShooting()
     {
-        //AudioManagerEnemy.Instance.StopWalk();
+        _enemy._audioManager.StopWalk(_enemy.audioSource);
         if (shootCoroutine == null)
             shootCoroutine = StartCoroutine(ShootRoutine());
     }
@@ -39,16 +46,13 @@ public class ShootBehaviour : MonoBehaviour
         while (true)
         {
             UpdateShootZonePosition();
+            _enemy._audioManager.PlaySFX(_enemy.shoot,_enemy.audioSource,_enemy.pitch);
             if (shootDirection == false)
             {
-                /*if (AudioManagerEnemy.Instance != null)
-                    AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);*/
                 _animator.Play("Attack_Left");
             }
             else
             {
-                /*if (AudioManagerEnemy.Instance != null)
-                    AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);*/
                 _animator.Play("Attack_Right");
             }
             Shoot();

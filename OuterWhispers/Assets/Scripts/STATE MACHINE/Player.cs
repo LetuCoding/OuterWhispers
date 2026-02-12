@@ -2,6 +2,7 @@ using System.Collections;
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Audio;
 using Zenject;
 
 public class Player : MonoBehaviour, IEffectTarget
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public AudioClip punch;
     public AudioClip die;
     public AudioClip damage;
-
+    
     //=====================================================================================================
     // WALL CHECK SETTINGS
     //=====================================================================================================
@@ -318,9 +319,7 @@ public class Player : MonoBehaviour, IEffectTarget
             _animator.Play("Die_Left");
         }
         FreezePlayer();
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.die);
-        
+        _audioManager.PlaySFX(die,sfxSource,1f);
     }
     private void FreezePlayer()
     {
@@ -340,8 +339,7 @@ public class Player : MonoBehaviour, IEffectTarget
     private IEnumerator HitEffect()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.damage);
+        _audioManager.PlaySFX(damage,sfxSource,1f);
         if (sr != null)
             sr.color = Color.red;
         

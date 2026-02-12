@@ -11,6 +11,7 @@ public class AudioManager : IAudioManager
         source.pitch = soundPitch;
         if (clip == null) return;
         source.PlayOneShot(clip);
+        Debug.Log("Reproduciendo: " + clip.name);
     }
     
     public void PlayWalk(AudioClip clip, AudioSource source, float soundPitch)
@@ -23,6 +24,7 @@ public class AudioManager : IAudioManager
             source.pitch = 0.5f;
             source.Play();
         }
+        Debug.Log("Reproduciendo: " + clip.name);
     }
 
     public void StopWalk(AudioSource source)
@@ -34,7 +36,6 @@ public class AudioManager : IAudioManager
 
     public void SetSoundVolume(float value, AudioMixer mixer)
     {
-        
         _soundVolume = value;
         value = Mathf.Clamp(value, 0.0001f, 1f);
         float dB = Mathf.Log10(value) * 20f;

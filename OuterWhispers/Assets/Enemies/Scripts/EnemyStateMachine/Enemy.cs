@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 {
@@ -32,6 +33,8 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public AudioClip chains;
     public AudioClip smash;
     public AudioClip damage;
+    public float pitch = 1f;
+    public IAudioManager _audioManager;
     #endregion
 
     #region Configuration & References
@@ -72,7 +75,11 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public float flashDuration = 0.1f;
     public Color originalColor;
     
-
+    [Inject]
+    public void Construct(IAudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
     #region State Variables
     public bool hasDetectedPlayer;
     public bool EnemyDirection;

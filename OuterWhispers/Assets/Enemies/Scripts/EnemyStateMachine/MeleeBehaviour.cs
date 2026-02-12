@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using Zenject;
 
 public class MeleeBehaviour : MonoBehaviour
 {
@@ -13,7 +14,13 @@ public class MeleeBehaviour : MonoBehaviour
     private Animator _animator;
     private Transform player;
     private Coroutine attackCoroutine;
+    private Enemy _enemy;
 
+    [Inject]
+    public void Construct(Enemy enemy)
+    {
+        this._enemy = enemy;
+    }
     public void Start()
     {
         _animator = GetComponent<Animator>();
@@ -33,7 +40,7 @@ public class MeleeBehaviour : MonoBehaviour
 
     public void StartAttacking()
     {
-        //enemy.audioManager.StopWalk();
+        _enemy._audioManager.StopWalk(_enemy.audioSource);
         if (attackCoroutine == null)
             if (IsHitboxOnRight == false)
             {
@@ -43,8 +50,7 @@ public class MeleeBehaviour : MonoBehaviour
             {
                 _animator.Play("Attack_Right_Final");
             }
-            /*if (AudioManagerEnemy.Instance != null)
-                AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);*/
+            _enemy._audioManager.PlaySFX(_enemy.shoot,_enemy.audioSource,_enemy.pitch);
             attackCoroutine = StartCoroutine(AttackRoutine());
     }
 
@@ -93,10 +99,7 @@ public class MeleeBehaviour : MonoBehaviour
             {
                 _animator.Play("Attack_Right_Final");
             }
-            /*if (AudioManagerEnemy.Instance != null)
-                AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.shoot);*/
-
-
+            _enemy._audioManager.PlaySFX(_enemy.shoot,_enemy.audioSource,_enemy.pitch);
         }
     }
     
