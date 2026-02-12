@@ -2,6 +2,9 @@ using System.Collections;
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.InputSystem;
+using Zenject;
 
 public class Player : MonoBehaviour, IEffectTarget
 {
@@ -12,7 +15,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public PlayerInputActions _playerInputActions;
     public Rigidbody2D _rigidbody2D;
     public Animator _animator;
-
+    public IAudioManager _audioManager;
 
     public float _moveInput;
     public float _lastInput;
@@ -48,7 +51,21 @@ public class Player : MonoBehaviour, IEffectTarget
     [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
 
+    //=====================================================================================================
+    // AUDIO SETTINGS
+    //=====================================================================================================
+    [Header("Audio Sources")]
+    [SerializeField] public AudioSource sfxSource;
 
+    [Header("SFX Clips")]
+    public AudioClip footstep;
+    public AudioClip dash;
+    public AudioClip jump;
+    public AudioClip slide;
+    public AudioClip punch;
+    public AudioClip die;
+    public AudioClip damage;
+    
     //=====================================================================================================
     // WALL CHECK SETTINGS
     //=====================================================================================================
@@ -69,6 +86,11 @@ public class Player : MonoBehaviour, IEffectTarget
     //======================================================================>
     public PlayerStateMachine StateMachine { get; private set; }
 
+    [Inject]
+    public void Construct(IAudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
     public IdleState IdleState { get; private set; }
     public JumpState JumpState { get; private set; }
 
@@ -93,12 +115,10 @@ public class Player : MonoBehaviour, IEffectTarget
 
     [SerializeField] public float _dashSpeed;
 
-
-
-
-
-
-
+    [Header("UI")]
+    [SerializeField] private GameObject uiOptions;
+    private bool _isPaused;
+    
     void Awake()
     {
 
@@ -140,7 +160,10 @@ public class Player : MonoBehaviour, IEffectTarget
         {
             _lastInput = _moveInput;
         }
-
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            TogglePauseMenu();
+        }
         GroundCheck();
         WallCheck();
         StateMachine.CurrentState.LogicUpdate();
@@ -249,7 +272,12 @@ public class Player : MonoBehaviour, IEffectTarget
         _wallJumping = false;
     }
 
-
+    private void TogglePauseMenu()
+    {
+        _isPaused = !_isPaused;
+        if (uiOptions != null)
+            uiOptions.SetActive(_isPaused);
+    }
     //Método que comprueba si el jugador está en alguna pared, izquierda o derecha.
     private void WallCheck()
     {
@@ -298,9 +326,7 @@ public class Player : MonoBehaviour, IEffectTarget
             _animator.Play("Die_Left");
         }
         FreezePlayer();
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.die);
-        
+        _audioManager.PlaySFX(die,sfxSource,1f);
     }
     private void FreezePlayer()
     {
@@ -320,8 +346,7 @@ public class Player : MonoBehaviour, IEffectTarget
     private IEnumerator HitEffect()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.damage);
+        _audioManager.PlaySFX(damage,sfxSource,1f);
         if (sr != null)
             sr.color = Color.red;
         

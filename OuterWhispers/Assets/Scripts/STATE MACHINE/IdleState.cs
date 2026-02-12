@@ -23,12 +23,12 @@ using UnityEngine;
         if (Player._moveInput == 1)
         {
             Player._animator.Play("Walk_Right");
-            AudioManagerPlayer.Instance.PlayWalk();
+            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,0.5f);
         }
         else if (Player._moveInput == -1)
         {
             Player._animator.Play("Walk_Left");
-            AudioManagerPlayer.Instance.PlayWalk();
+            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,0.5f);
         }
 
         else if (Input.GetKeyDown(KeyCode.F))
@@ -39,16 +39,14 @@ using UnityEngine;
 
         else if (Player._moveInput == 0)
         {
-
+            Player._audioManager.StopWalk(Player.sfxSource);
             if (Player._lastInput == -1)
             {
                 Player._animator.Play("Idle_Left");
-                AudioManagerPlayer.Instance.StopWalk();
             }
             else
             {
                 Player._animator.Play("Idle_Right");
-                AudioManagerPlayer.Instance.StopWalk();
             }
 
         }
@@ -56,7 +54,7 @@ using UnityEngine;
             //Apretamos Dash y lo hace
             if (Player.dashPressed)
             {
-                AudioManagerPlayer.Instance.StopWalk();
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.DashState);
                 return;
             }
@@ -65,7 +63,7 @@ using UnityEngine;
             //Si estamos en el suelo y apretamos Dash, Dasheamos
             if (Player.jumpPressed && Player._isGrounded)
             {
-                AudioManagerPlayer.Instance.StopWalk();
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.JumpState);
                 return;
             }
@@ -87,7 +85,7 @@ using UnityEngine;
 
         public override void Exit()
         {
-            AudioManagerPlayer.Instance.StopWalk();
+            Player._audioManager.StopWalk(Player.sfxSource);
         }
     }
     

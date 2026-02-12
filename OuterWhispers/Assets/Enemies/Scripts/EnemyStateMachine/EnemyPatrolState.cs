@@ -58,7 +58,7 @@ public class EnemyPatrolState : EnemyState
         if (dist <= enemy.stats.detectionDistance)
         {
             enemy.hasDetectedPlayer = true;
-            enemy.audioManager?.StopWalk();
+            enemy._audioManager.StopWalk(enemy.audioSource);
 
             if (enemy.canShoot)
                 stateMachine.ChangeState(enemy.ShootState);
@@ -119,7 +119,7 @@ public class EnemyPatrolState : EnemyState
             lastDirectionRight = dirX > 0f;
 
             enemy.animator.Play(lastDirectionRight ? "Walk_Right" : "Walk_Left");
-            enemy.audioManager?.PlayWalk();
+            enemy._audioManager.PlayWalk(enemy.footstep,enemy.audioSource,enemy.pitch);
         }
 
         enemy.transform.position = Vector2.MoveTowards(
@@ -134,7 +134,7 @@ public class EnemyPatrolState : EnemyState
 
     private void StartWaiting()
     {
-        enemy.audioManager?.StopWalk();
+        enemy._audioManager.StopWalk(enemy.audioSource);
         enemy.animator.Play(lastDirectionRight ? "Idle_Right" : "Idle_Left");
 
         isWaiting = true;
@@ -143,6 +143,6 @@ public class EnemyPatrolState : EnemyState
 
     public override void Exit()
     {
-        enemy.audioManager?.StopWalk();
+        enemy._audioManager.StopWalk(enemy.audioSource);
     }
 }

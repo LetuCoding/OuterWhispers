@@ -1,0 +1,88 @@
+using UnityEngine;
+using System.Collections;
+using Zenject;
+
+public class ShootBehaviour : MonoBehaviour
+{
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform shootZone;
+    [SerializeField] private float timeBetweenShots = 1f;
+    [SerializeField] private float shootOffset = 1f;
+    public Animator _animator;
+
+    private bool shootDirection = false;
+    private Transform player;
+    private Coroutine shootCoroutine;
+    private Enemy _enemy;
+
+    [Inject]
+    public void Construct(Enemy enemy)
+    {
+        this._enemy = enemy;
+    }
+    public void SetPlayer(Transform playerTransform)
+    {
+        player = playerTransform;
+    }
+
+    public void StartShooting()
+    {
+        _enemy._audioManager.StopWalk(_enemy.audioSource);
+        if (shootCoroutine == null)
+            shootCoroutine = StartCoroutine(ShootRoutine());
+    }
+
+    public void StopShooting()
+    {
+        if (shootCoroutine != null)
+        {
+            StopCoroutine(shootCoroutine);
+            shootCoroutine = null;
+        }
+    }
+
+    private IEnumerator ShootRoutine()
+    {
+        while (true)
+        {
+            UpdateShootZonePosition();
+            _enemy._audioManager.PlaySFX(_enemy.shoot,_enemy.audioSource,_enemy.pitch);
+            if (shootDirection == false)
+            {
+                _animator.Play("Attack_Left");
+            }
+            else
+            {
+                _animator.Play("Attack_Right");
+            }
+            Shoot();
+            yield return new WaitForSeconds(timeBetweenShots);
+        }
+    }
+        
+    private void UpdateShootZonePosition()
+    {
+        if (player == null || shootZone == null) return;
+        float direction = (player.position.x > transform.position.x) ? 1f : -1f;
+        shootDirection = direction > 0f;
+        shootZone.localPosition = new Vector3(direction * shootOffset, shootZone.localPosition.y, 0);
+        
+        shootZone.right = (player.position - shootZone.position).normalized;
+    }
+
+    private void Shoot()
+    {
+        if (player == null || projectilePrefab == null || shootZone == null)
+            return;
+
+        GameObject projectile = Instantiate(
+            projectilePrefab,
+            shootZone.position,
+            shootZone.rotation
+        );
+
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
+            proj.Initialize(player);
+    }
+}

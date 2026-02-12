@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Zenject;
+using Cursor = UnityEngine.Cursor;
 
 public class OptionsMenuManager : MonoBehaviour
 {
@@ -10,41 +12,68 @@ public class OptionsMenuManager : MonoBehaviour
     public GameObject UiOptions;
     private SliderInt sliderSound;
     private SliderInt sliderMusic;
-    private IAudioSettings _audioSettings;
+    private IAudioManager _audioManager;
+    private bool _isPaused;
+    private int savedVolume = 50;
+    private int savedMusic = 50;
+
+    
+    [Header("Audio Sources")]
+    [SerializeField] public AudioSource soundSource;
+    
+    [Header("SFX Clips")]
+    public AudioClip effect;
+    
+    [Header("Audio Mixer")]
+    public AudioMixer mixer;
     
     [Inject]
-    public void Construct(IAudioSettings audioSettings)
+    public void Construct(IAudioManager audioManager)
     {
-        _audioSettings = audioSettings;
+        _audioManager = audioManager;
     }
     void Start()
     {
-        _audioSettings.Play();
         UiOptions.SetActive(false);
     }
+    void Update()
+    {
+
+    }
+
+
     void OnEnable()
     {
-        var uiDocument = GetComponent<UIDocument>();
+        var uiDocument = UiOptions != null ? UiOptions.GetComponent<UIDocument>() : GetComponent<UIDocument>();
+        if (uiDocument == null) return;
+
         var root = uiDocument.rootVisualElement;
+
         CloseButton = root.Q<Button>("CloseButton");
         sliderSound = root.Q<SliderInt>("SliderSound");
         sliderMusic = root.Q<SliderInt>("SliderMusic");
-        if (CloseButton != null) CloseButton.clicked += OnCloseClicked;
+
+        if (CloseButton != null)
+        {
+            CloseButton.clicked += OnCloseClicked;
+            CloseButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterClose);
+            CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
+        }
         
+
         if (sliderSound != null)
         {
             sliderSound.RegisterValueChangedCallback(OnSliderSoundChanged);
+            sliderSound.SetValueWithoutNotify(savedVolume);
         }
 
         if (sliderMusic != null)
         {
             sliderMusic.RegisterValueChangedCallback(OnSliderMusicChanged);
+            sliderMusic.SetValueWithoutNotify(savedMusic);
         }
-
-        CloseButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterClose);
-        CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
-
     }
+
     void OnHoverEnterClose(MouseEnterEvent evt)
     {
         CloseButton.style.backgroundColor = new StyleColor(Color.grey);
@@ -64,29 +93,28 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void OnSliderSoundChanged(ChangeEvent<int> evt)
     {
-        float vol = evt.newValue / 100f;
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.SetSoundVolume(vol);
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.SetSoundVolume(vol);
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.SetSoundVolume(vol);
+        savedVolume = evt.newValue;
+        float volume = evt.newValue / 100f;
+        if (_audioManager != null)
+        {
+            _audioManager.SetSoundVolume(volume,mixer);
+        }
     }
 
     private void OnSliderMusicChanged(ChangeEvent<int> evt)
     {
-        float vol = evt.newValue / 100f;
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.SetMusicVolume(vol);
-        if (AudioManagerLevel.Instance != null)
-            AudioManagerLevel.Instance.SetMusicVolume(vol);
+        savedMusic = evt.newValue;
+        float volume = evt.newValue / 100f;
+
+        if (_audioManager != null)
+        {
+            _audioManager.SetMusicVolume(volume,mixer);
+        }
     }
+
     private void OnCloseClicked()
     {
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
+        _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
-        
-
     }
 }

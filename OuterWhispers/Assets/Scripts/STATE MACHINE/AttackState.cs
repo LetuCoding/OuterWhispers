@@ -11,8 +11,7 @@ public class AttackState : PlayerState
     {
 
         stateTimer = Player.stats.attackCooldown; 
-        if (AudioManagerPlayer.Instance != null)
-            AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.punch);
+        Player._audioManager.PlaySFX(Player.punch, Player.sfxSource, 1f);
         if (Player._lastInput == -1)
         {
             if (Player._animator.GetBool("attack") == true)

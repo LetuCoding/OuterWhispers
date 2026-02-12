@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using Zenject;
 using Application = UnityEngine.Application;
 
 public class MainMenuManager : MonoBehaviour
@@ -10,13 +12,32 @@ public class MainMenuManager : MonoBehaviour
     private Button OptionsButton;
     public GameObject UiOptions;
     public GameObject UiLoadMenu;
+    [Header("Audio Sources")]
+    [SerializeField] public AudioSource musicSource;
+    [SerializeField] public AudioSource soundSource;
+    [SerializeField] public AudioSource rainSource;
+    
+    [Header("SFX Clips")]
+    public AudioClip rain;
+    public AudioClip menuMusic;
+    public AudioClip menuSound;
+    
+    [Header("Audio Mixer")]
+    public AudioMixer mixer;
 
+    private IAudioManager _audioManager;
+    
+    [Inject]
+    public void Construct(IAudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
     void Start()
     {
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.PlayMusic(AudioManagerMenu.Instance.menuMusic);
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.PlayRain(AudioManagerMenu.Instance.rain);
+        _audioManager.SetMusicVolume(0.5f,mixer);
+        _audioManager.SetSoundVolume(0.5f,mixer);
+        _audioManager.PlayRain(rain, rainSource, true);
+        _audioManager.PlayMusic(menuMusic, musicSource);
     }
     void OnEnable()
     {
@@ -40,23 +61,19 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnStartClicked()
     {
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
+        _audioManager.PlaySFX(menuSound, soundSource, 1f);
         UiLoadMenu.SetActive(true);
     }
 
     private void OnQuitClicked()
     {
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
+        _audioManager.PlaySFX(menuSound, soundSource, 1f);
         Application.Quit();
     }
 
     private void OnOptionsClicked()
     {
-        // Activa el UI Options
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
+        _audioManager.PlaySFX(menuSound, soundSource, 1f);
         UiOptions.SetActive(true);
 
     }

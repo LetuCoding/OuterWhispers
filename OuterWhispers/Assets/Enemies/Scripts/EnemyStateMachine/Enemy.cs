@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public EnemyDeathState DeathState { get; private set; }
     public EnemyHeavyAttackState HeavyAttackState { get; private set; }
     public EnemyLowKickState LowKickState { get; private set; }
+
     #endregion
 
     #region Components
@@ -25,7 +26,18 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public Animator animator { get; private set; }
     private EnemyHealth health;
     
-    public AudioManagerEnemy audioManager;
+    #endregion
+    
+    #region Audio
+    public AudioSource audioSource;
+    public AudioClip footstep;
+    public AudioClip shoot;
+    public AudioClip dead;
+    public AudioClip chains;
+    public AudioClip smash;
+    public AudioClip damage;
+    public float pitch = 1f;
+    public IAudioManager _audioManager;
     #endregion
 
     #region Configuration & References
@@ -66,7 +78,11 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public float flashDuration = 0.1f;
     public Color originalColor;
     
-
+    [Inject]
+    public void Construct(IAudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
     #region State Variables
     public bool hasDetectedPlayer;
     public bool EnemyDirection;
@@ -82,10 +98,12 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         health = GetComponent<EnemyHealth>();
-        audioManager = GetComponent<AudioManagerEnemy>();
         StateMachine = new EnemyStateMachine();
         if (spriteRenderer != null)
             originalColor = spriteRenderer.color;
+        PatrolState = new EnemyPatrolState(StateMachine, this);
+        PatrolState = new EnemyPatrolState(StateMachine, this);
+        PatrolState = new EnemyPatrolState(StateMachine, this);
         PatrolState = new EnemyPatrolState(StateMachine, this);
         ChaseState = new EnemyChaseState(StateMachine, this);
         MeleeState = new EnemyMeleeState(StateMachine, this);

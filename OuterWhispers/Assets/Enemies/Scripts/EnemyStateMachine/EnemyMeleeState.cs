@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 public class EnemyMeleeState : EnemyState
 {
@@ -10,7 +11,8 @@ public class EnemyMeleeState : EnemyState
     private float attackCooldown; 
 
     public EnemyMeleeState(EnemyStateMachine stateMachine, Enemy enemy) : base(stateMachine, enemy) { }
-
+    
+    
     public override void Enter()
     {
         enemy.StopMovement();
@@ -46,11 +48,7 @@ public class EnemyMeleeState : EnemyState
     {
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
         enemy.EnemyDirection = isPlayerRight;
-        if (enemy.audioManager != null)
-        {
-                    
-            enemy.audioManager.PlaySFX(enemy.audioManager.shoot);
-        }
+        enemy._audioManager.PlaySFX(enemy.shoot,enemy.audioSource,enemy.pitch);
         
         if (isPlayerRight)
         {
