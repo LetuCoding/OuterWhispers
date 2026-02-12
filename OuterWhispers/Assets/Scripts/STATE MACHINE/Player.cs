@@ -3,6 +3,7 @@ using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class Player : MonoBehaviour, IEffectTarget
@@ -114,12 +115,10 @@ public class Player : MonoBehaviour, IEffectTarget
 
     [SerializeField] public float _dashSpeed;
 
-
-
-
-
-
-
+    [Header("UI")]
+    [SerializeField] private GameObject uiOptions;
+    private bool _isPaused;
+    
     void Awake()
     {
 
@@ -161,7 +160,10 @@ public class Player : MonoBehaviour, IEffectTarget
         {
             _lastInput = _moveInput;
         }
-
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            TogglePauseMenu();
+        }
         GroundCheck();
         WallCheck();
         StateMachine.CurrentState.LogicUpdate();
@@ -270,7 +272,12 @@ public class Player : MonoBehaviour, IEffectTarget
         _wallJumping = false;
     }
 
-
+    private void TogglePauseMenu()
+    {
+        _isPaused = !_isPaused;
+        if (uiOptions != null)
+            uiOptions.SetActive(_isPaused);
+    }
     //Método que comprueba si el jugador está en alguna pared, izquierda o derecha.
     private void WallCheck()
     {

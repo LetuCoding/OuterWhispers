@@ -13,6 +13,10 @@ public class OptionsMenuManager : MonoBehaviour
     private SliderInt sliderSound;
     private SliderInt sliderMusic;
     private IAudioManager _audioManager;
+    private bool _isPaused;
+    private int savedVolume = 50;
+    private int savedMusic = 50;
+
     
     [Header("Audio Sources")]
     [SerializeField] public AudioSource soundSource;
@@ -55,12 +59,19 @@ public class OptionsMenuManager : MonoBehaviour
             CloseButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterClose);
             CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
         }
+        
 
         if (sliderSound != null)
+        {
             sliderSound.RegisterValueChangedCallback(OnSliderSoundChanged);
+            sliderSound.SetValueWithoutNotify(savedVolume);
+        }
 
         if (sliderMusic != null)
+        {
             sliderMusic.RegisterValueChangedCallback(OnSliderMusicChanged);
+            sliderMusic.SetValueWithoutNotify(savedMusic);
+        }
     }
 
     void OnHoverEnterClose(MouseEnterEvent evt)
@@ -82,6 +93,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void OnSliderSoundChanged(ChangeEvent<int> evt)
     {
+        savedVolume = evt.newValue;
         float volume = evt.newValue / 100f;
         if (_audioManager != null)
         {
@@ -91,6 +103,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void OnSliderMusicChanged(ChangeEvent<int> evt)
     {
+        savedMusic = evt.newValue;
         float volume = evt.newValue / 100f;
 
         if (_audioManager != null)
@@ -103,20 +116,5 @@ public class OptionsMenuManager : MonoBehaviour
     {
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
-    }
-    public void PauseGame()
-    {
-        UiOptions.SetActive(true);
-        Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    public void ResumeGame()
-    {
-        UiOptions.SetActive(false);
-        Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 }

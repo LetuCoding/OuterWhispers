@@ -3,20 +3,15 @@ using UnityEngine.Audio;
 
 public class AudioManager : IAudioManager
 {
-    private float _soundVolume;
-    private float _musicVolume;
     public void PlaySFX(AudioClip clip, AudioSource source, float soundPitch)
     {
-        source.volume = _soundVolume;
         source.pitch = soundPitch;
         if (clip == null) return;
         source.PlayOneShot(clip);
-        Debug.Log("Reproduciendo: " + clip.name);
     }
     
     public void PlayWalk(AudioClip clip, AudioSource source, float soundPitch)
     {
-        source.volume = _soundVolume;
         if (!source.isPlaying)
         {
             source.clip = clip;
@@ -24,7 +19,6 @@ public class AudioManager : IAudioManager
             source.pitch = 0.5f;
             source.Play();
         }
-        Debug.Log("Reproduciendo: " + clip.name);
     }
 
     public void StopWalk(AudioSource source)
@@ -36,14 +30,12 @@ public class AudioManager : IAudioManager
 
     public void SetSoundVolume(float value, AudioMixer mixer)
     {
-        _soundVolume = value;
         value = Mathf.Clamp(value, 0.0001f, 1f);
         float dB = Mathf.Log10(value) * 20f;
         mixer.SetFloat("SFX",dB);
     }
     public void PlayMusic(AudioClip clip, AudioSource source)
     {
-        source.volume = _musicVolume;
         if (clip == null) return;
         source.clip = clip;
         source.loop = true;
@@ -52,7 +44,6 @@ public class AudioManager : IAudioManager
     
     public void PlayAmbience(AudioClip clip, AudioSource source, bool loop = true)
     {
-        source.volume = _soundVolume;
         if (clip == null) return;
         source.clip = clip;
         source.loop = loop;
@@ -71,14 +62,12 @@ public class AudioManager : IAudioManager
     
     public void SetMusicVolume(float value, AudioMixer mixer)
     {
-        _musicVolume = value;
         value = Mathf.Clamp(value, 0.0001f, 1f);
         float dB = Mathf.Log10(value) * 20f;
         mixer.SetFloat("Music",dB);
     }
     public void PlayRain(AudioClip clip, AudioSource source, bool loop = true)
     {
-        source.volume = _soundVolume;
         if (clip == null) return;
         source.clip = clip;
         source.loop = loop;
