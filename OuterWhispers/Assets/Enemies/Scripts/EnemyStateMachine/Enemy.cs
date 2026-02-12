@@ -71,9 +71,9 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public bool hasDetectedPlayer;
     public bool EnemyDirection;
     
-    [Inject]
-    public PatrolZone PatrolZone;
-    
+    [Inject] 
+    public IPatrolZoneService PatrolZoneService { get; private set; }
+
     
     #endregion
 

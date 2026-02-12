@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 using Enemies.Scripts;
@@ -11,7 +12,7 @@ using Enemies.Scripts;
         private void OnDisable() => _zoneService.Unregister(this);
         
         
-        [Min(2)]
+        
         public Transform[] waypoints;
 
         public Vector2 Center
@@ -34,6 +35,14 @@ using Enemies.Scripts;
         }
 
         public int WaypointCount => waypoints.Length;
+
+        public void OnDrawGizmos()
+        {
+            foreach (var wp in waypoints)
+            {
+                Gizmos.DrawWireSphere(wp.position, 0.2f);
+            }
+        }
     }
 
 
