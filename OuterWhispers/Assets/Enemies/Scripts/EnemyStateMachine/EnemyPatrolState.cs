@@ -2,114 +2,145 @@ using UnityEngine;
 
 public class EnemyPatrolState : EnemyState
 {
-    private int currentWaypointIndex = 0;
+    private PatrolZone currentZone;
+    private int currentWaypointIndex;
+
     private bool isWaiting;
     private float waitTimer;
-    
-    private bool lastDirectionRight; 
+    private bool lastDirectionRight;
 
-    public EnemyPatrolState(EnemyStateMachine stateMachine, Enemy enemy) : base(stateMachine, enemy) { }
+    // Control de cambio dinámico
+    private float zoneCheckTimer;
+    private const float zoneCheckInterval = 1f;      // cada 1 segundo
+    private const float zoneChangeDistance = 6f;     // distancia mínima para cambiar
+
+    public EnemyPatrolState(EnemyStateMachine stateMachine, Enemy enemy)
+        : base(stateMachine, enemy) { }
 
     public override void Enter()
     {
         isWaiting = false;
-        
-        if (enemy.waypoints == null || enemy.waypoints.Length == 0)
+        currentWaypointIndex = 0;
+        zoneCheckTimer = zoneCheckInterval;
+
+        currentZone = enemy.PatrolZoneService
+                           .GetClosestZone(enemy.transform.position);
+
+        if (currentZone == null || currentZone.WaypointCount < 2)
         {
-            Debug.LogError("No hay waypoints asignados en " + enemy.name);
-            stateMachine.ChangeState(new EnemyIdleState(stateMachine, enemy));
+            Debug.LogError("No hay PatrolZone válida para " + enemy.name);
+            stateMachine.ChangeState(enemy.IdleState);
+            return;
         }
     }
 
     public override void LogicUpdate()
     {
-        if (enemy.playerTransform != null)
-        {
-            float distToPlayer = Vector2.Distance(enemy.transform.position, enemy.playerTransform.position);
-            if (distToPlayer <= enemy.stats.detectionDistance)
-            {
-                enemy.hasDetectedPlayer = true;
-                
-                enemy._audioManager.StopWalk(enemy.audioSource);
-                
-                if (enemy.canShoot)
-                {
-                    stateMachine.ChangeState(enemy.ShootState);
-                    return;
-                }
-                else if (enemy.canChase)
-                {
-                    stateMachine.ChangeState(enemy.ChaseState);
-                    return;
-                }
-            }
-        }
+        HandlePlayerDetection();
+
+        HandleZoneCheck();
 
         if (isWaiting)
-        {
-            waitTimer -= Time.deltaTime;
+            HandleWaiting();
+        else
+            MoveToWaypoint();
+    }
 
-            if (waitTimer <= 0)
+    private void HandlePlayerDetection()
+    {
+        if (enemy.playerTransform == null)
+            return;
+
+        float dist = Vector2.Distance(
+            enemy.transform.position,
+            enemy.playerTransform.position);
+
+        if (dist <= enemy.stats.detectionDistance)
+        {
+            enemy.hasDetectedPlayer = true;
+            enemy._audioManager.StopWalk(enemy.audioSource);
+
+            if (enemy.canShoot)
+                stateMachine.ChangeState(enemy.ShootState);
+            else if (enemy.canChase)
+                stateMachine.ChangeState(enemy.ChaseState);
+        }
+    }
+
+    private void HandleZoneCheck()
+    {
+        zoneCheckTimer -= Time.deltaTime;
+
+        if (zoneCheckTimer > 0f)
+            return;
+
+        zoneCheckTimer = zoneCheckInterval;
+
+        if (currentZone == null)
+            return;
+
+        float sqrDist = (enemy.transform.position - (Vector3)currentZone.Center).sqrMagnitude;
+
+        if (sqrDist > zoneChangeDistance * zoneChangeDistance)
+        {
+            PatrolZone newZone = enemy.PatrolZoneService
+                                       .GetClosestZone(enemy.transform.position);
+
+            if (newZone != null && newZone != currentZone)
             {
-                isWaiting = false;
-                currentWaypointIndex = (currentWaypointIndex + 1) % enemy.waypoints.Length;
+                currentZone = newZone;
+                currentWaypointIndex = 0;
             }
         }
-        else
+    }
+
+    private void HandleWaiting()
+    {
+        waitTimer -= Time.deltaTime;
+
+        if (waitTimer <= 0f)
         {
-            MoveToWaypoint();
+            isWaiting = false;
+            currentWaypointIndex =
+                (currentWaypointIndex + 1) % currentZone.WaypointCount;
         }
     }
 
     private void MoveToWaypoint()
     {
-        Transform target = enemy.waypoints[currentWaypointIndex];
+        Transform target = currentZone.GetWaypoint(currentWaypointIndex);
+        if (target == null)
+            return;
+
         float dirX = target.position.x - enemy.transform.position.x;
 
-        if (Mathf.Abs(dirX) > 0.01f) 
+        if (Mathf.Abs(dirX) > 0.01f)
         {
+            lastDirectionRight = dirX > 0f;
+
+            enemy.animator.Play(lastDirectionRight ? "Walk_Right" : "Walk_Left");
             enemy._audioManager.PlayWalk(enemy.footstep,enemy.audioSource,enemy.pitch);
-            if (dirX > 0f)
-            {
-                lastDirectionRight = true;
-                enemy.animator.Play("Walk_Right");
-            }
-            else
-            {
-                lastDirectionRight = false;
-                enemy.animator.Play("Walk_Left");
-                
-            }
         }
-        
+
         enemy.transform.position = Vector2.MoveTowards(
             enemy.transform.position,
             target.position,
             enemy.stats.speed * Time.deltaTime
         );
-        
-        if (Vector2.Distance(enemy.transform.position, target.position) < 0.05f)
-        {
+
+        if ((enemy.transform.position - target.position).sqrMagnitude < 0.0025f)
             StartWaiting();
-        }
     }
 
     private void StartWaiting()
     {
         enemy._audioManager.StopWalk(enemy.audioSource);
-        if (lastDirectionRight == true)
-        {
-            enemy.animator.Play("Idle_Right");
-        } 
-        else
-        {
-            enemy.animator.Play("Idle_Left");
-        }
-        
+        enemy.animator.Play(lastDirectionRight ? "Idle_Right" : "Idle_Left");
+
         isWaiting = true;
         waitTimer = enemy.stats.patrolWaitTime;
     }
-    
+
     public override void Exit()
     {
         enemy._audioManager.StopWalk(enemy.audioSource);

@@ -1,5 +1,8 @@
+using System;
+using Enemies.Scripts;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 {
@@ -46,9 +49,9 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public bool canChase = true;
     public bool canShoot = false;
 
-    [Header("Patrol Settings")]
+    /*[Header("Patrol Settings")]
     public Transform[] waypoints;
-
+*/
     [Header("Melee Settings")]
     public GameObject meleeHitbox;
     public float meleeAttackOffset = 0.5f;
@@ -83,6 +86,11 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     #region State Variables
     public bool hasDetectedPlayer;
     public bool EnemyDirection;
+    
+    [Inject] 
+    public IPatrolZoneService PatrolZoneService { get; private set; }
+
+    
     #endregion
 
     private void Awake()
@@ -109,7 +117,7 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 
     private void Start()
     {
-
+        
         if (playerTransform == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -248,6 +256,9 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         }
     }
     #endregion
+
+
+    
 }
 
 public class EnemyIdleState : EnemyState

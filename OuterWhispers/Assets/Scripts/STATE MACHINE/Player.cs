@@ -99,7 +99,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public WallSlideState WallSlideState { get; private set; }
 
     public DashState DashState { get; private set; }
-    public event System.Action OnDeath;
+   
 
     private bool _isDead;
 
