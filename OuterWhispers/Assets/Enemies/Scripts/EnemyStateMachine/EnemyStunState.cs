@@ -9,8 +9,11 @@ public class EnemyStunState : EnemyState
     public override void Enter()
     {
         enemy.StopMovement();
-        if (AudioManagerEnemy.Instance != null)
-            AudioManagerEnemy.Instance.PlaySFX(AudioManagerEnemy.Instance.damage);
+        
+        if (enemy.audioManager!=null )
+        {
+            enemy.audioManager.PlaySFX(enemy.audioManager.damage);
+        }
         if (enemy.EnemyDirection == true)
         {
             enemy.animator.Play("Damage_Right"); 

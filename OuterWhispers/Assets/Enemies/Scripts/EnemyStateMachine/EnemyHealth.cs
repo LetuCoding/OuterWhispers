@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
-    [SerializeField] private EnemyStats stats;
+    
     private Enemy enemy;
-
     private float currentHealth;
     private float lastDamageTime;
     [SerializeField] private float damageCooldown = 0.2f;
@@ -15,7 +14,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        currentHealth = stats.maxHealth;
+        currentHealth = enemy.stats.maxHealth;
         lastDamageTime = -damageCooldown;
         enemy = GetComponent<Enemy>();
     }
@@ -53,6 +52,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
 
         // OPCIONAL: Si quieres que el cuerpo desaparezca a los 10 segundos
-        // Destroy(gameObject, 10f); 
+         Destroy(gameObject, 2f); 
     }
 }
