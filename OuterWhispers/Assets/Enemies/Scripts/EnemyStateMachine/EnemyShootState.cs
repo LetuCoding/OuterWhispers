@@ -53,11 +53,11 @@ public class EnemyShootState : EnemyState
     {
         if (enemy.projectilePrefab == null || enemy.shootPoint == null) return;
         
-        if (enemy.audioManager != null)
+        /*if (enemy.audioManager != null)
         {
                     
             enemy.audioManager.PlaySFX(enemy.audioManager.shoot);
-        }
+        }*/
         enemy.EnemyDirection = isPlayerRight;
         if (isPlayerRight)
         {

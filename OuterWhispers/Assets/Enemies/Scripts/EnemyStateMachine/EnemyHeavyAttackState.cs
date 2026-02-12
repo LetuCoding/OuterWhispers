@@ -66,10 +66,10 @@ public class EnemyHeavyAttackState : EnemyState
 
     private void PerformStrike()
     {
-        if (enemy.audioManager != null)
+        /*if (enemy.audioManager != null)
         {
             enemy.audioManager.PlaySFX(enemy.audioManager.chains);
-        }
+        }*/
 
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
         if (isPlayerRight) enemy.animator.Play("Heavy_Attack_Right_Execution");

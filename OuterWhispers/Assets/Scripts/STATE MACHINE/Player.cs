@@ -2,6 +2,7 @@ using System.Collections;
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
 using UnityEngine;
+using Zenject;
 
 public class Player : MonoBehaviour, IEffectTarget
 {
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public PlayerInputActions _playerInputActions;
     public Rigidbody2D _rigidbody2D;
     public Animator _animator;
-
+    public IAudioManager _audioManager;
 
     public float _moveInput;
     public float _lastInput;
@@ -48,6 +49,20 @@ public class Player : MonoBehaviour, IEffectTarget
     [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
 
+    //=====================================================================================================
+    // AUDIO SETTINGS
+    //=====================================================================================================
+    [Header("Audio Sources")]
+    [SerializeField] public AudioSource sfxSource;
+
+    [Header("SFX Clips")]
+    public AudioClip footstep;
+    public AudioClip dash;
+    public AudioClip jump;
+    public AudioClip slide;
+    public AudioClip punch;
+    public AudioClip die;
+    public AudioClip damage;
 
     //=====================================================================================================
     // WALL CHECK SETTINGS
@@ -69,6 +84,11 @@ public class Player : MonoBehaviour, IEffectTarget
     //======================================================================>
     public PlayerStateMachine StateMachine { get; private set; }
 
+    [Inject]
+    public void Construct(IAudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
     public IdleState IdleState { get; private set; }
     public JumpState JumpState { get; private set; }
 

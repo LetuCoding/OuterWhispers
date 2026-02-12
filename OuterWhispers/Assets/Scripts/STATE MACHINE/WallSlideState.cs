@@ -10,8 +10,7 @@ using UnityEngine;
             //Decimos que estamos Slideando en el Wall
             Player._wallSliding = true;
             // 🔊 Sonido del dash (una vez)
-            if (AudioManagerPlayer.Instance != null)
-                AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.slide);
+            Player._audioManager.PlaySFX(Player.slide, Player.sfxSource, 1f);
             //Pondríamos la animación de sliding
             if(Player._isOnRightWall)
             Player._animator.Play("Slide_Right");

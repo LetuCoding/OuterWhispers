@@ -193,6 +193,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuManager
   UiOptions: {fileID: 774980704}
   UiLoadMenu: {fileID: 1944588231}
+  musicSource: {fileID: 1939788211}
+  soundSource: {fileID: 1555467445}
+  rainSource: {fileID: 1016582137}
+  rain: {fileID: 8300000, guid: e40f3edd09c67b5c2bc1de1cbcf4c49e, type: 3}
+  menuMusic: {fileID: 8300000, guid: 9351a70dc5e69c240b3430aaa6cafb6f, type: 3}
+  menuSound: {fileID: 8300000, guid: 4d1251d3584f3534a9287fc24218f233, type: 3}
+  mixer: {fileID: 24100000, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
 --- !u!1 &445176861
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +732,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OptionsMenuManager
   UiOptions: {fileID: 774980704}
+  soundSource: {fileID: 1555467445}
+  effect: {fileID: 8300000, guid: 4d1251d3584f3534a9287fc24218f233, type: 3}
+  mixer: {fileID: 24100000, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
 --- !u!1 &988620406
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,13 +851,13 @@ AudioSource:
   m_GameObject: {fileID: 1016582133}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
+  OutputAudioMixerGroup: {fileID: -3843795193785307210, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e40f3edd09c67b5c2bc1de1cbcf4c49e, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1187,7 +1197,7 @@ AudioSource:
   m_GameObject: {fileID: 1555467443}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3843795193785307210, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 4d1251d3584f3534a9287fc24218f233, type: 3}
   m_PlayOnAwake: 0
@@ -1284,7 +1294,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1614008715}
-  - component: {fileID: 1614008714}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -1292,18 +1301,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1614008714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614008713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f502546ababb3044e860bbfe92819549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerMenu
 --- !u!4 &1614008715
 Transform:
   m_ObjectHideFlags: 0
@@ -1518,13 +1515,13 @@ AudioSource:
   m_GameObject: {fileID: 1939788209}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 840485759226230222, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 9351a70dc5e69c240b3430aaa6cafb6f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1675,6 +1672,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadMenuManager
   UiOptions: {fileID: 1944588231}
+  soundSource: {fileID: 1555467445}
+  musicSource: {fileID: 1939788211}
+  rainSource: {fileID: 1016582137}
+  effect: {fileID: 8300000, guid: 4d1251d3584f3534a9287fc24218f233, type: 3}
+  introMusic: {fileID: 8300000, guid: 34723c87c71309b4abcccc833951de26, type: 3}
+  mixer: {fileID: 24100000, guid: 98cd6e383bb94a4d8b7c4ba694e67983, type: 2}
 --- !u!1 &1975325688
 GameObject:
   m_ObjectHideFlags: 0

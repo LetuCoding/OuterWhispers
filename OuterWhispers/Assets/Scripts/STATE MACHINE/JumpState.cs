@@ -12,8 +12,7 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
         public override void Enter()
         {
             Debug.Log("Enter Jump State");
-             if (AudioManagerPlayer.Instance != null)
-                 AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.jump);
+            Player._audioManager.PlaySFX(Player.jump, Player.sfxSource, 1f);
             Player._rigidbody2D.Jump(Player.jumpForce);
             if (Player._lastInput == 1)
             {

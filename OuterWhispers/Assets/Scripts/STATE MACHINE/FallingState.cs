@@ -31,7 +31,7 @@ using UnityEngine;
             //Si el jugador está en el suelo cambiamos a Idle
             if (Player._isGrounded)
             {
-                AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.footstep);
+                Player._audioManager.PlaySFX(Player.footstep, Player.sfxSource, 1f);
                 fsm.ChangeState(Player.IdleState);
                 return;
             }

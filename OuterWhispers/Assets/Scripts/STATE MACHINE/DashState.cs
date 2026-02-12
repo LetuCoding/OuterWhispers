@@ -18,10 +18,7 @@ using UnityEngine;
 
         if (!Player._isGrounded && !Player._canDashAir) ExitDash();
 
-        // 🔊 Sonido del dash (una vez)
-        if (AudioManagerPlayer.Instance != null)
-        AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.dash);
-
+        Player._audioManager.PlaySFX(Player.dash, Player.sfxSource, 1f);
         if (Player._rigidbody2D.linearVelocity.x >= 0)
         {
             Player._animator.Play("Dash_Right");
@@ -85,7 +82,7 @@ using UnityEngine;
 
             // Elegir siguiente estado
             if (Player._isGrounded){
-                AudioManagerPlayer.Instance.PlaySFX(AudioManagerPlayer.Instance.footstep);
+                Player._audioManager.PlaySFX(Player.footstep, Player.sfxSource, 1f);
                 fsm.ChangeState(Player.IdleState);
             }
             else

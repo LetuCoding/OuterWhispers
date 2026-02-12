@@ -30,8 +30,8 @@ public class EnemyPatrolState : EnemyState
             {
                 enemy.hasDetectedPlayer = true;
                 
-                if (enemy.audioManager != null) 
-                    enemy.audioManager.StopWalk();
+                /*if (enemy.audioManager != null) 
+                    enemy.audioManager.StopWalk();*/
 
                 if (enemy.canShoot)
                 {
@@ -75,24 +75,24 @@ public class EnemyPatrolState : EnemyState
                 enemy.animator.Play("Walk_Right");
                 
               
-               if (enemy.audioManager != null)
+               /*if (enemy.audioManager != null)
                {
                     
                    enemy.audioManager.PlayWalk();
-               }
+               }*/
             }
             else
             {
                 lastDirectionRight = false;
                 enemy.animator.Play("Walk_Left");
 
-                /**if (AudioManagerEnemy.Instance != null)
-                    AudioManagerEnemy.Instance.PlayWalk();*/
+                /*if (AudioManagerEnemy.Instance != null)
+                    AudioManagerEnemy.Instance.PlayWalk();
                 if (enemy.audioManager != null)
                 {
                     
                 enemy.audioManager.PlayWalk();
-                }
+                }*/
             }
         }
         
@@ -110,8 +110,8 @@ public class EnemyPatrolState : EnemyState
 
     private void StartWaiting()
     {
-        if (enemy.audioManager != null)
-            enemy.audioManager.StopWalk();
+        /*if (enemy.audioManager != null)
+            enemy.audioManager.StopWalk();*/
 
         if (lastDirectionRight == true)
         {
@@ -128,7 +128,7 @@ public class EnemyPatrolState : EnemyState
     
     public override void Exit()
     {
-        if (enemy.audioManager != null)
-            enemy.audioManager.StopWalk();
+        /*if (enemy.audioManager != null)
+            enemy.audioManager.StopWalk();*/
     }
 }

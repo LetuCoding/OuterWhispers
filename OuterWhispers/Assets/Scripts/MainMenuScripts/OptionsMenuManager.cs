@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Zenject;
@@ -11,19 +12,21 @@ public class OptionsMenuManager : MonoBehaviour
     public GameObject UiOptions;
     private SliderInt sliderSound;
     private SliderInt sliderMusic;
-    private IAudioManagerMenu _audioManagerMenu;
-    private IAudioManagerEnemy _audioManagerEnemy;
-    private IAudioManagerLevel _audioManagerLevel;
-    private IAudioManagerPlayer _audioManagerPlayer;
-    private bool isPaused = false;
+    private IAudioManager _audioManager;
+    
+    [Header("Audio Sources")]
+    [SerializeField] public AudioSource soundSource;
+    
+    [Header("SFX Clips")]
+    public AudioClip effect;
+    
+    [Header("Audio Mixer")]
+    public AudioMixer mixer;
     
     [Inject]
-    public void Construct(IAudioManagerMenu audioManagerMenu, IAudioManagerEnemy audioManagerEnemy, IAudioManagerLevel audioManagerLevel, IAudioManagerPlayer audioManagerPlayer)
+    public void Construct(IAudioManager audioManager)
     {
-        _audioManagerEnemy = audioManagerEnemy;
-        _audioManagerLevel = audioManagerLevel;
-        _audioManagerPlayer = audioManagerPlayer;
-        _audioManagerMenu = audioManagerMenu;
+        _audioManager = audioManager;
     }
     void Start()
     {
@@ -31,14 +34,7 @@ public class OptionsMenuManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Debug.Log("ESC DETECTADO");
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused) ResumeGame();
-            else PauseGame();
-        }
     }
 
 
@@ -87,21 +83,9 @@ public class OptionsMenuManager : MonoBehaviour
     private void OnSliderSoundChanged(ChangeEvent<int> evt)
     {
         float volume = evt.newValue / 100f;
-        if (_audioManagerEnemy != null)
+        if (_audioManager != null)
         {
-            _audioManagerEnemy.SetSoundVolume(volume);
-        }
-        if (_audioManagerLevel != null)
-        {
-            _audioManagerLevel.SetSoundVolume(volume);
-        }
-        if (_audioManagerPlayer != null)
-        {
-            _audioManagerPlayer.SetSoundVolume(volume);
-        }
-        if (_audioManagerMenu != null)
-        {
-            _audioManagerMenu.SetSoundVolume(volume);
+            _audioManager.SetSoundVolume(volume,mixer);
         }
     }
 
@@ -109,28 +93,21 @@ public class OptionsMenuManager : MonoBehaviour
     {
         float volume = evt.newValue / 100f;
 
-        if (_audioManagerMenu != null)
+        if (_audioManager != null)
         {
-            _audioManagerMenu.SetMusicVolume(volume);
+            _audioManager.SetMusicVolume(volume,mixer);
         }
-        if (_audioManagerLevel != null)
-        {
-            _audioManagerLevel.SetMusicVolume(volume);
-        }
-        
     }
 
     private void OnCloseClicked()
     {
-        if (AudioManagerMenu.Instance != null)
-            AudioManagerMenu.Instance.PlaySFX(AudioManagerMenu.Instance.clickSound);
+        _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
     }
     public void PauseGame()
     {
         UiOptions.SetActive(true);
         Time.timeScale = 0f;
-        isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -139,7 +116,6 @@ public class OptionsMenuManager : MonoBehaviour
     {
         UiOptions.SetActive(false);
         Time.timeScale = 1f;
-        isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

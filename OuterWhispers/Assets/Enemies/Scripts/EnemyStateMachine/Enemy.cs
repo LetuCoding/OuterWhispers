@@ -22,7 +22,16 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
     public Animator animator { get; private set; }
     private EnemyHealth health;
     
-    public AudioManagerEnemy audioManager;
+    #endregion
+    
+    #region Audio
+    public AudioSource audioSource;
+    public AudioClip footstep;
+    public AudioClip shoot;
+    public AudioClip dead;
+    public AudioClip chains;
+    public AudioClip smash;
+    public AudioClip damage;
     #endregion
 
     #region Configuration & References
@@ -74,7 +83,6 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         health = GetComponent<EnemyHealth>();
-        audioManager = GetComponent<AudioManagerEnemy>();
         StateMachine = new EnemyStateMachine();
         if (spriteRenderer != null)
             originalColor = spriteRenderer.color;
@@ -94,11 +102,7 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 
     private void Start()
     {
-        if (audioManager != null)
-        {
-            Debug.Log("Audio Manager existe");
-        }
-        
+
         if (playerTransform == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");

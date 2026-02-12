@@ -67,11 +67,11 @@ public class EnemyLowKickState : EnemyState
 
     private void PerformStrike()
     {
-        if (enemy.audioManager != null)
+        /*if (enemy.audioManager != null)
         {
                     
             enemy.audioManager.PlaySFX(enemy.audioManager.smash);
-        }
+        }*/
         
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
         if (isPlayerRight) enemy.animator.Play("Smash_Attack_Right_Execution");

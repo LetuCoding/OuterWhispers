@@ -6,7 +6,7 @@ public class GameInstaller : MonoInstaller
     public override void InstallBindings()
     {
         
-        Container.Bind<IAudioManagerEnemy>().To<AudioManagerEnemy>().AsSingle();
+        Container.Bind<IAudioManager>().To<AudioManager>().AsSingle();
 
         Container.Bind<IAudioManagerPlayer>().To<AudioManagerPlayer>().AsSingle();
         
