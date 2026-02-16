@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3477081092089652411}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.29, y: -16.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -104,7 +104,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8faa4cdb358d6d749b84aa1d0c7bc3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickableItem
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: ae1bbb090ad007727a7ec06238f48610, type: 2}
+  pickupSound: {fileID: 8300000, guid: 58fa00f25be56c13380325eb1bce10d7, type: 3}
+  audioSource: {fileID: 0}
+  pickupParticlesPrefab: {fileID: 2735653625918340178, guid: b802b2987abb7a850b52bc927aa76ebe, type: 3}
 --- !u!61 &4171442735332945294
 BoxCollider2D:
   m_ObjectHideFlags: 0

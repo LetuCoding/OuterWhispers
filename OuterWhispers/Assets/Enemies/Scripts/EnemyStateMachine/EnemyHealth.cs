@@ -14,9 +14,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        currentHealth = enemy.stats.maxHealth;
         lastDamageTime = -damageCooldown;
         enemy = GetComponent<Enemy>();
+        currentHealth = enemy.stats.maxHealth;
     }
 
     public void TakeDamage(float damage)

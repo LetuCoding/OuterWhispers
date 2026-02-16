@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 
 public interface IAudioManager
 {
+
         public void PlaySFX(AudioClip clip, AudioSource source, float soundPitch);
 
         public void PlayWalk(AudioClip clip, AudioSource source, float soundPitch);
