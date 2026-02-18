@@ -96,6 +96,7 @@ public class Player : MonoBehaviour, IEffectTarget
     }
     public IdleState IdleState { get; private set; }
     public JumpState JumpState { get; private set; }
+    public SprintState SprintState { get; private set; }
 
     public FallingState FallingState { get; private set; }
 
@@ -138,6 +139,7 @@ public class Player : MonoBehaviour, IEffectTarget
         FallingState = new FallingState(StateMachine, this);
         DashState = new DashState(StateMachine, this);
         AttackState = new AttackState(StateMachine, this);
+        SprintState = new SprintState(StateMachine, this);
     }
 
 

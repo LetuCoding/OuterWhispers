@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
-    public class IdleState : PlayerState
+public class IdleState : PlayerState
     {
     public IdleState(PlayerStateMachine fsm, Player player) : base(fsm, player) {}
     public override void Enter()
@@ -20,6 +21,14 @@ using UnityEngine;
 
     public override void LogicUpdate()
     {
+        if (Player._moveInput != 0 &&
+            (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed))
+        {
+            fsm.ChangeState(Player.SprintState);
+            Player._audioManager.StopWalk(Player.sfxSource);
+            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,1f);
+            return;
+        }
         if (Player._moveInput == 1)
         {
             Player._animator.Play("Walk_Right");
@@ -73,6 +82,13 @@ using UnityEngine;
             {
                 fsm.ChangeState(Player.FallingState);
             }
+            if (Player._moveInput != 0 &&
+                (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed))
+            {
+                fsm.ChangeState(Player.SprintState);
+                return;
+            }
+
         }
 
         //Gravedad estandar del personaje
