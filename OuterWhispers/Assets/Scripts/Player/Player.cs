@@ -2,11 +2,10 @@ using System.Collections;
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class Player : MonoBehaviour, IEffectTarget
+public class Player : MonoBehaviour, IEffectTarget, IPlayer
 {
     //=====================================================================================================
     // COMPONENTS & INPUT
@@ -16,7 +15,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public Rigidbody2D _rigidbody2D;
     public Animator _animator;
     public IAudioManager _audioManager;
-
+    public HealthComponent _healthComponent;
     public float _moveInput;
     public float _lastInput;
     public bool _isGrounded;
@@ -36,7 +35,8 @@ public class Player : MonoBehaviour, IEffectTarget
     public bool _wallJumping;
     public bool _wallSliding;
 
-    [Header("Attack Settings")] public PlayerStats stats;
+    [Header("Attack Settings")] 
+    public PlayerStats stats;
     public Transform attackPoint;
     public LayerMask enemyLayer;
 
@@ -84,6 +84,9 @@ public class Player : MonoBehaviour, IEffectTarget
     //======================================================================>
     //  STATE MACHINE AND STATES
     //======================================================================>
+
+    #region StateMachine
+    
     public PlayerStateMachine StateMachine { get; private set; }
 
     [Inject]
@@ -102,6 +105,10 @@ public class Player : MonoBehaviour, IEffectTarget
    
 
     private bool _isDead;
+    
+
+    #endregion
+   
 
     //=====================================================================================================
     // PUBLIC CONFIGURATION
@@ -126,7 +133,7 @@ public class Player : MonoBehaviour, IEffectTarget
         _playerInputActions.Enable();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-
+        _healthComponent =  GetComponent<HealthComponent>();
         //States inicializados
         StateMachine = new PlayerStateMachine();
         IdleState = new IdleState(StateMachine, this);
