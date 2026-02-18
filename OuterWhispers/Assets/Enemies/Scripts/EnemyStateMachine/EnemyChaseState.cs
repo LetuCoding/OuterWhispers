@@ -6,19 +6,24 @@ public class EnemyChaseState : EnemyState
 
     public override void LogicUpdate()
     {
-        if (enemy.playerTransform == null) return;
+        if (enemy.playerTransform == null)
+        {
+            stateMachine.ChangeState(enemy.PatrolState);
+            return;
+        }
 
         float distanceToPlayer = Vector2.Distance(enemy.transform.position, enemy.playerTransform.position);
 
         if (distanceToPlayer <= enemy.stats.attackRange.x)
         {
+            enemy.rb.linearVelocity = new Vector2(0, enemy.rb.linearVelocity.y);
             enemy.DecideNextCombatAction();
             return;
         }
 
         if (distanceToPlayer > enemy.stats.detectionDistance * 1.5f)
         {
-            if (enemy.EnemyDirection)
+            if (enemy.transform.position.x < enemy.playerTransform.position.x)
             {
                 enemy.animator.Play("Stop_Attack_Right");
             }
@@ -26,22 +31,19 @@ public class EnemyChaseState : EnemyState
             {
                 enemy.animator.Play("Stop_Attack_Left");
             }
+            
             enemy.hasDetectedPlayer = false;
             stateMachine.ChangeState(enemy.PatrolState);
             return;
         }
         
-        Vector3 targetPosition = new Vector3(enemy.playerTransform.position.x, enemy.transform.position.y, enemy.transform.position.z);
+        float directionX = Mathf.Sign(enemy.playerTransform.position.x - enemy.transform.position.x);
 
-        enemy.transform.position = Vector3.MoveTowards(
-            enemy.transform.position,
-            targetPosition,
-            enemy.stats.speed * Time.deltaTime
-        );
+        enemy.rb.linearVelocity = new Vector2(directionX * enemy.stats.speed, enemy.rb.linearVelocity.y);
         
-        
-        bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
-        enemy._audioManager.PlayWalk(enemy.footstep,enemy.audioSource,enemy.pitch);
+        bool isPlayerRight = directionX > 0;
+        enemy._audioManager.PlayWalk(enemy.footstep, enemy.audioSource, enemy.pitch);
+
         if (isPlayerRight)
         {
             enemy.animator.Play("Walk_Right");
@@ -53,13 +55,18 @@ public class EnemyChaseState : EnemyState
         
         if (enemy.meleeHitbox != null)
         {
-            float direction = isPlayerRight ? 1f : -1f;
-            enemy.meleeHitbox.transform.localPosition = new Vector3(direction * enemy.meleeAttackOffset, 0, 0);
+            float hitBoxDirection = isPlayerRight ? 1f : -1f;
+            enemy.meleeHitbox.transform.localPosition = new Vector3(hitBoxDirection * enemy.meleeAttackOffset, 0, 0);
         }
     }
 
     public override void Exit()
     {
+        if (enemy.rb != null)
+        {
+            enemy.rb.linearVelocity = new Vector2(0, enemy.rb.linearVelocity.y);
+        }
+        
         enemy._audioManager.StopWalk(enemy.audioSource);
     }
 }
