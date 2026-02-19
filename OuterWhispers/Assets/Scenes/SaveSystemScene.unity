@@ -8675,6 +8675,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da7fbc5c6c9342bc8ed6f6af55989e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+--- !u!1 &928978414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 928978416}
+  - component: {fileID: 928978415}
+  m_Layer: 0
+  m_Name: ItemDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &928978415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928978414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb1bbd5436347d9a78086e68fad8c8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Items.ItemDatabase
+  items:
+  - {fileID: 11400000, guid: 5e6562ef7197a3a88b4ade57c6b6b894, type: 2}
+  - {fileID: 11400000, guid: ae1bbb090ad007727a7ec06238f48610, type: 2}
+  - {fileID: 11400000, guid: cc3a7825da61dfe5daa3f0f445ad836b, type: 2}
+  - {fileID: 11400000, guid: a265d53a38c6dabc6baf7c4ef01cadac, type: 2}
+  - {fileID: 11400000, guid: cf2fd4a602154763daa71add3ae80e4f, type: 2}
+--- !u!4 &928978416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928978414}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1117651974
 GameObject:
   m_ObjectHideFlags: 0
@@ -8865,3 +8915,4 @@ SceneRoots:
   - {fileID: 1117651976}
   - {fileID: 68956342}
   - {fileID: 280894997}
+  - {fileID: 928978416}

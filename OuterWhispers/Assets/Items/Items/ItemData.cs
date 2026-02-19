@@ -11,7 +11,8 @@ public enum ItemType
 public abstract class ItemData : ScriptableObject
 {
     [Header("Info")]
-    [SerializeField] private int keyID;
+    [SerializeField] private string guid = System.Guid.NewGuid().ToString();
+    
     [SerializeField] private string itemName;
     [TextArea(2, 3)]
     [SerializeField] private string description;
@@ -22,5 +23,6 @@ public abstract class ItemData : ScriptableObject
     public string Description => description;
     public Sprite Icon => icon;
     public ItemType Type => itemType;
-    public int KeyID => keyID;
+    
+    public string Guid => guid;
 }

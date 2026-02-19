@@ -24,6 +24,11 @@ public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
         OnHealthChanged?.Invoke(currentHealth, _stats.maxHealth);
     }
 
+    public void SetHealth(float health)
+    {
+        currentHealth = health;
+    }
+    
     public void TakeDamage(float amount)
     {
         if (currentHealth <= 0) return;

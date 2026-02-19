@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using InventoryScripts;
 using UnityEditor.Build.Content;
 using UnityEditor.VersionControl;
 
@@ -11,9 +12,9 @@ namespace SaveSystem
     public class PlayerPositionData
     {
         
-        public List<String> itemsId;
+        public List<InventorySlotSaveData> inventory;
         public float[] position; // x, y, z
-        public float PlayerCurrentHealth;
+        public float playerCurrentHealth;
         public float maxHealth;
         
     }

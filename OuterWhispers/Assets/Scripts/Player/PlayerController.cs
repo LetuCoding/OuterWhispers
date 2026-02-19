@@ -1,4 +1,5 @@
 using InventoryScripts;
+using Items;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,11 +8,12 @@ public class PlayerController : MonoBehaviour
     private Player player;
     private Inventory inventory;
     private HealthComponent healthComponent;
+    private ItemDatabase itemDatabase;
     private void Awake()
     {
         saveSystem = new SimpleSaveSystem();
         player = GetComponent<Player>();
-        
+        itemDatabase = FindAnyObjectByType<ItemDatabase>();
         inventory = GetComponent<Inventory>();
     }
 
@@ -26,9 +28,10 @@ public class PlayerController : MonoBehaviour
         // Presiona L para cargar posición
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Vector3 loadedPos = saveSystem.Load();
-            transform.position = loadedPos;
-            Debug.Log($"[LOAD] Player moved to {loadedPos}");
+          
+            saveSystem.Load(player, inventory, itemDatabase );
+            
+            Debug.Log($"[LOAD] Player moved to yes");
         }
     }
 }
