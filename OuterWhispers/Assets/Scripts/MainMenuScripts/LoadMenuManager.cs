@@ -22,9 +22,6 @@ public class LoadMenuManager : MonoBehaviour
     public AudioClip effect;
     public AudioClip introMusic;
     
-    [Header("Audio Mixer")]
-    public AudioMixer mixer;
-    
     [Inject]
     public void Construct(IAudioManager audioManager)
     {

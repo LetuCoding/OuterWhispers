@@ -56,6 +56,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     //=====================================================================================================
     [Header("Audio Sources")]
     [SerializeField] public AudioSource sfxSource;
+    [SerializeField] public AudioSource itemSource;
+
 
     [Header("SFX Clips")]
     public AudioClip footstep;
@@ -65,6 +67,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public AudioClip punch;
     public AudioClip die;
     public AudioClip damage;
+    public AudioClip heal;
     
     //=====================================================================================================
     // WALL CHECK SETTINGS
@@ -311,6 +314,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
 
     public void Heal(float amount)
     {
+        _audioManager.PlaySFX(heal,itemSource,1f);
         Debug.Log("Healing " + amount);
     }
 

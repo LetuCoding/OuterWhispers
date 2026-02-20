@@ -13,7 +13,7 @@ public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
     public event Action<float, float> OnHealthChanged;
     public UnityEvent OnDeath;
     public UnityEvent OnDamage;
-
+    public UnityEvent OnHeal;
     private float currentHealth;
 
     public float CurrentHealth => currentHealth;
@@ -54,6 +54,7 @@ public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, _stats.maxHealth);
         OnHealthChanged?.Invoke(currentHealth, _stats.maxHealth);
+        OnHeal?.Invoke();
     }
 
     public void Die()
