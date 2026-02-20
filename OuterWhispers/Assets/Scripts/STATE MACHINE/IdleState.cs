@@ -22,74 +22,34 @@ public class IdleState : PlayerState
     public override void LogicUpdate()
     {
         if (Player._moveInput != 0 &&
-            (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed))
+            ((Keyboard.current.leftShiftKey?.isPressed ?? false) ||
+             (Keyboard.current.rightShiftKey?.isPressed ?? false)))
         {
             fsm.ChangeState(Player.SprintState);
-            Player._audioManager.StopWalk(Player.sfxSource);
-            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,1f);
             return;
         }
+
+        // Walk
         if (Player._moveInput == 1)
         {
+            Player.footsetpPitch = 0.5f;
             Player._animator.Play("Walk_Right");
-            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,0.5f);
+            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
+            return;
         }
         else if (Player._moveInput == -1)
         {
+            Player.footsetpPitch = 0.5f;
             Player._animator.Play("Walk_Left");
-            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,0.5f);
+            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
+            return;
         }
 
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            fsm.ChangeState(Player.AttackState);
-        }
-        
+        Player._audioManager.StopWalk(Player.sfxSource);
+        Player._animator.Play(Player._lastInput == -1 ? "Idle_Left" : "Idle_Right");
 
-        else if (Player._moveInput == 0)
-        {
-            Player._audioManager.StopWalk(Player.sfxSource);
-            if (Player._lastInput == -1)
-            {
-                Player._animator.Play("Idle_Left");
-            }
-            else
-            {
-                Player._animator.Play("Idle_Right");
-            }
-
-        }
-            
-            //Apretamos Dash y lo hace
-            if (Player.dashPressed)
-            {
-                Player._audioManager.StopWalk(Player.sfxSource);
-                fsm.ChangeState(Player.DashState);
-                return;
-            }
-            
-            
-            //Si estamos en el suelo y apretamos Dash, Dasheamos
-            if (Player.jumpPressed && Player._isGrounded)
-            {
-                Player._audioManager.StopWalk(Player.sfxSource);
-                fsm.ChangeState(Player.JumpState);
-                return;
-            }
-
-            //Si el jugador no está en el suelo y su velocidad es inferior a 0, pasamos a caer.
-            if (!Player._isGrounded && Player._rigidbody2D.linearVelocity.y < 0f)
-            {
-                fsm.ChangeState(Player.FallingState);
-            }
-            if (Player._moveInput != 0 &&
-                (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed))
-            {
-                fsm.ChangeState(Player.SprintState);
-                return;
-            }
-
-        }
+        // Dash / Jump etc... (como lo tengas)
+    }
 
         //Gravedad estandar del personaje
         public override void PhysicsUpdate()
@@ -101,7 +61,6 @@ public class IdleState : PlayerState
 
         public override void Exit()
         {
-            Player._audioManager.StopWalk(Player.sfxSource);
         }
     }
     

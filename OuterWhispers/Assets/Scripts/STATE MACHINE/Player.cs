@@ -58,7 +58,6 @@ public class Player : MonoBehaviour, IEffectTarget
     [SerializeField] public AudioSource sfxSource;
     [SerializeField] public AudioSource itemSource;
 
-
     [Header("SFX Clips")]
     public AudioClip footstep;
     public AudioClip dash;
@@ -68,6 +67,10 @@ public class Player : MonoBehaviour, IEffectTarget
     public AudioClip die;
     public AudioClip damage;
     public AudioClip heal;
+    
+    [Header("Audio Pitch")]
+    public float footsetpPitch = 0.5f;
+
     
     //=====================================================================================================
     // WALL CHECK SETTINGS

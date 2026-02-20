@@ -15,7 +15,8 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
             Debug.Log("Entering Sprint State");
             _originalSpeed = Player.speed;
             Player.speed = _originalSpeed * SprintMultiplier;
-            // Player._animator.Play(Player._lastInput == 1 ? "Run_Right" : "Run_Left");
+            Player.footsetpPitch = 1f;
+            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
         }
 
         public override void LogicUpdate()
@@ -28,6 +29,8 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
             // Si suelta SHIFT -> salir del sprint
             if (!shiftHeld)
             {
+                Player.footsetpPitch = 0.5f;
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.IdleState);
                 return;
             }
@@ -35,13 +38,24 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
             // Si no se mueve, no tiene sentido seguir sprintando (opcional pero recomendado)
             if (Mathf.Approximately(Player._moveInput, 0f))
             {
+                Player.footsetpPitch = 0.5f;
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.IdleState);
                 return;
             }
-
+            if (Player._moveInput == 1)
+            {
+                Player._animator.Play("Sprint_Right");
+            }
+            else if (Player._moveInput == -1)
+            {
+                Player._animator.Play("Sprint_Left");
+            }
             // Si saltas desde suelo
             if (Player.jumpPressed && Player._isGrounded)
             {
+                Player.footsetpPitch = 0.5f;
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.JumpState);
                 return;
             }
@@ -49,6 +63,8 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
             // Si dasheas (tu Player ya gestiona _isDashing para físicas)
             if (Player.dashPressed && Player._canDashAir)
             {
+                Player.footsetpPitch = 0.5f;
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.DashState);
                 return;
             }
@@ -56,6 +72,8 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
             // Si te vas al aire cayendo
             if (!Player._isGrounded && Player._rigidbody2D.linearVelocity.y < 0f)
             {
+                Player.footsetpPitch = 0.5f;
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.FallingState);
                 return;
             }
@@ -63,6 +81,8 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
             // Si entras a pared (si tu lógica lo requiere)
             if (Player._isOnWall)
             {
+                Player.footsetpPitch = 0.5f;
+                Player._audioManager.StopWalk(Player.sfxSource);
                 fsm.ChangeState(Player.WallSlideState);
                 return;
             }
