@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private SimpleSaveSystem saveSystem;
+    private OuterWhispersSaveSystem _outerWhispersSaveSystem;
     private Player player;
     private Inventory inventory;
     private HealthComponent healthComponent;
     private ItemDatabase itemDatabase;
     private void Awake()
     {
-        saveSystem = new SimpleSaveSystem();
+        _outerWhispersSaveSystem = new OuterWhispersSaveSystem();
         player = GetComponent<Player>();
         itemDatabase = FindAnyObjectByType<ItemDatabase>();
         inventory = GetComponent<Inventory>();
@@ -22,14 +22,14 @@ public class PlayerController : MonoBehaviour
         // Presiona G para guardar posición
         if (Input.GetKeyDown(KeyCode.G))
         {
-            saveSystem.Save(player, inventory);
+            _outerWhispersSaveSystem.saveData(player, inventory);
         }
 
         // Presiona L para cargar posición
         if (Input.GetKeyDown(KeyCode.L))
         {
           
-            saveSystem.Load(player, inventory, itemDatabase );
+            _outerWhispersSaveSystem.LoadData(player, inventory, itemDatabase );
             
             Debug.Log($"[LOAD] Player moved to yes");
         }
