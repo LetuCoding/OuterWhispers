@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class Player : MonoBehaviour, IEffectTarget
+public class Player : MonoBehaviour, IEffectTarget, IPlayer
 {
     //=====================================================================================================
     // COMPONENTS & INPUT
@@ -16,6 +16,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public Rigidbody2D _rigidbody2D;
     public Animator _animator;
     public IAudioManager _audioManager;
+    public HealthComponent _healthComponent;
 
     public float _moveInput;
     public float _lastInput;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public bool _jumpCutting;
     public bool _canDashAir;
     public bool _isDashing;
+    public bool _isSprinting;
 
     public bool jumpPressed;
     public bool jumpReleased;
