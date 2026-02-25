@@ -399,7 +399,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -413,7 +413,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!95 &1491320799073332389
 Animator:
   serializedVersion: 7
@@ -448,7 +448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4db46660d56e08ba00db3fb102fc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  stats: {fileID: 11400000, guid: 754186b0755092617bec7dccc2659c76, type: 2}
   damageCooldown: 0.2
 --- !u!114 &2645305039364836637
 MonoBehaviour:
@@ -475,9 +474,6 @@ MonoBehaviour:
   canPatrol: 1
   canChase: 1
   canShoot: 0
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
   meleeHitbox: {fileID: 4002075207194950034}
   meleeAttackOffset: 0.5
   lowKickYOffset: -0.5

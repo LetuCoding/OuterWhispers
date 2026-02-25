@@ -264,5 +264,26 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
 public class EnemyIdleState : EnemyState
 {
     public EnemyIdleState(EnemyStateMachine stateMachine, Enemy enemy) : base(stateMachine, enemy) { }
-    public override void LogicUpdate() { enemy.StopMovement(); }
+
+    public override void Enter()
+    {
+        if (enemy.rb != null) enemy.rb.linearVelocity = Vector2.zero;
+        enemy.animator.Play("Idle");
+    }
+
+    public override void LogicUpdate()
+    {
+        if (enemy.playerTransform != null)
+        {
+            float distance = Vector2.Distance(enemy.transform.position, enemy.playerTransform.position);
+            
+            if (distance <= enemy.stats.detectionDistance)
+            {
+                stateMachine.ChangeState(enemy.ChaseState);
+            }
+        }
+    }
+    public override void Exit()
+    {
+    }
 }

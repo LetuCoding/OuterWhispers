@@ -7,28 +7,37 @@ using UnityEngine.Events;
 
 public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
 {
-    [SerializeField] private PlayerStats stats;
+    
+    private PlayerStats _stats;
     
     public event Action<float, float> OnHealthChanged;
     public UnityEvent OnDeath;
     public UnityEvent OnDamage;
     public UnityEvent OnHeal;
     private float currentHealth;
+
+    public float CurrentHealth => currentHealth;
     private void Start()
     {
-        currentHealth = stats.maxHealth;
-        OnHealthChanged?.Invoke(currentHealth, stats.maxHealth);
+        _stats = GetComponent<Player>().stats;;
+        currentHealth = _stats.maxHealth;
+        OnHealthChanged?.Invoke(currentHealth, _stats.maxHealth);
     }
 
+    public void SetHealth(float health)
+    {
+        currentHealth = health;
+    }
+    
     public void TakeDamage(float amount)
     {
         if (currentHealth <= 0) return;
 
         currentHealth -= amount;
         
-        currentHealth = Mathf.Clamp(currentHealth, 0, stats.maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, _stats.maxHealth);
 
-        OnHealthChanged?.Invoke(currentHealth, stats.maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, _stats.maxHealth);
         
         //StartCoroutine(StopTimeOnDamage());
         
@@ -43,8 +52,8 @@ public class HealthComponent : MonoBehaviour, IDamageable, IEffectTarget
     public void Heal(float amount)
     {
         currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, stats.maxHealth);
-        OnHealthChanged?.Invoke(currentHealth, stats.maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, _stats.maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, _stats.maxHealth);
         OnHeal?.Invoke();
     }
 

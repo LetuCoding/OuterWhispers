@@ -9,10 +9,10 @@ public class EnemyPatrolState : EnemyState
     private float waitTimer;
     private bool lastDirectionRight;
 
-    // Control de cambio dinámico
     private float zoneCheckTimer;
-    private const float zoneCheckInterval = 1f;      // cada 1 segundo
-    private const float zoneChangeDistance = 6f;     // distancia mínima para cambiar
+    private const float zoneCheckInterval = 1f;
+    private const float zoneChangeDistance = 6f;
+    private const float stopDistance = 0.2f; 
 
     public EnemyPatrolState(EnemyStateMachine stateMachine, Enemy enemy)
         : base(stateMachine, enemy) { }
@@ -23,8 +23,7 @@ public class EnemyPatrolState : EnemyState
         currentWaypointIndex = 0;
         zoneCheckTimer = zoneCheckInterval;
 
-        currentZone = enemy.PatrolZoneService
-                           .GetClosestZone(enemy.transform.position);
+        currentZone = enemy.PatrolZoneService.GetClosestZone(enemy.transform.position);
 
         if (currentZone == null || currentZone.WaypointCount < 2)
         {
@@ -37,27 +36,28 @@ public class EnemyPatrolState : EnemyState
     public override void LogicUpdate()
     {
         HandlePlayerDetection();
-
         HandleZoneCheck();
 
         if (isWaiting)
+        {
             HandleWaiting();
+        }
         else
+        {
             MoveToWaypoint();
+        }
     }
 
     private void HandlePlayerDetection()
     {
-        if (enemy.playerTransform == null)
-            return;
+        if (enemy.playerTransform == null) return;
 
-        float dist = Vector2.Distance(
-            enemy.transform.position,
-            enemy.playerTransform.position);
+        float dist = Vector2.Distance(enemy.transform.position, enemy.playerTransform.position);
 
         if (dist <= enemy.stats.detectionDistance)
         {
             enemy.hasDetectedPlayer = true;
+            enemy.rb.linearVelocity = new Vector2(0, enemy.rb.linearVelocity.y); 
             enemy._audioManager.StopWalk(enemy.audioSource);
 
             if (enemy.canShoot)
@@ -70,22 +70,17 @@ public class EnemyPatrolState : EnemyState
     private void HandleZoneCheck()
     {
         zoneCheckTimer -= Time.deltaTime;
-
-        if (zoneCheckTimer > 0f)
-            return;
+        if (zoneCheckTimer > 0f) return;
 
         zoneCheckTimer = zoneCheckInterval;
 
-        if (currentZone == null)
-            return;
+        if (currentZone == null) return;
 
-        float sqrDist = (enemy.transform.position - (Vector3)currentZone.Center).sqrMagnitude;
-
-        if (sqrDist > zoneChangeDistance * zoneChangeDistance)
+        float distX = Mathf.Abs(enemy.transform.position.x - currentZone.Center.x);
+        
+        if (distX > zoneChangeDistance)
         {
-            PatrolZone newZone = enemy.PatrolZoneService
-                                       .GetClosestZone(enemy.transform.position);
-
+            PatrolZone newZone = enemy.PatrolZoneService.GetClosestZone(enemy.transform.position);
             if (newZone != null && newZone != currentZone)
             {
                 currentZone = newZone;
@@ -96,44 +91,46 @@ public class EnemyPatrolState : EnemyState
 
     private void HandleWaiting()
     {
+        enemy.rb.linearVelocity = new Vector2(0, enemy.rb.linearVelocity.y);
+
         waitTimer -= Time.deltaTime;
 
         if (waitTimer <= 0f)
         {
             isWaiting = false;
-            currentWaypointIndex =
-                (currentWaypointIndex + 1) % currentZone.WaypointCount;
+            currentWaypointIndex = (currentWaypointIndex + 1) % currentZone.WaypointCount;
         }
     }
 
     private void MoveToWaypoint()
     {
         Transform target = currentZone.GetWaypoint(currentWaypointIndex);
-        if (target == null)
-            return;
+        if (target == null) return;
 
-        float dirX = target.position.x - enemy.transform.position.x;
+        float distanceX = Mathf.Abs(target.position.x - enemy.transform.position.x);
 
-        if (Mathf.Abs(dirX) > 0.01f)
+        if (distanceX < stopDistance)
         {
-            lastDirectionRight = dirX > 0f;
-
-            enemy.animator.Play(lastDirectionRight ? "Walk_Right" : "Walk_Left");
-            enemy._audioManager.PlayWalk(enemy.footstep,enemy.audioSource,enemy.pitch);
+            StartWaiting();
+            return;
         }
 
-        enemy.transform.position = Vector2.MoveTowards(
-            enemy.transform.position,
-            target.position,
-            enemy.stats.speed * Time.deltaTime
-        );
+        float direction = Mathf.Sign(target.position.x - enemy.transform.position.x);
 
-        if ((enemy.transform.position - target.position).sqrMagnitude < 0.0025f)
-            StartWaiting();
+        if (distanceX > 0.01f)
+        {
+            lastDirectionRight = direction > 0f;
+            enemy.animator.Play(lastDirectionRight ? "Walk_Right" : "Walk_Left");
+            enemy._audioManager.PlayWalk(enemy.footstep, enemy.audioSource, enemy.pitch);
+        }
+        
+        enemy.rb.linearVelocity = new Vector2(direction * enemy.stats.speed, enemy.rb.linearVelocity.y);
     }
 
     private void StartWaiting()
     {
+        enemy.rb.linearVelocity = new Vector2(0, enemy.rb.linearVelocity.y);
+        
         enemy._audioManager.StopWalk(enemy.audioSource);
         enemy.animator.Play(lastDirectionRight ? "Idle_Right" : "Idle_Left");
 
@@ -143,6 +140,11 @@ public class EnemyPatrolState : EnemyState
 
     public override void Exit()
     {
+        if (enemy.rb != null)
+        {
+            enemy.rb.linearVelocity = new Vector2(0, enemy.rb.linearVelocity.y);
+        }
+        
         enemy._audioManager.StopWalk(enemy.audioSource);
     }
 }
