@@ -18,7 +18,7 @@ public class AudioManager : IAudioManager
         {
             source.clip = clip;
             source.loop = true;
-            source.pitch = 0.5f;
+            source.pitch = soundPitch;
             source.Play();
         }
     }

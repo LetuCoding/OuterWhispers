@@ -23,6 +23,7 @@ public class Player : MonoBehaviour, IEffectTarget
     public bool _jumpCutting;
     public bool _canDashAir;
     public bool _isDashing;
+    public bool _isSprinting;
 
     public bool jumpPressed;
     public bool jumpReleased;
@@ -89,7 +90,7 @@ public class Player : MonoBehaviour, IEffectTarget
 
     //======================================================================>
     //  STATE MACHINE AND STATES
-    //======================================================================>
+    //======================z================================================>
     public PlayerStateMachine StateMachine { get; private set; }
 
     [Inject]
