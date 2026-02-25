@@ -2,6 +2,7 @@ using System.Collections;
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using Zenject;
 
@@ -16,12 +17,14 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public Animator _animator;
     public IAudioManager _audioManager;
     public HealthComponent _healthComponent;
+
     public float _moveInput;
     public float _lastInput;
     public bool _isGrounded;
     public bool _jumpCutting;
     public bool _canDashAir;
     public bool _isDashing;
+    public bool _isSprinting;
 
     public bool jumpPressed;
     public bool jumpReleased;
@@ -35,8 +38,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool _wallJumping;
     public bool _wallSliding;
 
-    [Header("Attack Settings")] 
-    public PlayerStats stats;
+    [Header("Attack Settings")] public PlayerStats stats;
     public Transform attackPoint;
     public LayerMask enemyLayer;
 
@@ -69,6 +71,10 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public AudioClip damage;
     public AudioClip heal;
     
+    [Header("Audio Pitch")]
+    public float footsetpPitch = 0.5f;
+
+    
     //=====================================================================================================
     // WALL CHECK SETTINGS
     //=====================================================================================================
@@ -99,6 +105,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     }
     public IdleState IdleState { get; private set; }
     public JumpState JumpState { get; private set; }
+    public SprintState SprintState { get; private set; }
 
     public FallingState FallingState { get; private set; }
 
@@ -145,6 +152,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         FallingState = new FallingState(StateMachine, this);
         DashState = new DashState(StateMachine, this);
         AttackState = new AttackState(StateMachine, this);
+        SprintState = new SprintState(StateMachine, this);
     }
 
 

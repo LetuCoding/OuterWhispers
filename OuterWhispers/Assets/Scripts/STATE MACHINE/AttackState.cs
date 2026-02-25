@@ -1,5 +1,6 @@
 using UnityEngine;
 using Core.Interfaces;
+using Zenject.SpaceFighter;
 
 public class AttackState : PlayerState
 {
@@ -9,7 +10,7 @@ public class AttackState : PlayerState
 
     public override void Enter()
     {
-
+        Debug.Log("Entering Attack State");
         stateTimer = Player.stats.attackCooldown; 
         Player._audioManager.PlaySFX(Player.punch, Player.sfxSource, 1f);
         if (Player._lastInput == -1)

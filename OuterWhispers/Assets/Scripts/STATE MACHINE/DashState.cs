@@ -14,8 +14,7 @@ using UnityEngine;
 
     public override void Enter()
     {
-
-
+        Debug.Log("Entering Dash State");
         if (!Player._isGrounded && !Player._canDashAir) ExitDash();
 
         Player._audioManager.PlaySFX(Player.dash, Player.sfxSource, 1f);
