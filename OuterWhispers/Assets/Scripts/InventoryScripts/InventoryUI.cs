@@ -26,6 +26,8 @@ public class InventoryUI : MonoBehaviour
         inventoryRoot.SetActive(false);
     }
 
+
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -35,13 +37,24 @@ public class InventoryUI : MonoBehaviour
     }
 
 
-    void BuildSlots()
+    public void BuildSlots()
     {
+        
+        
         foreach (var slot in inventory.items)
         {
             SlotUI uiSlot = Instantiate(slotPrefab, slotsParent);
             uiSlot.Setup(slot, this);
         }
+    }
+
+    public void LoadBuild()
+    {
+        foreach (Transform child in slotsParent)
+        {
+            Destroy(child.gameObject);
+        }
+        BuildSlots();
     }
 
     public void ShowDetails(InventorySlot slot)

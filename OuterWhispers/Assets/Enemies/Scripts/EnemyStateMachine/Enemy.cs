@@ -102,9 +102,6 @@ public class Enemy : MonoBehaviour, Core.Interfaces.IDamageable
         if (spriteRenderer != null)
             originalColor = spriteRenderer.color;
         PatrolState = new EnemyPatrolState(StateMachine, this);
-        PatrolState = new EnemyPatrolState(StateMachine, this);
-        PatrolState = new EnemyPatrolState(StateMachine, this);
-        PatrolState = new EnemyPatrolState(StateMachine, this);
         ChaseState = new EnemyChaseState(StateMachine, this);
         MeleeState = new EnemyMeleeState(StateMachine, this);
         ShootState = new EnemyShootState(StateMachine, this);

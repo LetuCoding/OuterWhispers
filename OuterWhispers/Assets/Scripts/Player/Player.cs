@@ -1,6 +1,7 @@
 using System.Collections;
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
+using InventoryScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -16,6 +17,10 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public Animator _animator;
     public IAudioManager _audioManager;
     public HealthComponent _healthComponent;
+    private Inventory _inventory;
+    
+    public Inventory Inventory => _inventory;
+    
     public float _moveInput;
     public float _lastInput;
     public bool _isGrounded;
@@ -27,6 +32,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool jumpReleased;
     public bool dashPressed;
 
+  
 
     //WallState
     public bool _isOnWall;
@@ -137,6 +143,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _healthComponent =  GetComponent<HealthComponent>();
+        _inventory =  GetComponent<Inventory>();
+        
         //States inicializados
         StateMachine = new PlayerStateMachine();
         IdleState = new IdleState(StateMachine, this);
@@ -145,6 +153,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         FallingState = new FallingState(StateMachine, this);
         DashState = new DashState(StateMachine, this);
         AttackState = new AttackState(StateMachine, this);
+        
+        Debug.Log(_inventory == null ? "Inventory es NULL" : "Inventory OK");
     }
 
 
@@ -367,4 +377,5 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             sr.color = Color.white;
     }
 
+   
 }

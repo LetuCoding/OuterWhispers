@@ -11,8 +11,8 @@ namespace InventoryScripts
         [Header("Inventory settings")] [SerializeField]
         private int slotCount;
 
-        [SerializeField] private HealthComponent owner;
-        public HealthComponent Owner => owner;
+        [SerializeField] private Player owner;
+        public Player Owner => owner;
 
         public List<InventorySlot> items = new List<InventorySlot>();
 
@@ -40,8 +40,10 @@ namespace InventoryScripts
                     slot.item = item;
                     EAddItem?.Invoke(this);
                     return true;
+                    
                 }
 
+               
             }
 
             
@@ -81,6 +83,31 @@ namespace InventoryScripts
             
             return false;
         }
-        
-}
+
+        public bool CheckItemByName(String name)
+        {
+            foreach (var slot in items)
+            {
+                if (slot.item.name == name) return true;
+            }
+            return false;
+        }
+
+        public bool RemoveItemByName(String name)
+        {
+            foreach (var slot in items)
+            {
+                if (slot.item.name == name)
+                {
+                    items.Remove(slot);
+                    Debug.Log("Successfully removed item " + name);
+                }
+                return true;
+            }
+            Debug.Log("No such item");
+            return false;
+        }
+
+
+    }
 }
