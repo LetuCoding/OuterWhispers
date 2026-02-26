@@ -4,6 +4,7 @@ public class EnemyHeavyAttackState : EnemyState
 {
     private float timer;
     private bool hasPerformedStrike;
+    private bool attackDirection;
     
     private float chargeDuration = 2f;   
     private float hitboxActiveTime = 0.3f; 
@@ -21,8 +22,16 @@ public class EnemyHeavyAttackState : EnemyState
         hasPerformedStrike = false;
 
         bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
-        if (isPlayerRight) enemy.animator.Play("Heavy_Attack_Right");
-        else enemy.animator.Play("Heavy_Attack_Left");
+        if (isPlayerRight)
+        {
+            enemy.animator.Play("Heavy_Attack_Right");
+            attackDirection = true;
+        }
+        else
+        {
+            enemy.animator.Play("Heavy_Attack_Left");
+            attackDirection = false;
+        }
         
         if (enemy.meleeHitbox != null) enemy.meleeHitbox.SetActive(false);
     }
@@ -67,8 +76,7 @@ public class EnemyHeavyAttackState : EnemyState
     private void PerformStrike()
     {
         enemy._audioManager.PlaySFX(enemy.chains,enemy.audioSource,enemy.pitch);
-        bool isPlayerRight = enemy.playerTransform.position.x > enemy.transform.position.x;
-        if (isPlayerRight) enemy.animator.Play("Heavy_Attack_Right_Execution");
+        if (attackDirection) enemy.animator.Play("Heavy_Attack_Right_Execution");
         else enemy.animator.Play("Heavy_Attack_Left_Execution");
 
         if (enemy.meleeHitbox != null)

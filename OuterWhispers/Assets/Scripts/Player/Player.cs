@@ -29,6 +29,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool jumpPressed;
     public bool jumpReleased;
     public bool dashPressed;
+    public bool shiftPressedThisFrame;
+    public bool shiftHeld;
 
 
     //WallState
@@ -173,7 +175,12 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         jumpReleased = _playerInputActions.Player.Jump.WasReleasedThisFrame();
         dashPressed = _playerInputActions.Player.Dash.WasPressedThisFrame();
         _moveInput = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
-
+        shiftPressedThisFrame =
+            (Keyboard.current.leftShiftKey?.wasPressedThisFrame ?? false) ||
+            (Keyboard.current.rightShiftKey?.wasPressedThisFrame ?? false);
+        shiftHeld =
+            (Keyboard.current.leftShiftKey?.isPressed ?? false) ||
+            (Keyboard.current.rightShiftKey?.isPressed ?? false);
         if (_moveInput != 0)
         {
             _lastInput = _moveInput;
