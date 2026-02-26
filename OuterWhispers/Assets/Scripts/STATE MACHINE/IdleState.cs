@@ -21,14 +21,21 @@ public class IdleState : PlayerState
  
     public override void LogicUpdate()
     {
-        if (Player._moveInput != 0 &&
-            (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed))
+        if (Player._isGrounded && Player.shiftPressedThisFrame)
+        {
+            Player._audioManager.StopWalk(Player.sfxSource);
+            fsm.ChangeState(Player.DashState);
+            return;
+        }
+
+        if (Player._moveInput != 0 && Player.shiftHeld)
         {
             Player.footsetpPitch = 0.7f;
-            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,Player.footsetpPitch);
+            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
             fsm.ChangeState(Player.SprintState);
             return;
         }
+
         else if (Player._moveInput == 1)
         {
             Player.footsetpPitch = 0.5f;

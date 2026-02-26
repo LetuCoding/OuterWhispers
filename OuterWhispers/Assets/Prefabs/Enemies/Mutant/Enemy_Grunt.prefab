@@ -64,31 +64,31 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.4149147
-      value: 1.0037193
-      inSlope: -5.0019917
-      outSlope: -5.0019917
+      time: 0.15999374
+      value: 1.018055
+      inSlope: -1.9093791
+      outSlope: -1.9093791
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.37108427
     - serializedVersion: 3
-      time: 0.49902344
-      value: 0.46123964
-      inSlope: -1.9015
-      outSlope: -1.9015
+      time: 0.5175171
+      value: 0.47658998
+      inSlope: -0.8442764
+      outSlope: -0.8442764
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.30799103
+      inWeight: 0.7764014
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -1.1366681
+      outSlope: -1.1366681
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.4570783
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -225,7 +225,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 12
   m_Sprite: {fileID: -8479810848188833700, guid: a6483748ab0c56725baca450125877fd, type: 3}
   m_Color: {r: 0.1882353, g: 0.29803923, b: 0, a: 1}
   m_FlipX: 0
