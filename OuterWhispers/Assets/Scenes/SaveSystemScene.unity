@@ -478,7 +478,7 @@ PrefabInstance:
     - target: {fileID: 8803182007246636894, guid: 237f5837ec8e20d58bd74720e009a9b3, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: ae1bbb090ad007727a7ec06238f48610, type: 2}
+      objectReference: {fileID: 11400000, guid: 303841a34d53d2d68856ff740ddd9b28, type: 2}
     - target: {fileID: 8803182007246636894, guid: 237f5837ec8e20d58bd74720e009a9b3, type: 3}
       propertyPath: audioSource
       value: 
@@ -8683,6 +8683,38 @@ PrefabInstance:
       propertyPath: owner
       value: 
       objectReference: {fileID: 865468572}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: items.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: inventoryChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: inventoryChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: inventoryChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 250404296}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: inventoryChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: inventoryChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RefreshSlots
+      objectReference: {fileID: 0}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: inventoryChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InventoryUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
+      propertyPath: inventoryChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8733,10 +8765,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1567009071383335015, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 164781654}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5566472200803501241, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 865468566}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
 --- !u!1001 &539490208
 PrefabInstance:
@@ -8839,44 +8868,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9942c2e47568519908233dc2b87468a8, type: 3}
---- !u!1 &865468565 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5566472200803501241, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
-  m_PrefabInstance: {fileID: 417944226}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &865468566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865468565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7fbc5c6c9342bc8ed6f6af55989e9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  GameLoaded:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 250404296}
-        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
-        m_MethodName: LoadBuild
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &865468570 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 966639831666262910, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
   m_PrefabInstance: {fileID: 417944226}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865468565}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 378a96cfd93f49fc8737d1eeb9044f58, type: 3}
@@ -8887,7 +8884,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2349091239875696405, guid: 018d160a2aa0801f58f760771a5790b6, type: 3}
   m_PrefabInstance: {fileID: 417944226}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865468565}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d7ff30d2bcfbfb4b94ece53f9cd6d35, type: 3}

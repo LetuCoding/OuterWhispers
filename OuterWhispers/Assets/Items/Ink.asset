@@ -15,5 +15,5 @@ MonoBehaviour:
   guid: 0ce99383-cff1-4075-b818-805e2677ebee
   itemName: Ink ribbon
   description: To be used with a typewriter.
-  icon: {fileID: 0}
+  icon: {fileID: -1372064561821452604, guid: f61c01242315c5555953fb55e2b70361, type: 3}
   itemType: 0

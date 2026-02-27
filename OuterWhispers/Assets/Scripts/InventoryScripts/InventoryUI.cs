@@ -90,7 +90,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    void RefreshSlots()
+    public void RefreshSlots()
     {
         foreach (Transform child in slotsParent)
         {
@@ -110,8 +110,8 @@ public class InventoryUI : MonoBehaviour
 
     void ToggleInventory()
     {
-        RefreshSlots();
         inventoryRoot.SetActive(!inventoryRoot.activeSelf);
+        RefreshSlots();
         Debug.Log("Inventario toggle: " + inventoryRoot.activeSelf);
     }
 }

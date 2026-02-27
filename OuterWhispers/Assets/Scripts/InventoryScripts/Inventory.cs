@@ -17,7 +17,7 @@ namespace InventoryScripts
         public List<InventorySlot> items = new List<InventorySlot>();
 
         public event Action<Inventory> EAddItem;
-
+        
 
         private void Awake()
         {
@@ -53,6 +53,7 @@ namespace InventoryScripts
 
         public void RemoveItem(InventorySlot slot)
         {
+            
             slot.Clear();
 
         }
@@ -67,6 +68,7 @@ namespace InventoryScripts
                 if (slot.IsEmpty)
                 {
                     slot.item = item;
+                    
                     return true;
                 }
 
@@ -88,22 +90,24 @@ namespace InventoryScripts
         {
             foreach (var slot in items)
             {
-                if (slot.item.name == name) return true;
+                if (slot.item != null && slot.item.name == name) return true;
             }
             return false;
         }
 
-        public bool RemoveItemByName(String name)
+        public bool RemoveItemByName(string name)
         {
             foreach (var slot in items)
             {
-                if (slot.item.name == name)
+                if (slot.item != null && slot.item.name == name)
                 {
-                    items.Remove(slot);
+                    slot.Clear(); // 🔥 vacía el slot
+                 
                     Debug.Log("Successfully removed item " + name);
+                    return true;
                 }
-                return true;
             }
+
             Debug.Log("No such item");
             return false;
         }

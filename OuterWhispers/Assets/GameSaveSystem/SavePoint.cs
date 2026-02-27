@@ -22,7 +22,7 @@ public class SavePoint : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            TrySave();
+            //TrySave();
         }
     }
 
@@ -33,10 +33,10 @@ public class SavePoint : MonoBehaviour
             Debug.Log("Necesitas Ink Ribbon para guardar.");
             return;
         }
+        _player.Inventory.RemoveItemByName(requiredItemName);
 
         _saveSystem.saveData(_player, _player.Inventory);
 
-        _player.Inventory.RemoveItemByName(requiredItemName);
 
         Debug.Log("Game Saved.");
     }
