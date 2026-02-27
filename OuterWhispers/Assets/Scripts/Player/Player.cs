@@ -25,6 +25,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool _canDashAir;
     public bool _isDashing;
     public bool _isSprinting;
+    public bool _isAttackSliding;
 
     public bool jumpPressed;
     public bool jumpReleased;
@@ -110,7 +111,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public SprintState SprintState { get; private set; }
 
     public FallingState FallingState { get; private set; }
-
+    public AttackRunState AttackRunState { get; private set; }
     public WallSlideState WallSlideState { get; private set; }
 
     public DashState DashState { get; private set; }
@@ -155,6 +156,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         DashState = new DashState(StateMachine, this);
         AttackState = new AttackState(StateMachine, this);
         SprintState = new SprintState(StateMachine, this);
+        AttackRunState = new AttackRunState(StateMachine, this);
     }
 
 
@@ -205,7 +207,11 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             return;
         }
 
-
+        if (_isDashing || _isAttackSliding)
+        {
+            StateMachine.CurrentState.PhysicsUpdate();
+            return;
+        }
 
         if (_moveInput != 0)
         {
