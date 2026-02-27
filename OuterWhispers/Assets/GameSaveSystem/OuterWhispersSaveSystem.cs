@@ -11,10 +11,15 @@ using SaveSystem;
 
         public void saveData(Player player, Inventory playerInventory)
         {
+            
             PlayerPositionData data = new PlayerPositionData
             {
+                
                 position = new float[]
-                    { player.transform.position.x, player.transform.position.y, player.transform.position.z },
+                {
+                    
+                    player.transform.position.x, player.transform.position.y, player.transform.position.z
+                },
                 playerCurrentHealth = player._healthComponent.CurrentHealth,
                 inventory = new List<InventorySlotSaveData>()
 

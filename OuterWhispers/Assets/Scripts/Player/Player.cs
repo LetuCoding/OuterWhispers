@@ -1,6 +1,7 @@
 using System.Collections;
 using _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE;
 using Interfaces;
+using InventoryScripts;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
@@ -17,6 +18,10 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public Animator _animator;
     public IAudioManager _audioManager;
     public HealthComponent _healthComponent;
+    private Inventory _inventory;
+    
+    public Inventory Inventory => _inventory;
+    
 
     public float _moveInput;
     public float _lastInput;
@@ -33,6 +38,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool shiftPressedThisFrame;
     public bool shiftHeld;
 
+  
 
     //WallState
     public bool _isOnWall;
@@ -41,7 +47,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool _wallJumping;
     public bool _wallSliding;
 
-    [Header("Attack Settings")] public PlayerStats stats;
+    [Header("Attack Settings")] 
+    public PlayerStats stats;
     public Transform attackPoint;
     public LayerMask enemyLayer;
 
@@ -147,6 +154,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _healthComponent =  GetComponent<HealthComponent>();
+        _inventory =  GetComponent<Inventory>();
+        
         //States inicializados
         StateMachine = new PlayerStateMachine();
         IdleState = new IdleState(StateMachine, this);
@@ -388,4 +397,5 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             sr.color = Color.white;
     }
 
+   
 }

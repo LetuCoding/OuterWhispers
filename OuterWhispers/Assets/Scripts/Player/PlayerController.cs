@@ -1,6 +1,7 @@
 using InventoryScripts;
 using Items;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Inventory inventory;
     private HealthComponent healthComponent;
     private ItemDatabase itemDatabase;
+    public UnityEvent GameLoaded;
     private void Awake()
     {
         _outerWhispersSaveSystem = new OuterWhispersSaveSystem();
@@ -27,10 +29,11 @@ public class PlayerController : MonoBehaviour
 
         // Presiona L para cargar posición
         if (Input.GetKeyDown(KeyCode.L))
-        {
+        {   
+         
           
             _outerWhispersSaveSystem.LoadData(player, inventory, itemDatabase );
-            
+            GameLoaded.Invoke();
             Debug.Log($"[LOAD] Player moved to yes");
         }
     }

@@ -334,7 +334,6 @@ GameObject:
   - component: {fileID: 2738201051470901867}
   - component: {fileID: 5576422638798923847}
   - component: {fileID: 7021948805454137875}
-  - component: {fileID: 9148572087756377554}
   m_Layer: 0
   m_Name: Enemy Final Boss
   m_TagString: Untagged
@@ -480,7 +479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4db46660d56e08ba00db3fb102fc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  stats: {fileID: 11400000, guid: 754186b0755092617bec7dccc2659c76, type: 2}
   damageCooldown: 0.2
 --- !u!114 &5576422638798923847
 MonoBehaviour:
@@ -495,14 +493,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   stats: {fileID: 11400000, guid: 754186b0755092617bec7dccc2659c76, type: 2}
-  audioManager: {fileID: 9148572087756377554}
+  audioSource: {fileID: 0}
+  footstep: {fileID: 0}
+  shoot: {fileID: 0}
+  dead: {fileID: 0}
+  chains: {fileID: 0}
+  smash: {fileID: 0}
+  damage: {fileID: 0}
+  pitch: 1
   playerTransform: {fileID: 0}
   canPatrol: 1
   canChase: 1
   canShoot: 0
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
   meleeHitbox: {fileID: 5807993998051550484}
   meleeAttackOffset: 0.5
   lowKickYOffset: -0.5
@@ -556,23 +558,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 1.3}
   m_Direction: 0
---- !u!114 &9148572087756377554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8564354479509007166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4891c4a4ff5f495a1b77b6d8a796e08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerEnemy
-  sfxSource: {fileID: 1752815328110798724}
-  footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
-  shoot: {fileID: 8300000, guid: 60e9eb66651f2a7db9d53a2e48a9fb68, type: 3}
-  damage: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
-  dead: {fileID: 8300000, guid: 553eb7fea8068a77eb3a2c97f41c4028, type: 3}
-  musicVolume: 1
-  soundVolume: 1
-  minPlayTime: 5
