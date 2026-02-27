@@ -4,17 +4,11 @@ using Zenject;
 public class SavePoint : MonoBehaviour
 {
     [Inject] private Player _player;
-
-    private OuterWhispersSaveSystem _saveSystem;
-
+    
     [SerializeField] private string requiredItemName = "Ink";
+    public SaveMenuManager SaveMenuManager;
 
     private bool _playerInside;
-
-    void Start()
-    {
-        _saveSystem = new OuterWhispersSaveSystem();
-    }
 
     void Update()
     {
@@ -22,23 +16,8 @@ public class SavePoint : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            //TrySave();
+            SaveMenuManager.Open();
         }
-    }
-
-    private void TrySave()
-    {
-        if (!_player.Inventory.CheckItemByName(requiredItemName))
-        {
-            Debug.Log("Necesitas Ink Ribbon para guardar.");
-            return;
-        }
-        _player.Inventory.RemoveItemByName(requiredItemName);
-
-        _saveSystem.saveData(_player, _player.Inventory);
-
-
-        Debug.Log("Game Saved.");
     }
 
     private void OnTriggerEnter2D(Collider2D other)

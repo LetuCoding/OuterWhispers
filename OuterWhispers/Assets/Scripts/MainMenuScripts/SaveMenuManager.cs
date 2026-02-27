@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,13 @@ public class SaveMenuManager : MonoBehaviour
     public GameObject UiOptions;
     private Button NoButton;
     private Button YesButton;
+    private Label saveText;
     private IAudioManager _audioManager;
+    [Inject] private Player _player;
+
+    private OuterWhispersSaveSystem _saveSystem;
+
+    [SerializeField] private string requiredItemName = "Ink";
     
     [Header("Audio Sources")]
     [SerializeField] public AudioSource soundSource;
@@ -25,8 +32,16 @@ public class SaveMenuManager : MonoBehaviour
     {
         _audioManager = audioManager;
     }
+
+    public void Open()
+    {
+        _audioManager.PlaySFX(machineSound, soundSource, 1f);
+        UiOptions.SetActive(true);
+    }
     void Start()
     {
+        UiOptions.SetActive(false);
+        _saveSystem = new OuterWhispersSaveSystem();
     }
     void OnEnable()
     {
@@ -35,6 +50,7 @@ public class SaveMenuManager : MonoBehaviour
         CloseButton = root.Q<Button>("CloseButton");
         NoButton = root.Q<Button>("NoButton");
         YesButton = root.Q<Button>("YesButton");
+        saveText = root.Q<Label>("NoInkText");
         
         if (CloseButton != null) CloseButton.clicked += OnCloseClicked;
         if (NoButton != null) NoButton.clicked += OnNoClicked;
@@ -75,20 +91,29 @@ public class SaveMenuManager : MonoBehaviour
     
     private void OnCloseClicked()
     {
+        saveText.text = " ";
         _audioManager.PlaySFX(effect, soundSource, 1f);
-        UiOptions.SetActive(false);
-    }
-    private void OnYesClicked()
-    {
-        _audioManager.PlaySFX(machineSound, soundSource, 1f);
         UiOptions.SetActive(false);
     }
 
     private void OnNoClicked()
     {
-        _audioManager.PlaySFX(machineSound, soundSource, 1f);
+        saveText.text = " ";
+        _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
     }
-
+    private void OnYesClicked()
+    {
+        if (!_player.Inventory.CheckItemByName(requiredItemName))
+        {
+            saveText.text = "The typewriter needs ink";
+            return;
+        }
+        _player.Inventory.RemoveItemByName(requiredItemName);
+        _saveSystem.saveData(_player, _player.Inventory);
+        _audioManager.PlaySFX(machineSound, soundSource, 1f);
+        Debug.Log("Game Saved.");
+        UiOptions.SetActive(false);
+    }
 
 }

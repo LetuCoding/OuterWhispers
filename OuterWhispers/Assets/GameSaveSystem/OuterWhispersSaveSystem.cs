@@ -16,7 +16,7 @@ using SaveSystem;
             {
                 
                 position = new float[]
-                {
+                {                              
                     
                     player.transform.position.x, player.transform.position.y, player.transform.position.z
                 },

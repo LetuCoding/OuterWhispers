@@ -383,6 +383,22 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             _rigidbody2D.bodyType = RigidbodyType2D.Static; // opcional: congela total
         }
     }
+    private void UnfreezePlayer()
+    {
+        // Reactivar input
+        if (_playerInputActions != null)
+            _playerInputActions.Enable();
+
+        // Restaurar físicas
+        if (_rigidbody2D != null)
+        {
+            _rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+
+            // opcional pero recomendable
+            _rigidbody2D.linearVelocity = Vector2.zero;
+            _rigidbody2D.angularVelocity = 0f;
+        }
+    }
 
     private IEnumerator HitEffect()
     {
