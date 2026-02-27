@@ -56,6 +56,10 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
                 fsm.ChangeState(Player.JumpState);
                 return;
             }
+            else if (Input.GetKeyDown(KeyCode.F))
+            {
+                fsm.ChangeState(Player.AttackRunState);
+            }
 
             // Si dasheas (tu Player ya gestiona _isDashing para físicas)
             if (Player.dashPressed && Player._canDashAir)
