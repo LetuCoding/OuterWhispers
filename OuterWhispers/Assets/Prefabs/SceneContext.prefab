@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8059359112113432101
+--- !u!1 &2741299098221859806
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8413882546549835376}
-  - component: {fileID: 6613135658628178820}
-  - component: {fileID: 3205588500812111864}
+  - component: {fileID: 880936396202260261}
+  - component: {fileID: 6576475410314067743}
+  - component: {fileID: 5558642977755318}
   m_Layer: 0
   m_Name: GameInjector
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8413882546549835376
+--- !u!4 &880936396202260261
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8059359112113432101}
+  m_GameObject: {fileID: 2741299098221859806}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.42553, y: -1.81884, z: 0}
@@ -33,25 +33,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5222277164035195710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6613135658628178820
+--- !u!114 &6576475410314067743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8059359112113432101}
+  m_GameObject: {fileID: 2741299098221859806}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8511101e15b1495e9357ecd2675b6dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Scripts.PatrolInstaller
---- !u!114 &3205588500812111864
+--- !u!114 &5558642977755318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8059359112113432101}
+  m_GameObject: {fileID: 2741299098221859806}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5016803f4b0c48c6874a8f45ebd1223a, type: 3}
@@ -68,6 +68,7 @@ GameObject:
   - component: {fileID: 5222277164035195710}
   - component: {fileID: 3291471744003936239}
   - component: {fileID: 4316528432698863052}
+  - component: {fileID: 4304886037029294590}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -88,7 +89,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8413882546549835376}
+  - {fileID: 880936396202260261}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3291471744003936239
@@ -105,8 +106,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 6613135658628178820}
+  - {fileID: 6576475410314067743}
   - {fileID: 4316528432698863052}
+  - {fileID: 4304886037029294590}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -136,3 +138,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5016803f4b0c48c6874a8f45ebd1223a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameInstaller
+--- !u!114 &4304886037029294590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8373659393543654618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5693d47e642837732b1eb958f4620bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInstaller

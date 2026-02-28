@@ -19,6 +19,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public IAudioManager _audioManager;
     public HealthComponent _healthComponent;
     private Inventory _inventory;
+    public DeathScreen _deathScreen;
     
     public Inventory Inventory => _inventory;
     
@@ -69,8 +70,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     [Header("Audio Sources")]
     [SerializeField] public AudioSource sfxSource;
     [SerializeField] public AudioSource itemSource;
-
-
+    [SerializeField] public AudioSource ambienceSource;
+    [SerializeField] public AudioSource musicSource;
     [Header("SFX Clips")]
     public AudioClip footstep;
     public AudioClip dash;
@@ -368,8 +369,11 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         }
         FreezePlayer();
         _audioManager.PlaySFX(die,sfxSource,1f);
+        _audioManager.StopAmbience(ambienceSource);
+        _audioManager.StopMusic(musicSource);
+        _deathScreen.FadeToBlackAndShowMessage();
     }
-    private void FreezePlayer()
+    public void FreezePlayer()
     {
         // Desactiva lectura de input
         if (_playerInputActions != null)
@@ -383,7 +387,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             _rigidbody2D.bodyType = RigidbodyType2D.Static; // opcional: congela total
         }
     }
-    private void UnfreezePlayer()
+    public void UnfreezePlayer()
     {
         // Reactivar input
         if (_playerInputActions != null)

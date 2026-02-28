@@ -37,6 +37,7 @@ public class SaveMenuManager : MonoBehaviour
     {
         _audioManager.PlaySFX(machineSound, soundSource, 1f);
         UiOptions.SetActive(true);
+        _player.FreezePlayer();
     }
     void Start()
     {
@@ -94,6 +95,7 @@ public class SaveMenuManager : MonoBehaviour
         saveText.text = " ";
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
+        _player.UnfreezePlayer();
     }
 
     private void OnNoClicked()
@@ -101,9 +103,11 @@ public class SaveMenuManager : MonoBehaviour
         saveText.text = " ";
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
+        _player.UnfreezePlayer();
     }
     private void OnYesClicked()
     {
+        _player.UnfreezePlayer();
         if (!_player.Inventory.CheckItemByName(requiredItemName))
         {
             saveText.text = "The typewriter needs ink";

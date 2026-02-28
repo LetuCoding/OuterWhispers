@@ -2,6 +2,7 @@ using InventoryScripts;
 using Items;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,5 +37,12 @@ public class PlayerController : MonoBehaviour
             GameLoaded.Invoke();
             Debug.Log($"[LOAD] Player moved to yes");
         }
+    }
+
+    public void LoadSavedScene()
+    {
+        SceneManager.LoadScene("SaveSystemScene");
+        _outerWhispersSaveSystem.LoadData(player, inventory, itemDatabase );
+        GameLoaded.Invoke();
     }
 }

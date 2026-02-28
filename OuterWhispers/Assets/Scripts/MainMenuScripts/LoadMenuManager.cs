@@ -12,7 +12,8 @@ public class LoadMenuManager : MonoBehaviour
     private Button ButtonSavedGameButton;
     private Button ButtonLoadGameButton;
     private IAudioManager _audioManager;
-    
+    public PlayerController playerController;
+
     [Header("Audio Sources")]
     [SerializeField] public AudioSource soundSource;
     [SerializeField] public AudioSource musicSource;
@@ -81,6 +82,12 @@ public class LoadMenuManager : MonoBehaviour
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
     }
+    private void OnNewGameClicked()
+    {
+        _audioManager.PlaySFX(effect, soundSource, 1f);
+        playerController.LoadSavedScene();
+    }
+
     private void OnLoadClicked()
     {
         _audioManager.PlaySFX(effect, soundSource, 1f);
@@ -88,11 +95,6 @@ public class LoadMenuManager : MonoBehaviour
         FindObjectOfType<ScreenFader>().FadeToBlackAndPlayTexts();
         _audioManager.PlayMusic(introMusic, musicSource);
         _audioManager.StopRain(rainSource);
-    }
-
-    private void OnNewGameClicked()
-    {
-        _audioManager.PlaySFX(effect, soundSource, 1f);
     }
 
 
