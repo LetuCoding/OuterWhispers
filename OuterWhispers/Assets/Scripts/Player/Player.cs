@@ -175,7 +175,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     void Start()
     {
         StateMachine.Initialize(IdleState);
-
+        _deathScreen.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -371,6 +371,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         _audioManager.PlaySFX(die,sfxSource,1f);
         _audioManager.StopAmbience(ambienceSource);
         _audioManager.StopMusic(musicSource);
+        _deathScreen.gameObject.SetActive(true);
         _deathScreen.FadeToBlackAndShowMessage();
     }
     public void FreezePlayer()
