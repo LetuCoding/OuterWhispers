@@ -26,6 +26,7 @@ public class SaveMenuManager : MonoBehaviour
     [Header("SFX Clips")]
     public AudioClip effect;
     public AudioClip machineSound;
+    public AudioClip typingSound;
     
     [Inject]
     public void Construct(IAudioManager audioManager)
@@ -101,7 +102,7 @@ public class SaveMenuManager : MonoBehaviour
     private void OnNoClicked()
     {
         saveText.text = " ";
-        _audioManager.PlaySFX(effect, soundSource, 1f);
+        _audioManager.PlaySFX(machineSound, soundSource, 1f);
         UiOptions.SetActive(false);
         _player.UnfreezePlayer();
     }
@@ -115,7 +116,7 @@ public class SaveMenuManager : MonoBehaviour
         }
         _player.Inventory.RemoveItemByName(requiredItemName);
         _saveSystem.saveData(_player, _player.Inventory);
-        _audioManager.PlaySFX(machineSound, soundSource, 1f);
+        _audioManager.PlaySFX(typingSound, soundSource, 1f);
         Debug.Log("Game Saved.");
         UiOptions.SetActive(false);
     }

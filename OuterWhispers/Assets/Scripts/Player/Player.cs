@@ -4,6 +4,7 @@ using Interfaces;
 using InventoryScripts;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Zenject;
 
@@ -81,6 +82,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public AudioClip die;
     public AudioClip damage;
     public AudioClip heal;
+    public AudioClip sadMusic;
     
     [Header("Audio Pitch")]
     public float footsetpPitch = 0.5f;
@@ -146,6 +148,10 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     [Header("UI")]
     [SerializeField] private GameObject uiOptions;
     private bool _isPaused;
+    
+    [Header("Save System")]
+    public UnityEvent OnLoadGame;
+
     
     void Awake()
     {
@@ -370,7 +376,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         FreezePlayer();
         _audioManager.PlaySFX(die,sfxSource,1f);
         _audioManager.StopAmbience(ambienceSource);
-        _audioManager.StopMusic(musicSource);
+        _audioManager.PlayMusic(sadMusic,musicSource);
         _deathScreen.gameObject.SetActive(true);
         _deathScreen.FadeToBlackAndShowMessage();
     }
@@ -418,5 +424,9 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             sr.color = Color.white;
     }
 
-   
+    public void LoadSavedGame()
+    {
+        OnLoadGame?.Invoke();
+    }
+    
 }

@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
+using InventoryScripts;
+using Items;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
@@ -17,14 +21,24 @@ public class DeathScreen : MonoBehaviour
 
     [Header("Timings")]
     [SerializeField] private float screenFadeDuration = 4f;
-    [SerializeField] private float textFadeDuration = 2f;
-    [SerializeField] private float buttonsDelay = 0.5f;
+    [SerializeField] private float textFadeDuration = 4f;
+    [SerializeField] private float buttonsDelay = 4f;
 
     [Header("Text")]
     [SerializeField] private string message = "THE NOTHING CALLS YOU";
+    
+    private HealthComponent healthComponent;
+    private Player player;
+
+    private void Start()
+    {
+        
+    }
 
     private void Awake()
     {
+        
+        player = GetComponent<Player>();
         // Panel invisible
         SetPanelAlpha(0f);
 
@@ -127,6 +141,8 @@ public class DeathScreen : MonoBehaviour
         fadePanel.gameObject.SetActive(false);
         returnButton.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
+        SceneBootData.ShouldLoadGame = true;
         SceneManager.LoadScene("DemoLevel");
     }
 
@@ -136,6 +152,7 @@ public class DeathScreen : MonoBehaviour
         fadePanel.gameObject.SetActive(false);
         returnButton.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
         SceneManager.LoadScene("MainMenu");
     }
 }

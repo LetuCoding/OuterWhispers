@@ -33,6 +33,7 @@ public class InventoryUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             ToggleInventory();
+            ClearDetails();
         }
     }
 

@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private Inventory inventory;
     private HealthComponent healthComponent;
     private ItemDatabase itemDatabase;
-    public UnityEvent GameLoaded;
     private void Awake()
     {
         _outerWhispersSaveSystem = new OuterWhispersSaveSystem();
@@ -20,6 +19,13 @@ public class PlayerController : MonoBehaviour
         inventory = GetComponent<Inventory>();
     }
 
+    void OnEnable()
+    {
+        if (SceneBootData.ShouldLoadGame)
+        {
+            LoadSavedScene();
+        }
+    }
     private void Update()
     {
         // Presiona G para guardar posición
@@ -34,15 +40,12 @@ public class PlayerController : MonoBehaviour
          
           
             _outerWhispersSaveSystem.LoadData(player, inventory, itemDatabase );
-            GameLoaded.Invoke();
             Debug.Log($"[LOAD] Player moved to yes");
         }
     }
 
     public void LoadSavedScene()
     {
-        SceneManager.LoadScene("SaveSystemScene");
         _outerWhispersSaveSystem.LoadData(player, inventory, itemDatabase );
-        GameLoaded.Invoke();
     }
 }

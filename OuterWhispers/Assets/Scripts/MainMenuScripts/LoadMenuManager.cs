@@ -42,7 +42,7 @@ public class LoadMenuManager : MonoBehaviour
         
         if (CloseButton != null) CloseButton.clicked += OnCloseClicked;
         if (ButtonSavedGameButton != null) ButtonSavedGameButton.clicked += OnNewGameClicked;
-        if (ButtonLoadGameButton != null) ButtonLoadGameButton.clicked += OnLoadClicked;
+        if (ButtonLoadGameButton != null) ButtonLoadGameButton.clicked += OnLoadGameCLicked;
         ButtonSavedGameButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterSaved);
         ButtonSavedGameButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitSaved);
         ButtonLoadGameButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterLoad);
@@ -82,14 +82,17 @@ public class LoadMenuManager : MonoBehaviour
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
     }
-    private void OnNewGameClicked()
+
+    private void OnLoadGameCLicked()
     {
+        SceneBootData.ShouldLoadGame = true;
         _audioManager.PlaySFX(effect, soundSource, 1f);
-        playerController.LoadSavedScene();
+        SceneManager.LoadScene("DemoLevel");
     }
 
-    private void OnLoadClicked()
+    private void OnNewGameClicked()
     {
+        SceneBootData.ShouldLoadGame = false;
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
         FindObjectOfType<ScreenFader>().FadeToBlackAndPlayTexts();

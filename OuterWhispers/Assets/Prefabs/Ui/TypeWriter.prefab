@@ -165,6 +165,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UISaveGame
       objectReference: {fileID: 0}
+    - target: {fileID: 4819810525557653292, guid: f1ee8cb6c13b520308c43748eb5b58ea, type: 3}
+      propertyPath: typingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 77474853929af1dc8b92f7c71967775e, type: 3}
     - target: {fileID: 6602195698385676750, guid: f1ee8cb6c13b520308c43748eb5b58ea, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.26
