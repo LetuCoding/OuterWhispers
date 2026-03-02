@@ -964,6 +964,7 @@ GameObject:
   - component: {fileID: 624940459949169800}
   - component: {fileID: 5162535366802341029}
   - component: {fileID: 966639831666262910}
+  - component: {fileID: 8657321842030632613}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1065,15 +1066,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   _rigidbody2D: {fileID: 4343004863414109698}
   _animator: {fileID: 5824234412805578279}
+  _healthComponent: {fileID: 5162535366802341029}
+  _deathScreen: {fileID: 0}
   _moveInput: 0
   _lastInput: 0
   _isGrounded: 0
   _jumpCutting: 0
   _canDashAir: 0
   _isDashing: 0
+  _isSprinting: 0
+  _isAttackSliding: 0
   jumpPressed: 0
   jumpReleased: 0
   dashPressed: 0
+  shiftPressedThisFrame: 0
+  shiftHeld: 0
   _isOnWall: 0
   _isOnLeftWall: 0
   _isOnRightWall: 0
@@ -1092,6 +1099,8 @@ MonoBehaviour:
     m_Bits: 8
   sfxSource: {fileID: 738152576506349790}
   itemSource: {fileID: 325426453367413637}
+  ambienceSource: {fileID: 325426453367413637}
+  musicSource: {fileID: 6392738262287935667}
   footstep: {fileID: 8300000, guid: bfebeebe3e37f445d9dc512e0340a4a5, type: 3}
   dash: {fileID: 8300000, guid: f971ded5a0a1c43db87331883c93e071, type: 3}
   jump: {fileID: 8300000, guid: 2558a622f57554193958bf08e647d56e, type: 3}
@@ -1100,6 +1109,7 @@ MonoBehaviour:
   die: {fileID: 8300000, guid: 44712f855edf4afb8a9ed2169d89bf72, type: 3}
   damage: {fileID: 8300000, guid: dd2ad21970d28a472ba342bf971cb9b2, type: 3}
   heal: {fileID: 8300000, guid: fcdb9d2c8ac2dd7ec9952a8510db61a6, type: 3}
+  footsetpPitch: 0.5
   _wallCheckLeft: {fileID: 6315935526507881073}
   _wallCheckRight: {fileID: 646865249079184832}
   wallLayer:
@@ -1113,6 +1123,21 @@ MonoBehaviour:
   _dashDuration: 0.25
   _dashSpeed: 2
   uiOptions: {fileID: 0}
+  OnLoadGame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8657321842030632613}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: LoadSavedScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &4343004863414109698
 Rigidbody2D:
   serializedVersion: 5
@@ -1220,13 +1245,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559223f1ae5e076ec9160e52088e5f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  stats: {fileID: 11400000, guid: bc2317df6dacd75e9adf0d97e4307f55, type: 2}
   OnDeath:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2349091239875696405}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Die
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DeathScreen, Assembly-CSharp
+        m_MethodName: FadeToBlackAndShowMessage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1251,6 +1287,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnHeal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2349091239875696405}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Heal
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 10
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &966639831666262910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1264,8 +1315,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryScripts.Inventory
   slotCount: 8
-  owner: {fileID: 5162535366802341029}
+  owner: {fileID: 2349091239875696405}
   items: []
+--- !u!114 &8657321842030632613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566472200803501241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7fbc5c6c9342bc8ed6f6af55989e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &5609594014487878227
 GameObject:
   m_ObjectHideFlags: 0

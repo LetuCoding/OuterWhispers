@@ -4,6 +4,7 @@ using Interfaces;
 using InventoryScripts;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Zenject;
 
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public IAudioManager _audioManager;
     public HealthComponent _healthComponent;
     private Inventory _inventory;
+    public DeathScreen _deathScreen;
     
     public Inventory Inventory => _inventory;
     
@@ -69,8 +71,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     [Header("Audio Sources")]
     [SerializeField] public AudioSource sfxSource;
     [SerializeField] public AudioSource itemSource;
-
-
+    [SerializeField] public AudioSource ambienceSource;
+    [SerializeField] public AudioSource musicSource;
     [Header("SFX Clips")]
     public AudioClip footstep;
     public AudioClip dash;
@@ -80,6 +82,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public AudioClip die;
     public AudioClip damage;
     public AudioClip heal;
+    public AudioClip sadMusic;
     
     [Header("Audio Pitch")]
     public float footsetpPitch = 0.5f;
@@ -146,6 +149,10 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     [SerializeField] private GameObject uiOptions;
     private bool _isPaused;
     
+    [Header("Save System")]
+    public UnityEvent OnLoadGame;
+
+    
     void Awake()
     {
 
@@ -174,7 +181,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     void Start()
     {
         StateMachine.Initialize(IdleState);
-
+        _deathScreen.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -368,8 +375,12 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         }
         FreezePlayer();
         _audioManager.PlaySFX(die,sfxSource,1f);
+        _audioManager.StopAmbience(ambienceSource);
+        _audioManager.PlayMusic(sadMusic,musicSource);
+        _deathScreen.gameObject.SetActive(true);
+        _deathScreen.FadeToBlackAndShowMessage();
     }
-    private void FreezePlayer()
+    public void FreezePlayer()
     {
         // Desactiva lectura de input
         if (_playerInputActions != null)
@@ -381,6 +392,22 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             _rigidbody2D.linearVelocity = Vector2.zero;
             _rigidbody2D.angularVelocity = 0f;
             _rigidbody2D.bodyType = RigidbodyType2D.Static; // opcional: congela total
+        }
+    }
+    public void UnfreezePlayer()
+    {
+        // Reactivar input
+        if (_playerInputActions != null)
+            _playerInputActions.Enable();
+
+        // Restaurar físicas
+        if (_rigidbody2D != null)
+        {
+            _rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+
+            // opcional pero recomendable
+            _rigidbody2D.linearVelocity = Vector2.zero;
+            _rigidbody2D.angularVelocity = 0f;
         }
     }
 
@@ -397,5 +424,9 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             sr.color = Color.white;
     }
 
-   
+    public void LoadSavedGame()
+    {
+        OnLoadGame?.Invoke();
+    }
+    
 }
