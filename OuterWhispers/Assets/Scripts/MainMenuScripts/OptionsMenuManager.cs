@@ -16,7 +16,6 @@ public class OptionsMenuManager : MonoBehaviour
     private bool _isPaused;
     private int savedVolume = 50;
     private int savedMusic = 50;
-
     
     [Header("Audio Sources")]
     [SerializeField] public AudioSource soundSource;

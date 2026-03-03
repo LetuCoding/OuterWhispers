@@ -66,6 +66,7 @@ public class ScreenFader : MonoBehaviour
             fadeText.gameObject.SetActive(false);
         }
         yield return new WaitForSecondsRealtime(textHoldTime);
+        
         SceneManager.LoadScene("DemoLevel");
     }
 

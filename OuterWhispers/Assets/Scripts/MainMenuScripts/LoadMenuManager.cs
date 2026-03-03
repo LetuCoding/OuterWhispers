@@ -12,7 +12,8 @@ public class LoadMenuManager : MonoBehaviour
     private Button ButtonSavedGameButton;
     private Button ButtonLoadGameButton;
     private IAudioManager _audioManager;
-    
+    public PlayerController playerController;
+
     [Header("Audio Sources")]
     [SerializeField] public AudioSource soundSource;
     [SerializeField] public AudioSource musicSource;
@@ -41,7 +42,7 @@ public class LoadMenuManager : MonoBehaviour
         
         if (CloseButton != null) CloseButton.clicked += OnCloseClicked;
         if (ButtonSavedGameButton != null) ButtonSavedGameButton.clicked += OnNewGameClicked;
-        if (ButtonLoadGameButton != null) ButtonLoadGameButton.clicked += OnLoadClicked;
+        if (ButtonLoadGameButton != null) ButtonLoadGameButton.clicked += OnLoadGameCLicked;
         ButtonSavedGameButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterSaved);
         ButtonSavedGameButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitSaved);
         ButtonLoadGameButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterLoad);
@@ -81,18 +82,22 @@ public class LoadMenuManager : MonoBehaviour
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
     }
-    private void OnLoadClicked()
+
+    private void OnLoadGameCLicked()
     {
+        SceneBootData.ShouldLoadGame = true;
+        _audioManager.PlaySFX(effect, soundSource, 1f);
+        SceneManager.LoadScene("DemoLevel");
+    }
+
+    private void OnNewGameClicked()
+    {
+        SceneBootData.ShouldLoadGame = false;
         _audioManager.PlaySFX(effect, soundSource, 1f);
         UiOptions.SetActive(false);
         FindObjectOfType<ScreenFader>().FadeToBlackAndPlayTexts();
         _audioManager.PlayMusic(introMusic, musicSource);
         _audioManager.StopRain(rainSource);
-    }
-
-    private void OnNewGameClicked()
-    {
-        _audioManager.PlaySFX(effect, soundSource, 1f);
     }
 
 
