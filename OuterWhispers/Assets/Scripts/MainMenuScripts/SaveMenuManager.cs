@@ -21,7 +21,7 @@ public class SaveMenuManager : MonoBehaviour
     [SerializeField] private string requiredItemName = "Ink";
     
     [Header("Audio Sources")]
-    [SerializeField] public AudioSource soundSource;
+    public AudioSource soundSource;
     
     [Header("SFX Clips")]
     public AudioClip effect;

@@ -79,7 +79,7 @@ public class InventoryUI : MonoBehaviour
 
         if (selectedSlot.item is UsableItemData usable)
         {
-            usable.Use(inventory.Owner);
+            usable.Use(inventory.Owner._healthComponent);
             
             if (usable.ConsumeOnUse)
             {

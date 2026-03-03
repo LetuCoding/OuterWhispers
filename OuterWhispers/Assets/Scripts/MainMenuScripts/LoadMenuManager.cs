@@ -38,7 +38,7 @@ public class LoadMenuManager : MonoBehaviour
         var root = uiDocument.rootVisualElement;
         CloseButton = root.Q<Button>("CloseButton");
         ButtonSavedGameButton = root.Q<Button>("ButtonSavedGame");
-        ButtonLoadGameButton = root.Q<Button>("ButtonNewGame");
+        ButtonLoadGameButton = root.Q<Button>("ButtonLoadGame");
         
         if (CloseButton != null) CloseButton.clicked += OnCloseClicked;
         if (ButtonSavedGameButton != null) ButtonSavedGameButton.clicked += OnNewGameClicked;

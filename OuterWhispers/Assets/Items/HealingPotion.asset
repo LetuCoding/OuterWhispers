@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83db1bdcb7bf812448f74efce965f130, type: 3}
   m_Name: HealingPotion
   m_EditorClassIdentifier: Assembly-CSharp::UsableItemData
+  guid: 763d97d6-9bd7-47c9-920c-731210afb21d
   itemName: Healing Potion
-  description: Heals potions
+  description: 'This will restore some amount of health
+
+'
   icon: {fileID: 270709142491913625, guid: 7a8e30d3752b110d9b13184c357ccab8, type: 3}
   itemType: 0
   effect: {fileID: 11400000, guid: c60792b3b17667ebca2db0b585d94588, type: 2}
