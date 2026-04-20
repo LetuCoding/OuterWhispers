@@ -1,53 +1,47 @@
 using UnityEngine;
 
+/// <summary>
+/// Estado de caída libre del jugador.
+/// Permite dashear en el aire, aterrizar y agarrarse a una pared.
+/// </summary>
+public class FallingState : PlayerState
+{
+    public FallingState(PlayerStateMachine fsm, Player player) : base(fsm, player) { }
 
-    public class FallingState : PlayerState
+    public override void Enter()
     {
-        public FallingState(PlayerStateMachine fsm, Player player) : base(fsm, player) {}
-
-        public override void Enter()
-        {
-            //Aquí pondríamos animación de caída.
-            if (Player._lastInput == 1)
-            {
-                Player._animator.Play("Fall_Right");
-            }
-            else
-            {
-                Player._animator.Play("Fall_Left");
-            }
-        }
-
-        public override void LogicUpdate()
-        {
-            
-            //Si Dash apretado y Dash en aire es true, cambiamos a DashState
-            if (Player.dashPressed && Player._canDashAir)
-            {
-                fsm.ChangeState(Player.DashState);
-                return;
-            }
-
-            //Si el jugador está en el suelo cambiamos a Idle
-            if (Player._isGrounded)
-            {
-                Player._audioManager.PlaySFX(Player.footstep, Player.sfxSource, 1f);
-                fsm.ChangeState(Player.IdleState);
-                return;
-            }
-
-            //Si el jugador está en la pared cambiamos a estado en pared.
-            if (Player._isOnWall)
-            {
-                fsm.ChangeState(Player.WallSlideState);
-            }
-        }
-
-        public override void PhysicsUpdate()
-        {
-            Player.Gravity(4.5f);
-        }
-
-        public override void Exit() {}
+        Player._animator.Play(Player._lastInput >= 0 ? "Fall_Right" : "Fall_Left");
     }
 
+    public override void LogicUpdate()
+    {
+        // Dash aéreo disponible
+        if (Player.dashPressed && Player._canDashAir)
+        {
+            fsm.ChangeState(Player.DashState);
+            return;
+        }
+
+        // Aterrizaje
+        if (Player._isGrounded)
+        {
+            Player._audioManager.PlaySFX(Player.footstep, Player.sfxSource, 1f);
+            fsm.ChangeState(Player.IdleState);
+            return;
+        }
+
+        // Contacto con pared
+        if (Player._isOnWall)
+        {
+            fsm.ChangeState(Player.WallSlideState);
+        }
+    }
+
+    /// <summary>Gravedad aumentada para una caída rápida y responsiva.</summary>
+    public override void PhysicsUpdate()
+    {
+        Player.Gravity(4.5f);
+    }
+
+    public override void Exit() { }
+}

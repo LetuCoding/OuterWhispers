@@ -1,26 +1,26 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
- 
- 
+
+/// <summary>
+/// Estado base del jugador cuando está en el suelo sin acción especial.
+/// Gestiona las transiciones hacia Sprint, Jump, Dash, Attack y Fall.
+/// </summary>
 public class IdleState : PlayerState
 {
-    public IdleState(PlayerStateMachine fsm, Player player) : base(fsm, player) {}
+    public IdleState(PlayerStateMachine fsm, Player player) : base(fsm, player) { }
+
     public override void Enter()
     {
         Debug.Log("Entering Idle State");
-        if (Player._lastInput == -1)
-        {
-            Player._animator.Play("Idle_Left");
-        }
-        else
-        {
-            Player._animator.Play("Idle_Right");
-        }
+
+        // Reproducir animación según la última dirección registrada
+        Player._animator.Play(Player._lastInput < 0 ? "Idle_Left" : "Idle_Right");
         Player._jumpCutting = false;
     }
- 
+
     public override void LogicUpdate()
     {
+        // ── Sprint ──────────────────────────────────────────────────────────
+        // Shift pulsado este frame: dash lateral instantáneo desde parado
         if (Player._isGrounded && Player.shiftPressedThisFrame)
         {
             Player._audioManager.StopWalk(Player.sfxSource);
@@ -28,7 +28,8 @@ public class IdleState : PlayerState
             return;
         }
 
-        if (Player._moveInput != 0 && Player.shiftHeld)
+        // Shift mantenido + movimiento: transición a sprint
+        if (Player._moveInput != 0f && Player.shiftHeld)
         {
             Player.footsetpPitch = 0.7f;
             Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
@@ -36,87 +37,65 @@ public class IdleState : PlayerState
             return;
         }
 
-        else if (Player._moveInput == 1)
-        {
-            Player.footsetpPitch = 0.5f;
-            Player._animator.Play("Walk_Right");
-            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,Player.footsetpPitch);
-        }
-        else if (Player._moveInput == -1)
-        {
-            Player.footsetpPitch = 0.5f;
-            Player._animator.Play("Walk_Left");
-            Player._audioManager.PlayWalk(Player.footstep,Player.sfxSource,Player.footsetpPitch);
-        }
-        else if (Input.GetKeyDown(KeyCode.F))
-        {
-            fsm.ChangeState(Player.AttackState);
-        }
- 
- 
-        else if (Player._moveInput == 0)
-        {
-            Player._audioManager.StopWalk(Player.sfxSource);
-            if (Player._lastInput == -1)
-            {
-                Player._animator.Play("Idle_Left");
-            }
-            else
-            {
-                Player._animator.Play("Idle_Right");
-            }
- 
-        }
- 
-        //Apretamos Dash y lo hace
+        // ── Dash ─────────────────────────────────────────────────────────────
         if (Player.dashPressed)
         {
             Player._audioManager.StopWalk(Player.sfxSource);
             fsm.ChangeState(Player.DashState);
             return;
         }
- 
- 
-        //Si estamos en el suelo y apretamos Jump, Saltaremos
+
+        // ── Jump ─────────────────────────────────────────────────────────────
         if (Player.jumpPressed && Player._isGrounded)
         {
             Player._audioManager.StopWalk(Player.sfxSource);
             fsm.ChangeState(Player.JumpState);
             return;
         }
-        
-        //Si estamos en el suelo y sprintando haremos un salto más largo
-        if (Player.jumpPressed && Player._isSprinting)
+
+        // ── Attack ───────────────────────────────────────────────────────────
+        // FIX: usamos attackPressed (nuevo Input System) en lugar de
+        //      Input.GetKeyDown(KeyCode.F) (API clásica, inconsistente).
+        // FIX: movido ANTES de los bloques de walk para que no quede enmascarado.
+        if (Player.attackPressed)
         {
-            Player._audioManager.StopWalk(Player.sfxSource);
-            fsm.ChangeState(Player.JumpState);
+            fsm.ChangeState(Player.AttackState);
             return;
         }
-        
-        
- 
-        //Si el jugador no está en el suelo y su velocidad es inferior a 0, pasamos a caer.
+
+        // ── Walk animations ──────────────────────────────────────────────────
+        if (Player._moveInput > 0f)
+        {
+            Player.footsetpPitch = 0.5f;
+            Player._animator.Play("Walk_Right");
+            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
+        }
+        else if (Player._moveInput < 0f)
+        {
+            Player.footsetpPitch = 0.5f;
+            Player._animator.Play("Walk_Left");
+            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
+        }
+        else
+        {
+            // Sin input: volver a idle con la animación correcta
+            Player._audioManager.StopWalk(Player.sfxSource);
+            Player._animator.Play(Player._lastInput < 0 ? "Idle_Left" : "Idle_Right");
+        }
+
+        // ── Caída ────────────────────────────────────────────────────────────
         if (!Player._isGrounded && Player._rigidbody2D.linearVelocity.y < 0f)
         {
             fsm.ChangeState(Player.FallingState);
         }
-        if (Player._moveInput != 0 &&
-            (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed))
-        {
-            fsm.ChangeState(Player.SprintState);
-            return;
-        }
- 
     }
- 
-    //Gravedad estandar del personaje
+
+    /// <summary>Gravedad estándar del jugador en el suelo.</summary>
     public override void PhysicsUpdate()
     {
         Player.Gravity(3.5f);
     }
- 
- 
- 
+
     public override void Exit()
     {
         Player._audioManager.StopWalk(Player.sfxSource);
