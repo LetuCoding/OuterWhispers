@@ -56,6 +56,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool _isOnRightWall;
     public bool _wallJumping;
     public bool _wallSliding;
+    public bool canMove;
 
     // =========================================================================
     // ATTACK
@@ -236,7 +237,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     private void FixedUpdate()
     {
         if (_isDead) return;
-
         // FIX: bloque duplicado eliminado. Una sola comprobación para ambos flags.
         if (_isDashing || _isAttackSliding)
         {
@@ -244,7 +244,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             return;
         }
 
-        if (_moveInput != 0)
+        if (_moveInput != 0 && canMove)
         {
             _rigidbody2D.linearVelocity = new Vector2(_moveInput * speed, _rigidbody2D.linearVelocity.y);
         }
@@ -338,7 +338,11 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     // =========================================================================
     // PAUSA
     // =========================================================================
-
+    public void UnablePLayer()
+    {
+        _playerInputActions.Player.Disable();
+    }
+    
     private void TogglePauseMenu()
     {
         _isPaused = !_isPaused;

@@ -22,9 +22,6 @@ namespace InventoryScripts
         private void Awake()
         {
             items.Clear();
-            
-            
-            
             for (int i = 0; i < slotCount; i++)
             {
                 items.Add(new InventorySlot());
