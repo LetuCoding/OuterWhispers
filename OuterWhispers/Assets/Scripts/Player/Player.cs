@@ -224,6 +224,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
             TogglePauseMenu();
+        if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
+            TogglePauseMenu();
 
         GroundCheck();
         WallCheck();
@@ -339,8 +341,27 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     private void TogglePauseMenu()
     {
         _isPaused = !_isPaused;
+        _playerInputActions.Player.Disable();
         if (uiOptions != null)
+        {
             uiOptions.SetActive(_isPaused);
+            if (_isPaused)
+            {
+                OptionsMenuManager options = uiOptions.GetComponent<OptionsMenuManager>();
+                if (options != null)
+                {
+                    options.SetInitialFocus();
+                }
+            }
+        }
+    }
+
+    public void UnPauseMenu()
+    {
+        if (_playerInputActions != null)
+        {
+            _playerInputActions.Player.Enable();
+        }
     }
 
     // =========================================================================
