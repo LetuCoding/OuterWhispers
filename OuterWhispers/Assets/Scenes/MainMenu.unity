@@ -1329,7 +1329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1944588233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1380,8 +1380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efe8a720e44b94649bb44d79b7806ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadMenuManager
-  UiOptions: {fileID: 1944588231}
-  playerController: {fileID: 1944588236}
+  uiLoadMenu: {fileID: 1944588231}
+  uiMainMenu: {fileID: 381170151}
   soundSource: {fileID: 1555467445}
   musicSource: {fileID: 1939788211}
   rainSource: {fileID: 1016582137}
@@ -1399,9 +1399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da7fbc5c6c9342bc8ed6f6af55989e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  GameLoaded:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1975325688
 GameObject:
   m_ObjectHideFlags: 0

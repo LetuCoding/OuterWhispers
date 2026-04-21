@@ -1,0 +1,1274 @@
+fileFormatVersion: 2
+guid: 8260e9bc525eea1a5b20b28b3b00e867
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3145147001649283118
+    second: LogoCaminas_0
+  - first:
+      213: 4521794008946397430
+    second: LogoCaminas_1
+  - first:
+      213: -6232407822586699626
+    second: LogoCaminas_2
+  - first:
+      213: 8708939803559878482
+    second: LogoCaminas_3
+  - first:
+      213: 7729140463481274983
+    second: LogoCaminas_4
+  - first:
+      213: -5144241084160067868
+    second: LogoCaminas_5
+  - first:
+      213: 7527968202515065905
+    second: LogoCaminas_6
+  - first:
+      213: 5116166092761143332
+    second: LogoCaminas_7
+  - first:
+      213: -4296004886976550433
+    second: LogoCaminas_8
+  - first:
+      213: 7746930819253486006
+    second: LogoCaminas_9
+  - first:
+      213: -3589405602892556345
+    second: LogoCaminas_10
+  - first:
+      213: -2835320354684968669
+    second: LogoCaminas_11
+  - first:
+      213: -1141865768596907831
+    second: LogoCaminas_12
+  - first:
+      213: -2005514240187138803
+    second: LogoCaminas_13
+  - first:
+      213: 546202691167237801
+    second: LogoCaminas_14
+  - first:
+      213: 5906189207314578290
+    second: LogoCaminas_15
+  - first:
+      213: 3331603278866000946
+    second: LogoCaminas_16
+  - first:
+      213: -1769387059240607491
+    second: LogoCaminas_17
+  - first:
+      213: -7970665980909355782
+    second: LogoCaminas_18
+  - first:
+      213: 2182384880951231980
+    second: LogoCaminas_19
+  - first:
+      213: -1199843386801891505
+    second: LogoCaminas_20
+  - first:
+      213: 790186567815828128
+    second: LogoCaminas_21
+  - first:
+      213: 7241841191542288622
+    second: LogoCaminas_22
+  - first:
+      213: 4590962253598587395
+    second: LogoCaminas_23
+  - first:
+      213: -2463218631904073676
+    second: LogoCaminas_24
+  - first:
+      213: -136910043349274125
+    second: LogoCaminas_25
+  - first:
+      213: 914947328233659770
+    second: LogoCaminas_26
+  - first:
+      213: 261231165199463702
+    second: LogoCaminas_27
+  - first:
+      213: -3577792470444884620
+    second: LogoCaminas_28
+  - first:
+      213: -2566202010303548720
+    second: LogoCaminas_29
+  - first:
+      213: 1952725099889286315
+    second: LogoCaminas_30
+  - first:
+      213: 2015605367977105556
+    second: LogoCaminas_31
+  - first:
+      213: 7363578168334522230
+    second: LogoCaminas_32
+  - first:
+      213: 8003758351907396327
+    second: LogoCaminas_33
+  - first:
+      213: -6740108404604346210
+    second: LogoCaminas_34
+  - first:
+      213: 1699198198372884966
+    second: LogoCaminas_35
+  - first:
+      213: 2756134887228412249
+    second: LogoCaminas_36
+  - first:
+      213: -850391424316743141
+    second: LogoCaminas_37
+  - first:
+      213: 5190143947546835669
+    second: LogoCaminas_38
+  - first:
+      213: -4016329487639722016
+    second: LogoCaminas_39
+  - first:
+      213: 1770262609905028244
+    second: LogoCaminas_40
+  - first:
+      213: 3282272732782397006
+    second: LogoCaminas_41
+  - first:
+      213: 3001606179544299822
+    second: LogoCaminas_42
+  - first:
+      213: 4781048652781348065
+    second: LogoCaminas_43
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LogoCaminas_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1431
+        width: 1143
+        height: 664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e20c0b7c88ec5ab20800000000000000
+      internalID: 3145147001649283118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_1
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 1819
+        width: 72
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f05db291b3a0ce30800000000000000
+      internalID: 4521794008946397430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_2
+      rect:
+        serializedVersion: 2
+        x: 1923
+        y: 1815
+        width: 90
+        height: 237
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 690aa572b1a0289a0800000000000000
+      internalID: -6232407822586699626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_3
+      rect:
+        serializedVersion: 2
+        x: 2055
+        y: 2049
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25f52710c9e5cd870800000000000000
+      internalID: 8708939803559878482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_4
+      rect:
+        serializedVersion: 2
+        x: 2119
+        y: 1815
+        width: 90
+        height: 237
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76246e00d4c634b60800000000000000
+      internalID: 7729140463481274983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_5
+      rect:
+        serializedVersion: 2
+        x: 2403
+        y: 1815
+        width: 89
+        height: 237
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e63ba34dfbfb98b0800000000000000
+      internalID: -5144241084160067868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_6
+      rect:
+        serializedVersion: 2
+        x: 2583
+        y: 1819
+        width: 162
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13ca85ff137b87860800000000000000
+      internalID: 7527968202515065905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_7
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 1815
+        width: 154
+        height: 269
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4281dea64f5400740800000000000000
+      internalID: 5116166092761143332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_8
+      rect:
+        serializedVersion: 2
+        x: 3624
+        y: 2049
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd9ab6601568164c0800000000000000
+      internalID: -4296004886976550433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_9
+      rect:
+        serializedVersion: 2
+        x: 3752
+        y: 2024
+        width: 57
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b1412df880a28b60800000000000000
+      internalID: 7746930819253486006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_10
+      rect:
+        serializedVersion: 2
+        x: 3938
+        y: 1815
+        width: 149
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c7dac42f9edf2ec0800000000000000
+      internalID: -3589405602892556345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_11
+      rect:
+        serializedVersion: 2
+        x: 4796
+        y: 1815
+        width: 155
+        height: 269
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 321619ad82be6a8d0800000000000000
+      internalID: -2835320354684968669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_12
+      rect:
+        serializedVersion: 2
+        x: 4996
+        y: 2024
+        width: 58
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c85a9122274720f0800000000000000
+      internalID: -1141865768596907831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_13
+      rect:
+        serializedVersion: 2
+        x: 5275
+        y: 2049
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0d78a99c6bfa24e0800000000000000
+      internalID: -2005514240187138803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_14
+      rect:
+        serializedVersion: 2
+        x: 1589
+        y: 1819
+        width: 171
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a6b2662470849700800000000000000
+      internalID: 546202691167237801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_15
+      rect:
+        serializedVersion: 2
+        x: 1784
+        y: 1815
+        width: 119
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27b3b3eaacff6f150800000000000000
+      internalID: 5906189207314578290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_16
+      rect:
+        serializedVersion: 2
+        x: 2033
+        y: 1819
+        width: 70
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23ca551d78b3c3e20800000000000000
+      internalID: 3331603278866000946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_17
+      rect:
+        serializedVersion: 2
+        x: 2225
+        y: 1815
+        width: 162
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df06acf18dfd177e0800000000000000
+      internalID: -1769387059240607491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_18
+      rect:
+        serializedVersion: 2
+        x: 2942
+        y: 1815
+        width: 161
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afc7b905581826190800000000000000
+      internalID: -7970665980909355782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_19
+      rect:
+        serializedVersion: 2
+        x: 3124
+        y: 1815
+        width: 133
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce508488c73694e10800000000000000
+      internalID: 2182384880951231980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_20
+      rect:
+        serializedVersion: 2
+        x: 3284
+        y: 1815
+        width: 142
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f475297fbcc495fe0800000000000000
+      internalID: -1199843386801891505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_21
+      rect:
+        serializedVersion: 2
+        x: 3446
+        y: 1815
+        width: 133
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a292f03f7e47fa00800000000000000
+      internalID: 790186567815828128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_22
+      rect:
+        serializedVersion: 2
+        x: 3602
+        y: 1819
+        width: 71
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee07badd130308460800000000000000
+      internalID: 7241841191542288622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_23
+      rect:
+        serializedVersion: 2
+        x: 3694
+        y: 1815
+        width: 146
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a78fe78df56bf30800000000000000
+      internalID: 4590962253598587395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_24
+      rect:
+        serializedVersion: 2
+        x: 4113
+        y: 1815
+        width: 133
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 438eb3974b3e0ddd0800000000000000
+      internalID: -2463218631904073676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_25
+      rect:
+        serializedVersion: 2
+        x: 4271
+        y: 1815
+        width: 133
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f1bbfb7a09991ef0800000000000000
+      internalID: -136910043349274125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_26
+      rect:
+        serializedVersion: 2
+        x: 4424
+        y: 1815
+        width: 163
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7d5f875fbb82bc00800000000000000
+      internalID: 914947328233659770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_27
+      rect:
+        serializedVersion: 2
+        x: 4605
+        y: 1819
+        width: 172
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 615b9f55c5410a300800000000000000
+      internalID: 261231165199463702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_28
+      rect:
+        serializedVersion: 2
+        x: 4972
+        y: 1815
+        width: 142
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47db01f34b0295ec0800000000000000
+      internalID: -3577792470444884620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_29
+      rect:
+        serializedVersion: 2
+        x: 5134
+        y: 1819
+        width: 103
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d2b6f13ed4036cd0800000000000000
+      internalID: -2566202010303548720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_30
+      rect:
+        serializedVersion: 2
+        x: 5253
+        y: 1818
+        width: 72
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bacd3e2e129791b10800000000000000
+      internalID: 1952725099889286315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_31
+      rect:
+        serializedVersion: 2
+        x: 5347
+        y: 1815
+        width: 142
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49855ad276ed8fb10800000000000000
+      internalID: 2015605367977105556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_32
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 954
+        width: 430
+        height: 630
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6779667845fa03660800000000000000
+      internalID: 7363578168334522230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_33
+      rect:
+        serializedVersion: 2
+        x: 1964
+        y: 954
+        width: 226
+        height: 671
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ea9189b0df031f60800000000000000
+      internalID: 8003758351907396327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_34
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 945
+        width: 450
+        height: 648
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e90eeebdd135672a0800000000000000
+      internalID: -6740108404604346210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_35
+      rect:
+        serializedVersion: 2
+        x: 4065
+        y: 1523
+        width: 113
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e1eff832c3c49710800000000000000
+      internalID: 1699198198372884966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_36
+      rect:
+        serializedVersion: 2
+        x: 4796
+        y: 1488
+        width: 196
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9519f4ac312cf3620800000000000000
+      internalID: 2756134887228412249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_37
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 949
+        width: 1142
+        height: 523
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b12ef81518dc234f0800000000000000
+      internalID: -850391424316743141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_38
+      rect:
+        serializedVersion: 2
+        x: 2900
+        y: 946
+        width: 379
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5da3ca6fb68170840800000000000000
+      internalID: 5190143947546835669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_39
+      rect:
+        serializedVersion: 2
+        x: 3301
+        y: 954
+        width: 684
+        height: 474
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e7ce444c912348c0800000000000000
+      internalID: -4016329487639722016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_40
+      rect:
+        serializedVersion: 2
+        x: 4007
+        y: 954
+        width: 221
+        height: 467
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49c8b86e67c319810800000000000000
+      internalID: 1770262609905028244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_41
+      rect:
+        serializedVersion: 2
+        x: 4250
+        y: 954
+        width: 460
+        height: 474
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e46027509a9fc8d20800000000000000
+      internalID: 3282272732782397006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_42
+      rect:
+        serializedVersion: 2
+        x: 4747
+        y: 946
+        width: 380
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e29fa57cae8d7a920800000000000000
+      internalID: 3001606179544299822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LogoCaminas_43
+      rect:
+        serializedVersion: 2
+        x: 5172
+        y: 946
+        width: 332
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e464ea2b62b95240800000000000000
+      internalID: 4781048652781348065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LogoCaminas_0: 3145147001649283118
+      LogoCaminas_1: 4521794008946397430
+      LogoCaminas_10: -3589405602892556345
+      LogoCaminas_11: -2835320354684968669
+      LogoCaminas_12: -1141865768596907831
+      LogoCaminas_13: -2005514240187138803
+      LogoCaminas_14: 546202691167237801
+      LogoCaminas_15: 5906189207314578290
+      LogoCaminas_16: 3331603278866000946
+      LogoCaminas_17: -1769387059240607491
+      LogoCaminas_18: -7970665980909355782
+      LogoCaminas_19: 2182384880951231980
+      LogoCaminas_2: -6232407822586699626
+      LogoCaminas_20: -1199843386801891505
+      LogoCaminas_21: 790186567815828128
+      LogoCaminas_22: 7241841191542288622
+      LogoCaminas_23: 4590962253598587395
+      LogoCaminas_24: -2463218631904073676
+      LogoCaminas_25: -136910043349274125
+      LogoCaminas_26: 914947328233659770
+      LogoCaminas_27: 261231165199463702
+      LogoCaminas_28: -3577792470444884620
+      LogoCaminas_29: -2566202010303548720
+      LogoCaminas_3: 8708939803559878482
+      LogoCaminas_30: 1952725099889286315
+      LogoCaminas_31: 2015605367977105556
+      LogoCaminas_32: 7363578168334522230
+      LogoCaminas_33: 8003758351907396327
+      LogoCaminas_34: -6740108404604346210
+      LogoCaminas_35: 1699198198372884966
+      LogoCaminas_36: 2756134887228412249
+      LogoCaminas_37: -850391424316743141
+      LogoCaminas_38: 5190143947546835669
+      LogoCaminas_39: -4016329487639722016
+      LogoCaminas_4: 7729140463481274983
+      LogoCaminas_40: 1770262609905028244
+      LogoCaminas_41: 3282272732782397006
+      LogoCaminas_42: 3001606179544299822
+      LogoCaminas_43: 4781048652781348065
+      LogoCaminas_5: -5144241084160067868
+      LogoCaminas_6: 7527968202515065905
+      LogoCaminas_7: 5116166092761143332
+      LogoCaminas_8: -4296004886976550433
+      LogoCaminas_9: 7746930819253486006
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

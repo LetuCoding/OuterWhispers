@@ -1,104 +1,226 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Zenject;
 
 public class LoadMenuManager : MonoBehaviour
 {
-    private bool isOpen = false;
-    private Button CloseButton;
-    public GameObject UiOptions;
-    private Button ButtonSavedGameButton;
-    private Button ButtonLoadGameButton;
+    private Button closeButton;
+    private Button savedGameButton;
+    private Button loadGameButton;
+
+    [Header("Objeto raíz del menú de carga")]
+    [SerializeField] private GameObject uiLoadMenu;
+    [SerializeField] private GameObject uiMainMenu;
+
     private IAudioManager _audioManager;
-    public PlayerController playerController;
 
     [Header("Audio Sources")]
-    [SerializeField] public AudioSource soundSource;
-    [SerializeField] public AudioSource musicSource;
-    [SerializeField] public AudioSource rainSource;
-    
+    [SerializeField] private AudioSource soundSource;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource rainSource;
+
     [Header("SFX Clips")]
-    public AudioClip effect;
-    public AudioClip introMusic;
-    
+    [SerializeField] private AudioClip effect;
+    [SerializeField] private AudioClip introMusic;
+
+    private UIDocument uiDocument;
+    private VisualElement root;
+
     [Inject]
     public void Construct(IAudioManager audioManager)
     {
         _audioManager = audioManager;
     }
-    void Start()
-    {
-        UiOptions.SetActive(false);
-    }
-    void OnEnable()
-    {
-        var uiDocument = GetComponent<UIDocument>();
-        var root = uiDocument.rootVisualElement;
-        CloseButton = root.Q<Button>("CloseButton");
-        ButtonSavedGameButton = root.Q<Button>("ButtonSavedGame");
-        ButtonLoadGameButton = root.Q<Button>("ButtonLoadGame");
-        
-        if (CloseButton != null) CloseButton.clicked += OnCloseClicked;
-        if (ButtonSavedGameButton != null) ButtonSavedGameButton.clicked += OnNewGameClicked;
-        if (ButtonLoadGameButton != null) ButtonLoadGameButton.clicked += OnLoadGameCLicked;
-        ButtonSavedGameButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterSaved);
-        ButtonSavedGameButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitSaved);
-        ButtonLoadGameButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterLoad);
-        ButtonLoadGameButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitLoad);
-        CloseButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterClose);
-        CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
 
-    }
-
-    void OnHoverEnterSaved(MouseEnterEvent evt)
+    private void Awake()
     {
-        ButtonSavedGameButton.style.backgroundColor = new StyleColor(Color.grey);
-    }
-    void OnHoverExitSaved(MouseLeaveEvent evt)
-    {
-        ButtonSavedGameButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
-    }
-    void OnHoverEnterLoad(MouseEnterEvent evt)
-    {
-        ButtonLoadGameButton.style.backgroundColor = new StyleColor(Color.grey);
-    }
-    void OnHoverExitLoad(MouseLeaveEvent evt)
-    {
-        ButtonLoadGameButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
-    }
-    void OnHoverEnterClose(MouseEnterEvent evt)
-    {
-        CloseButton.style.backgroundColor = new StyleColor(Color.grey);
-    }
-    void OnHoverExitClose(MouseLeaveEvent evt)
-    {
-        CloseButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
+        uiDocument = GetComponent<UIDocument>();
     }
     
-    private void OnCloseClicked()
+    private void Update()
     {
-        _audioManager.PlaySFX(effect, soundSource, 1f);
-        UiOptions.SetActive(false);
+        if (!gameObject.activeInHierarchy)
+            return;
+
+        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        {
+            OnCloseClicked();
+        }
+    }
+    
+    private void OnEnable()
+    {
+        if (uiDocument == null)
+            uiDocument = GetComponent<UIDocument>();
+
+        if (uiDocument == null)
+        {
+            Debug.LogError("LoadMenuManager: no hay UIDocument en este GameObject.");
+            return;
+        }
+
+        root = uiDocument.rootVisualElement;
+
+        if (root == null)
+        {
+            Debug.LogError("LoadMenuManager: rootVisualElement es null.");
+            return;
+        }
+
+        closeButton = root.Q<Button>("CloseButton");
+        savedGameButton = root.Q<Button>("ButtonSavedGame");
+        loadGameButton = root.Q<Button>("ButtonLoadGame");
+
+        if (closeButton == null) Debug.LogError("No se encontró CloseButton");
+        if (savedGameButton == null) Debug.LogError("No se encontró ButtonSavedGame");
+        if (loadGameButton == null) Debug.LogError("No se encontró ButtonLoadGame");
+
+        PrepararBoton(closeButton, OnCloseClicked);
+        PrepararBoton(savedGameButton, OnNewGameClicked);
+        PrepararBoton(loadGameButton, OnLoadGameClicked);
+
+        StartCoroutine(SetInitialFocusNextFrame());
     }
 
-    private void OnLoadGameCLicked()
+    private void OnDisable()
+    {
+        LimpiarBoton(closeButton, OnCloseClicked);
+        LimpiarBoton(savedGameButton, OnNewGameClicked);
+        LimpiarBoton(loadGameButton, OnLoadGameClicked);
+    }
+
+    private void PrepararBoton(Button boton, System.Action onClick)
+    {
+        if (boton == null) return;
+
+        boton.focusable = true;
+        boton.clicked += onClick;
+
+        boton.RegisterCallback<MouseEnterEvent>(OnHoverEnter);
+        boton.RegisterCallback<MouseLeaveEvent>(OnHoverExit);
+
+        boton.RegisterCallback<FocusInEvent>(OnFocusEnter);
+        boton.RegisterCallback<FocusOutEvent>(OnFocusExit);
+    }
+
+    private void LimpiarBoton(Button boton, System.Action onClick)
+    {
+        if (boton == null) return;
+
+        boton.clicked -= onClick;
+
+        boton.UnregisterCallback<MouseEnterEvent>(OnHoverEnter);
+        boton.UnregisterCallback<MouseLeaveEvent>(OnHoverExit);
+
+        boton.UnregisterCallback<FocusInEvent>(OnFocusEnter);
+        boton.UnregisterCallback<FocusOutEvent>(OnFocusExit);
+    }
+
+    private IEnumerator SetInitialFocusNextFrame()
+    {
+        yield return null;
+
+        if (savedGameButton != null)
+        {
+            savedGameButton.Focus();
+        }
+    }
+
+    public void SetInitialFocus()
+    {
+        StartCoroutine(SetInitialFocusNextFrame());
+    }
+
+    private void OnHoverEnter(MouseEnterEvent evt)
+    {
+        if (evt.currentTarget is Button boton)
+        {
+            ResaltarBoton(boton);
+        }
+    }
+
+    private void OnHoverExit(MouseLeaveEvent evt)
+    {
+        if (evt.currentTarget is Button boton)
+        {
+            RestaurarBoton(boton);
+        }
+    }
+
+    private void OnFocusEnter(FocusInEvent evt)
+    {
+        if (evt.currentTarget is Button boton)
+        {
+            ResaltarBoton(boton);
+        }
+    }
+
+    private void OnFocusExit(FocusOutEvent evt)
+    {
+        if (evt.currentTarget is Button boton)
+        {
+            RestaurarBoton(boton);
+        }
+    }
+
+    private void ResaltarBoton(Button boton)
+    {
+        boton.style.backgroundColor = new StyleColor(Color.grey);
+    }
+
+    private void RestaurarBoton(Button boton)
+    {
+        boton.style.backgroundColor = new StyleColor(new Color(0f, 0f, 0f, 0f));
+    }
+
+    private void OnCloseClicked()
+    {
+        if (_audioManager != null)
+            _audioManager.PlaySFX(effect, soundSource, 1f);
+
+        if (uiLoadMenu != null)
+            uiLoadMenu.SetActive(false);
+    }
+
+    private void OnLoadGameClicked()
     {
         SceneBootData.ShouldLoadGame = true;
-        _audioManager.PlaySFX(effect, soundSource, 1f);
+
+        if (_audioManager != null)
+            _audioManager.PlaySFX(effect, soundSource, 1f);
+
         SceneManager.LoadScene("DemoLevel");
     }
 
     private void OnNewGameClicked()
     {
         SceneBootData.ShouldLoadGame = false;
-        _audioManager.PlaySFX(effect, soundSource, 1f);
-        UiOptions.SetActive(false);
-        FindObjectOfType<ScreenFader>().FadeToBlackAndPlayTexts();
-        _audioManager.PlayMusic(introMusic, musicSource);
-        _audioManager.StopRain(rainSource);
+        if (_audioManager != null)
+            _audioManager.PlaySFX(effect, soundSource, 1f);
+
+        if (uiLoadMenu != null)
+            uiLoadMenu.SetActive(false);
+        
+        if (uiMainMenu != null)
+            uiMainMenu.SetActive(false);
+        
+        ScreenFader fader = FindObjectOfType<ScreenFader>();
+        if (fader != null)
+        {
+            fader.FadeToBlackAndPlayTexts();
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró ScreenFader en la escena.");
+        }
+
+        if (_audioManager != null)
+        {
+            _audioManager.PlayMusic(introMusic, musicSource);
+            _audioManager.StopRain(rainSource);
+        }
     }
-
-
 }

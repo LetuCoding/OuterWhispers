@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Zenject;
@@ -35,9 +36,15 @@ public class OptionsMenuManager : MonoBehaviour
     {
         UiOptions.SetActive(false);
     }
-    void Update()
+    private void Update()
     {
+        if (!gameObject.activeInHierarchy)
+            return;
 
+        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        {
+            OnCloseClicked();
+        }
     }
 
 
