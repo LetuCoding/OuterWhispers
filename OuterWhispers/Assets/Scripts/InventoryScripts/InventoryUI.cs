@@ -11,7 +11,7 @@ public class InventoryUI : MonoBehaviour
 
     [Header("Details Panel")] [SerializeField]
     private Image detailIcon;
-
+    Player _player;
     [SerializeField] private TMP_Text detailName;
     [SerializeField] private TMP_Text detailDescription;
     [SerializeField] private Button useButton;
@@ -24,13 +24,18 @@ public class InventoryUI : MonoBehaviour
         BuildSlots();
         ClearDetails();
         inventoryRoot.SetActive(false);
+
+        if (inventory.Owner != null)
+        {
+            _player = inventory.Owner;
+        }
     }
 
 
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (_player.inventoryPressed)
         {
             ToggleInventory();
             ClearDetails();

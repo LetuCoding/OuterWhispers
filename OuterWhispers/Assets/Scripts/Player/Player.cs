@@ -49,6 +49,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool shiftPressedThisFrame;
     public bool shiftHeld;
 
+    public bool inventoryPressed;
     // --- Estado en pared ---
     public bool _isOnWall;
     public bool _isOnLeftWall;
@@ -208,7 +209,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         jumpReleased  = _playerInputActions.Player.Jump.WasReleasedThisFrame();
         dashPressed   = _playerInputActions.Player.Dash.WasPressedThisFrame();
         attackPressed = _playerInputActions.Player.Attack.WasPressedThisFrame(); // FIX: asignación que faltaba
-
+        inventoryPressed =  _playerInputActions.Player.Inventory.WasPressedThisFrame();
         _moveInput = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
 
         shiftPressedThisFrame =
