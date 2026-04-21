@@ -21,7 +21,7 @@ namespace _Project.Scripts.Gameplay.PlayerScripts.STATE_MACHINE
         //      ajustarse desde el Inspector sin recompilar.
         [SerializeField] private float _slideSpeed = 12f;
         [SerializeField] private float _slideTime  = 0.5f;
-        [SerializeField] private float _strikeTime = 0.5f;
+        [SerializeField] private float _strikeTime = 0.3f;
 
         public AttackRunState(PlayerStateMachine fsm, Player player) : base(fsm, player) { }
 
