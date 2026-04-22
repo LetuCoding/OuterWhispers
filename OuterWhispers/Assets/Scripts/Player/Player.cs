@@ -32,8 +32,8 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public Inventory Inventory => _inventory;
 
     // --- Estado de movimiento ---
-    public float _moveInput;        // Eje horizontal del frame actual (-1, 0, 1)
-    public float _lastInput;        // Última dirección registrada (no se pone a 0)
+    public float _moveInput;
+    public float _lastInput;
     public bool  _isGrounded;
     public bool  _jumpCutting;
     public bool  _canDashAir;
@@ -41,22 +41,22 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool  _isSprinting;
     public bool  _isAttackSliding;
 
-    // --- Flags de input (seteados en Update, consumidos por los estados) ---
+    // --- Flags de input ---
     public bool jumpPressed;
     public bool jumpReleased;
     public bool dashPressed;
-    public bool attackPressed;          // FIX: antes nunca se asignaba
+    public bool attackPressed;
     public bool shiftPressedThisFrame;
     public bool shiftHeld;
-
     public bool inventoryPressed;
+
     // --- Estado en pared ---
     public bool _isOnWall;
     public bool _isOnLeftWall;
     public bool _isOnRightWall;
     public bool _wallJumping;
     public bool _wallSliding;
-    public bool canMove;
+    public bool canMove = true;
 
     // =========================================================================
     // ATTACK
@@ -111,9 +111,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float     wallCheckRadius = 0.1f;
 
-    /// <summary>Escala de gravedad durante el deslizamiento en pared.</summary>
-    // FIX: [SerializeField] no funciona en propiedades auto-implementadas;
-    //      se convierte en campo serializable con getter explícito.
     [SerializeField] private float _wallSlideGravity = 1f;
     public float wallSlideGravity => _wallSlideGravity;
 
@@ -157,6 +154,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     [Header("UI")]
     [SerializeField] private GameObject uiOptions;
     private bool _isPaused;
+    private bool _isInventoryOpen;
 
     [Header("Save System")]
     public UnityEvent OnLoadGame;
@@ -168,23 +166,40 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     private void Awake()
     {
         _playerInputActions = new PlayerInputActions();
-        _playerInputActions.Enable();
 
-        _rigidbody2D      = GetComponent<Rigidbody2D>();
-        _animator         = GetComponent<Animator>();
-        _healthComponent  = GetComponent<HealthComponent>();
-        _inventory        = GetComponent<Inventory>();
+        _rigidbody2D     = GetComponent<Rigidbody2D>();
+        _animator        = GetComponent<Animator>();
+        _healthComponent = GetComponent<HealthComponent>();
+        _inventory       = GetComponent<Inventory>();
 
         // Inicialización de la máquina de estados y sus estados
-        StateMachine  = new PlayerStateMachine();
-        IdleState     = new IdleState(StateMachine, this);
-        JumpState     = new JumpState(StateMachine, this);
-        WallSlideState= new WallSlideState(StateMachine, this);
-        FallingState  = new FallingState(StateMachine, this);
-        DashState     = new DashState(StateMachine, this);
-        AttackState   = new AttackState(StateMachine, this);
-        SprintState   = new SprintState(StateMachine, this);
-        AttackRunState= new AttackRunState(StateMachine, this);
+        StateMachine   = new PlayerStateMachine();
+        IdleState      = new IdleState(StateMachine, this);
+        JumpState      = new JumpState(StateMachine, this);
+        WallSlideState = new WallSlideState(StateMachine, this);
+        FallingState   = new FallingState(StateMachine, this);
+        DashState      = new DashState(StateMachine, this);
+        AttackState    = new AttackState(StateMachine, this);
+        SprintState    = new SprintState(StateMachine, this);
+        AttackRunState = new AttackRunState(StateMachine, this);
+    }
+
+    private void OnEnable()
+    {
+        if (_playerInputActions != null)
+            _playerInputActions.Player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        if (_playerInputActions != null)
+            _playerInputActions.Player.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        if (_playerInputActions != null)
+            _playerInputActions.Dispose();
     }
 
     /// <summary>Inyección de dependencia de Zenject para el AudioManager.</summary>
@@ -196,38 +211,65 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
 
     private void Start()
     {
-        // Estado inicial de la FSM
         StateMachine.Initialize(IdleState);
-        _deathScreen.gameObject.SetActive(false);
+
+        if (_deathScreen != null)
+            _deathScreen.gameObject.SetActive(false);
+
+        if (uiOptions != null)
+            uiOptions.SetActive(false);
+
     }
 
     private void Update()
     {
         if (_isDead) return;
 
-        // Leer todos los inputs en un único lugar; los estados los consumen.
+        // =========================
+        // INPUTS con PlayerInputActions
+        // =========================
         jumpPressed   = _playerInputActions.Player.Jump.WasPressedThisFrame();
         jumpReleased  = _playerInputActions.Player.Jump.WasReleasedThisFrame();
         dashPressed   = _playerInputActions.Player.Dash.WasPressedThisFrame();
-        attackPressed = _playerInputActions.Player.Attack.WasPressedThisFrame(); // FIX: asignación que faltaba
-        inventoryPressed =  _playerInputActions.Player.Inventory.WasPressedThisFrame();
-        _moveInput = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
+        attackPressed = _playerInputActions.Player.Attack.WasPressedThisFrame();
+        _moveInput    = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
 
+        // =========================
+        // INVENTORY manual (sin PlayerInputActions)
+        // =========================
+        inventoryPressed =
+            (Keyboard.current?.bKey?.wasPressedThisFrame ?? false) ||
+            (Gamepad.current?.dpad.up.wasPressedThisFrame ?? false);
+
+        // =========================
+        // SHIFT manual solo si lo necesitas para sprint u otra lógica
+        // =========================
         shiftPressedThisFrame =
-            (Keyboard.current.leftShiftKey?.wasPressedThisFrame  ?? false) ||
-            (Keyboard.current.rightShiftKey?.wasPressedThisFrame ?? false);
+            (Keyboard.current?.leftShiftKey?.wasPressedThisFrame ?? false) ||
+            (Keyboard.current?.rightShiftKey?.wasPressedThisFrame ?? false);
 
         shiftHeld =
-            (Keyboard.current.leftShiftKey?.isPressed  ?? false) ||
-            (Keyboard.current.rightShiftKey?.isPressed ?? false);
+            (Keyboard.current?.leftShiftKey?.isPressed ?? false) ||
+            (Keyboard.current?.rightShiftKey?.isPressed ?? false);
 
         if (_moveInput != 0)
             _lastInput = _moveInput;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        // =========================
+        // PAUSA
+        // =========================
+        bool pausePressed =
+            (Keyboard.current?.escapeKey?.wasPressedThisFrame ?? false) ||
+            (Gamepad.current?.startButton.wasPressedThisFrame ?? false);
+
+        if (pausePressed)
             TogglePauseMenu();
-        if (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame)
-            TogglePauseMenu();
+
+        // =========================
+        // INVENTARIO
+        // =========================
+        if (inventoryPressed)
+            ToggleInventoryMenu();
 
         GroundCheck();
         WallCheck();
@@ -237,7 +279,9 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     private void FixedUpdate()
     {
         if (_isDead) return;
-        // FIX: bloque duplicado eliminado. Una sola comprobación para ambos flags.
+
+        if (_isPaused || _isInventoryOpen) return;
+
         if (_isDashing || _isAttackSliding)
         {
             StateMachine.CurrentState.PhysicsUpdate();
@@ -250,11 +294,10 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         }
         else if (!_isGrounded)
         {
-            // En el aire sin input: no cancelar inercia horizontal (permite coyote-time y wall-jumps suaves)
+            // En el aire sin input: mantener inercia
         }
         else
         {
-            // En el suelo sin input: frenar en seco
             _rigidbody2D.linearVelocity = new Vector2(0f, _rigidbody2D.linearVelocity.y);
         }
 
@@ -265,7 +308,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     // CHECKS DE COLISIÓN
     // =========================================================================
 
-    /// <summary>Detecta si el jugador está tocando el suelo y resetea flags relacionados.</summary>
     private void GroundCheck()
     {
         _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, groundCheckRadius, groundLayer);
@@ -277,10 +319,9 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         }
     }
 
-    /// <summary>Detecta si el jugador está en contacto con una pared (izquierda o derecha).</summary>
     private void WallCheck()
     {
-        _isOnLeftWall  = Physics2D.OverlapCircle(_wallCheckLeft.position,  wallCheckRadius, wallLayer);
+        _isOnLeftWall  = Physics2D.OverlapCircle(_wallCheckLeft.position, wallCheckRadius, wallLayer);
         _isOnRightWall = Physics2D.OverlapCircle(_wallCheckRight.position, wallCheckRadius, wallLayer);
         _isOnWall      = (_isOnLeftWall || _isOnRightWall) && !_isGrounded;
     }
@@ -289,24 +330,17 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     // MOVIMIENTO
     // =========================================================================
 
-    /// <summary>Aplica una escala de gravedad personalizada al Rigidbody2D.</summary>
-    /// <param name="gravity">Valor de gravityScale deseado.</param>
     public void Gravity(float gravity)
     {
         _rigidbody2D.gravityScale = gravity;
     }
 
-    /// <summary>
-    /// Ejecuta un wall jump: calcula la dirección según la pared tocada
-    /// y aplica impulso; bloquea el input brevemente para evitar reentrar en la pared.
-    /// </summary>
     public void WallJump()
     {
         _wallJumping = true;
         _wallSliding = false;
         _isOnWall    = false;
 
-        // El jugador salta hacia el lado contrario de la pared que está tocando
         float jumpDirection = _isOnLeftWall ? 1f : -1f;
 
         _rigidbody2D.linearVelocity = Vector2.zero;
@@ -315,10 +349,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         StartCoroutine(WallJumpLock());
     }
 
-    /// <summary>
-    /// Bloquea el input horizontal durante <see cref="_wallJumpLockTime"/> segundos
-    /// para evitar que el jugador vuelva inmediatamente a la pared tras saltar.
-    /// </summary>
     private IEnumerator WallJumpLock()
     {
         _wallJumping = true;
@@ -328,7 +358,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         while (elapsed < _wallJumpLockTime)
         {
             _moveInput = 0f;
-            elapsed   += Time.deltaTime;
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
@@ -338,32 +368,62 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     // =========================================================================
     // PAUSA
     // =========================================================================
-    public void UnablePLayer()
-    {
-        _playerInputActions.Player.Disable();
-    }
-    
+
     private void TogglePauseMenu()
     {
+        // Si el inventario está abierto, primero lo cerramos
+        if (_isInventoryOpen)
+            ToggleInventoryMenu();
+
         _isPaused = !_isPaused;
-        _playerInputActions.Player.Disable();
+
         if (uiOptions != null)
         {
             uiOptions.SetActive(_isPaused);
+
             if (_isPaused)
             {
+                _playerInputActions.Player.Disable();
+
                 OptionsMenuManager options = uiOptions.GetComponent<OptionsMenuManager>();
                 if (options != null)
-                {
                     options.SetInitialFocus();
-                }
+            }
+            else
+            {
+                _playerInputActions.Player.Enable();
             }
         }
     }
 
     public void UnPauseMenu()
     {
+        _isPaused = false;
+
+        if (uiOptions != null)
+            uiOptions.SetActive(false);
+
         if (_playerInputActions != null)
+            _playerInputActions.Player.Enable();
+    }
+
+    // =========================================================================
+    // INVENTARIO
+    // =========================================================================
+
+    private void ToggleInventoryMenu()
+    {
+
+        // Si el pause está abierto, no abrir inventario
+        if (_isPaused) return;
+
+        _isInventoryOpen = !_isInventoryOpen;
+
+        if (_isInventoryOpen)
+        {
+            _playerInputActions.Player.Disable();
+        }
+        else
         {
             _playerInputActions.Player.Enable();
         }
@@ -373,10 +433,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     // FREEZE / UNFREEZE
     // =========================================================================
 
-    /// <summary>
-    /// Congela al jugador: desactiva el input y convierte el Rigidbody en estático.
-    /// Se usa al morir o en cinemáticas.
-    /// </summary>
     public void FreezePlayer()
     {
         _playerInputActions?.Disable();
@@ -389,9 +445,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         }
     }
 
-    /// <summary>
-    /// Descongela al jugador: reactiva el input y restaura el Rigidbody dinámico.
-    /// </summary>
     public void UnfreezePlayer()
     {
         _playerInputActions?.Enable();
@@ -408,13 +461,11 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     // DAÑO, MUERTE Y CURACIÓN
     // =========================================================================
 
-    /// <summary>Reproduce el efecto visual y de sonido al recibir daño.</summary>
     public void TakeDamage()
     {
         StartCoroutine(HitEffect());
     }
 
-    /// <summary>Parpadeo rojo de 0.25 s al ser golpeado.</summary>
     private IEnumerator HitEffect()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -425,10 +476,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         if (sr != null) sr.color = Color.white;
     }
 
-    /// <summary>
-    /// Ejecuta la secuencia de muerte: animación, freeze, audio y pantalla de muerte.
-    /// Protegido contra doble llamada con <c>_isDead</c>.
-    /// </summary>
     public void Die()
     {
         if (_isDead) return;
@@ -445,8 +492,6 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         _deathScreen.FadeToBlackAndShowMessage();
     }
 
-    /// <summary>Cura al jugador la cantidad indicada y reproduce el sonido de curación.</summary>
-    /// <param name="amount">Cantidad de vida a restaurar.</param>
     public void Heal(float amount)
     {
         _audioManager.PlaySFX(heal, itemSource, 1f);
@@ -457,14 +502,13 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     // SAVE SYSTEM
     // =========================================================================
 
-    /// <summary>Lanza el evento <see cref="OnLoadGame"/> para notificar al sistema de guardado.</summary>
     public void LoadSavedGame()
     {
         OnLoadGame?.Invoke();
     }
 
     // =========================================================================
-    // GIZMOS (sólo editor)
+    // GIZMOS
     // =========================================================================
 
     private void OnDrawGizmosSelected()
@@ -472,9 +516,15 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         if (_groundCheck == null) return;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(_groundCheck.position,    groundCheckRadius);
-        Gizmos.DrawWireSphere(_wallCheckLeft.position,  wallCheckRadius);
-        Gizmos.DrawWireSphere(_wallCheckRight.position, wallCheckRadius);
-        Gizmos.DrawWireCube(attackPoint.position,       stats.attackRange);
+        Gizmos.DrawWireSphere(_groundCheck.position, groundCheckRadius);
+
+        if (_wallCheckLeft != null)
+            Gizmos.DrawWireSphere(_wallCheckLeft.position, wallCheckRadius);
+
+        if (_wallCheckRight != null)
+            Gizmos.DrawWireSphere(_wallCheckRight.position, wallCheckRadius);
+
+        if (attackPoint != null && stats != null)
+            Gizmos.DrawWireCube(attackPoint.position, stats.attackRange);
     }
 }

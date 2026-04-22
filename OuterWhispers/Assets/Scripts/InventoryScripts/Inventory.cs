@@ -17,7 +17,6 @@ namespace InventoryScripts
         public List<InventorySlot> items = new List<InventorySlot>();
 
         public event Action<Inventory> EAddItem;
-        
 
         private void Awake()
         {

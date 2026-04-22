@@ -27,11 +27,15 @@ public class InventoryUI : MonoBehaviour
 
     private readonly List<SlotUI> uiSlots = new List<SlotUI>();
 
+    private Coroutine _selectRoutine;
+    private bool _toggleLock;
+
     private void Start()
     {
         BuildSlots();
         RefreshSlots();
         ClearDetails();
+
         if (inventoryRoot != null)
             inventoryRoot.SetActive(false);
 
@@ -54,19 +58,31 @@ public class InventoryUI : MonoBehaviour
             inventory.EAddItem -= OnInventoryChanged;
     }
 
+    private void OnDisable()
+    {
+        if (_player != null)
+            _player.UnPauseMenu();
+    }
+
     private void Update()
     {
         if (_player == null)
             return;
 
-        // IMPORTANTE:
-        // inventoryPressed debería ser algo tipo "pressed this frame".
-        // Si es un bool mantenido, te abrirá/cerrará el inventario muchas veces.
-        if (_player.inventoryPressed)
+        // Esto asume que inventoryPressed viene como pulsación de un solo frame.
+        // Si en Player no está bien reseteado, el inventario toggleará varias veces.
+        if (_player.inventoryPressed && !_toggleLock)
         {
+            StartCoroutine(ToggleInventoryCooldown());
             ToggleInventory();
-            ClearDetails();
         }
+    }
+
+    private IEnumerator ToggleInventoryCooldown()
+    {
+        _toggleLock = true;
+        yield return null;
+        _toggleLock = false;
     }
 
     private void OnInventoryChanged(Inventory inv)
@@ -75,7 +91,7 @@ public class InventoryUI : MonoBehaviour
 
         if (inventoryRoot != null && inventoryRoot.activeSelf)
         {
-            StartCoroutine(SelectFirstSlotNextFrame());
+            StartSelectFirstSlot();
         }
     }
 
@@ -132,8 +148,13 @@ public class InventoryUI : MonoBehaviour
 
         if (useButton != null)
         {
-            useButton.gameObject.SetActive(item is UsableItemData);
-            EventSystem.current.SetSelectedGameObject(useButton.gameObject);
+            bool canUse = item is UsableItemData;
+            useButton.gameObject.SetActive(canUse);
+
+            // IMPORTANTE:
+            // NO seleccionar aquí el botón.
+            // ShowDetails suele ser llamado desde OnSelect del slot,
+            // y cambiar la selección aquí provoca el conflicto con EventSystem.
         }
     }
 
@@ -155,7 +176,7 @@ public class InventoryUI : MonoBehaviour
             ClearDetails();
 
             if (inventoryRoot != null && inventoryRoot.activeSelf)
-                StartCoroutine(SelectFirstSlotNextFrame());
+                StartSelectFirstSlot();
         }
     }
 
@@ -198,22 +219,31 @@ public class InventoryUI : MonoBehaviour
 
         if (open)
         {
-            _player.canMove = false;
             RefreshSlots();
             ClearDetails();
-            StartCoroutine(SelectFirstSlotNextFrame());
+            StartSelectFirstSlot();
         }
         else
         {
-            EventSystem.current.SetSelectedGameObject(null);
-            _player.canMove = true;
+            if (EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(null);
         }
 
         Debug.Log("Inventario toggle: " + inventoryRoot.activeSelf);
     }
 
+    private void StartSelectFirstSlot()
+    {
+        if (_selectRoutine != null)
+            StopCoroutine(_selectRoutine);
+
+        _selectRoutine = StartCoroutine(SelectFirstSlotNextFrame());
+    }
+
     private IEnumerator SelectFirstSlotNextFrame()
     {
+        // Esperar más de un frame ayuda a evitar conflictos con el EventSystem
+        yield return null;
         yield return null;
 
         if (EventSystem.current == null)
@@ -240,5 +270,22 @@ public class InventoryUI : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(useButton.gameObject);
         }
+    }
+
+    public void FocusUseButton()
+    {
+        if (useButton == null || !useButton.gameObject.activeInHierarchy)
+            return;
+
+        StartCoroutine(FocusUseButtonNextFrame());
+    }
+
+    private IEnumerator FocusUseButtonNextFrame()
+    {
+        yield return null;
+        yield return null;
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(useButton.gameObject);
     }
 }
