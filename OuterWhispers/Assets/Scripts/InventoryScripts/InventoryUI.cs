@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform slotsParent;
     [SerializeField] private SlotUI slotPrefab;
+
+    [Header("Grid")]
+    [SerializeField] private int columns = 4;
 
     [Header("Details Panel")]
     [SerializeField] private Image detailIcon;
@@ -31,6 +35,7 @@ public class InventoryUI : MonoBehaviour
         BuildSlots();
         RefreshSlots();
         ClearDetails();
+        ConfigureNavigation();
 
         if (inventoryRoot != null)
             inventoryRoot.SetActive(false);
@@ -42,6 +47,46 @@ public class InventoryUI : MonoBehaviour
             inventory.EAddItem += OnInventoryChanged;
     }
 
+    private void Update()
+    {
+        if (inventoryRoot == null || !inventoryRoot.activeInHierarchy)
+            return;
+
+        if (EventSystem.current == null)
+            return;
+
+        GameObject currentSelected = EventSystem.current.currentSelectedGameObject;
+
+        // Botón círculo / B / Escape / Cancel
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            TryDeselectUseButton(currentSelected);
+            return;
+        }
+
+        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        {
+            TryDeselectUseButton(currentSelected);
+        }
+    }
+
+    private void TryDeselectUseButton(GameObject currentSelected)
+    {
+        if (useButton == null || currentSelected != useButton.gameObject)
+            return;
+
+        SlotUI selectedUI = FindUISlotBySlot(selectedSlot);
+
+        if (selectedUI != null && selectedUI.GetSelectable() != null)
+        {
+            EventSystem.current.SetSelectedGameObject(selectedUI.GetSelectable().gameObject);
+        }
+        else
+        {
+            StartSelectFirstSlot();
+        }
+    }
+    
     private void OnDestroy()
     {
         if (useButton != null)
@@ -60,6 +105,7 @@ public class InventoryUI : MonoBehaviour
     private void OnInventoryChanged(Inventory inv)
     {
         RefreshSlots();
+        ConfigureNavigation();
 
         if (inventoryRoot != null && inventoryRoot.activeSelf)
             StartSelectFirstSlot();
@@ -68,6 +114,7 @@ public class InventoryUI : MonoBehaviour
     public void OnOpenedByManager()
     {
         RefreshSlots();
+        ConfigureNavigation();
         ClearDetails();
         StartSelectFirstSlot();
     }
@@ -79,6 +126,9 @@ public class InventoryUI : MonoBehaviour
         if (inventory == null || slotsParent == null || slotPrefab == null)
             return;
 
+        foreach (Transform child in slotsParent)
+            Destroy(child.gameObject);
+
         foreach (var slot in inventory.items)
         {
             SlotUI uiSlot = Instantiate(slotPrefab, slotsParent);
@@ -89,12 +139,9 @@ public class InventoryUI : MonoBehaviour
 
     public void LoadBuild()
     {
-        foreach (Transform child in slotsParent)
-            Destroy(child.gameObject);
-
-        uiSlots.Clear();
         BuildSlots();
         RefreshSlots();
+        ConfigureNavigation();
     }
 
     public void ShowDetails(InventorySlot slot)
@@ -126,6 +173,8 @@ public class InventoryUI : MonoBehaviour
             bool canUse = item is UsableItemData;
             useButton.gameObject.SetActive(canUse);
         }
+
+        ConfigureNavigation();
     }
 
     public void UseSelectedItem()
@@ -143,6 +192,7 @@ public class InventoryUI : MonoBehaviour
 
             RefreshSlots();
             ClearDetails();
+            ConfigureNavigation();
 
             if (inventoryRoot != null && inventoryRoot.activeSelf)
                 StartSelectFirstSlot();
@@ -196,23 +246,91 @@ public class InventoryUI : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
 
+        Selectable first = GetFirstSelectable();
+        if (first != null)
+            EventSystem.current.SetSelectedGameObject(first.gameObject);
+    }
+
+    private Selectable GetFirstSelectable()
+    {
         foreach (var uiSlot in uiSlots)
         {
-            if (uiSlot != null && !uiSlot.IsEmpty())
-            {
-                EventSystem.current.SetSelectedGameObject(uiSlot.gameObject);
-                yield break;
-            }
+            if (uiSlot != null && uiSlot.GetSelectable() != null)
+                return uiSlot.GetSelectable();
         }
 
-        if (uiSlots.Count > 0 && uiSlots[0] != null)
+        return null;
+    }
+
+    private void ConfigureNavigation()
+    {
+        for (int i = 0; i < uiSlots.Count; i++)
         {
-            EventSystem.current.SetSelectedGameObject(uiSlots[0].gameObject);
+            SlotUI slotUI = uiSlots[i];
+            if (slotUI == null)
+                continue;
+
+            Selectable current = slotUI.GetSelectable();
+            if (current == null)
+                continue;
+
+            Navigation nav = new Navigation();
+            nav.mode = Navigation.Mode.Explicit;
+
+            nav.selectOnLeft = GetSelectableAt(i - 1, sameRowOnly: true, currentIndex: i);
+            nav.selectOnRight = GetSelectableAt(i + 1, sameRowOnly: true, currentIndex: i);
+            nav.selectOnUp = GetSelectableAt(i - columns, sameRowOnly: false, currentIndex: i);
+            nav.selectOnDown = GetSelectableAt(i + columns, sameRowOnly: false, currentIndex: i);
+
+            current.navigation = nav;
         }
-        else if (useButton != null && useButton.gameObject.activeInHierarchy)
+
+        if (useButton != null)
         {
-            EventSystem.current.SetSelectedGameObject(useButton.gameObject);
+            Navigation buttonNav = new Navigation();
+            buttonNav.mode = Navigation.Mode.Explicit;
+
+            SlotUI selectedUI = FindUISlotBySlot(selectedSlot);
+            if (selectedUI != null)
+                buttonNav.selectOnUp = selectedUI.GetSelectable();
+
+            useButton.navigation = buttonNav;
         }
+    }
+
+    private Selectable GetSelectableAt(int index, bool sameRowOnly, int currentIndex)
+    {
+        if (index < 0 || index >= uiSlots.Count)
+            return null;
+
+        if (sameRowOnly)
+        {
+            int currentRow = currentIndex / columns;
+            int targetRow = index / columns;
+
+            if (currentRow != targetRow)
+                return null;
+        }
+
+        SlotUI slotUI = uiSlots[index];
+        if (slotUI == null)
+            return null;
+
+        return slotUI.GetSelectable();
+    }
+
+    private SlotUI FindUISlotBySlot(InventorySlot slot)
+    {
+        if (slot == null)
+            return null;
+
+        foreach (var uiSlot in uiSlots)
+        {
+            if (uiSlot != null && uiSlot.GetSlot() == slot)
+                return uiSlot;
+        }
+
+        return null;
     }
 
     public void FocusUseButton()

@@ -8,19 +8,17 @@ public class GameUIManager : MonoBehaviour
     public static GameUIManager Instance { get; private set; }
 
     [Header("Panels")]
-    [SerializeField] private GameObject inventoryPanel; // Asigna aquí InventoryUI/Root
-    [SerializeField] private GameObject optionsPanel;   // Asigna aquí UiOptions
+    [SerializeField] private GameObject inventoryPanel;
+    [SerializeField] private GameObject optionsPanel;
 
-    [Header("Input")]
-    [SerializeField] private Key inventoryKey = Key.B;
-    [SerializeField] private Key inventoryAltKey = Key.UpArrow;
-    [SerializeField] private Key optionsKey = Key.Escape;
+    [Header("Refs")]
+    [SerializeField] private InventoryUI inventoryUI;
 
-    [Header("Behaviour")]
+    [Header("Settings")]
     [SerializeField] private bool pauseGameWhenOpen = true;
 
-    private bool _toggleLock;
-    private UIPanelType _currentOpenPanel = UIPanelType.None;
+    private bool _inputLock;
+    private UIPanelType _currentPanel = UIPanelType.None;
 
     private enum UIPanelType
     {
@@ -28,10 +26,6 @@ public class GameUIManager : MonoBehaviour
         Inventory,
         Options
     }
-
-    public bool IsAnyUIOpen => _currentOpenPanel != UIPanelType.None;
-    public bool IsInventoryOpen => inventoryPanel != null && inventoryPanel.activeSelf;
-    public bool IsOptionsOpen => optionsPanel != null && optionsPanel.activeSelf;
 
     private void Awake()
     {
@@ -54,172 +48,152 @@ public class GameUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (_toggleLock)
+        if (_inputLock)
             return;
 
         if (Keyboard.current == null)
             return;
 
-        bool inventoryPressed =
-            Keyboard.current[inventoryKey].wasPressedThisFrame ||
-            Keyboard.current[inventoryAltKey].wasPressedThisFrame;
+        // =========================
+        // INPUT OPCIONES
+        // =========================
+        bool escPressed = Keyboard.current.escapeKey.wasPressedThisFrame;
+        bool startPressed = Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame;
 
-        bool optionsPressed =
-            Keyboard.current[optionsKey].wasPressedThisFrame;
+        // =========================
+        // INPUT INVENTARIO
+        // =========================
+        bool bPressed = Keyboard.current.bKey.wasPressedThisFrame;
+        bool dpadUpPressed = Gamepad.current != null && Gamepad.current.dpad.up.wasPressedThisFrame;
 
-        if (inventoryPressed)
-        {
-            StartCoroutine(InputCooldown());
-            ToggleInventory();
-            return;
-        }
-
-        if (optionsPressed)
+        if (escPressed || startPressed)
         {
             StartCoroutine(InputCooldown());
             ToggleOptions();
+            return;
+        }
+
+        if (bPressed || dpadUpPressed)
+        {
+            StartCoroutine(InputCooldown());
+            ToggleInventory();
         }
     }
 
     private IEnumerator InputCooldown()
     {
-        _toggleLock = true;
+        _inputLock = true;
         yield return null;
-        _toggleLock = false;
+        _inputLock = false;
     }
 
+    // =========================================================
+    // INVENTARIO
+    // =========================================================
     public void ToggleInventory()
     {
         if (inventoryPanel == null)
-        {
-            Debug.LogWarning("GameUIManager: inventoryPanel no asignado.");
             return;
-        }
 
-        if (IsInventoryOpen)
-        {
+        if (_currentPanel == UIPanelType.Inventory)
             CloseInventory();
-        }
         else
-        {
             OpenInventory();
-        }
-    }
-
-    public void ToggleOptions()
-    {
-        if (optionsPanel == null)
-        {
-            Debug.LogWarning("GameUIManager: optionsPanel no asignado.");
-            return;
-        }
-
-        if (IsOptionsOpen)
-        {
-            CloseOptions();
-        }
-        else
-        {
-            OpenOptions();
-        }
     }
 
     public void OpenInventory()
     {
-        if (inventoryPanel == null)
-            return;
-
-        if (IsOptionsOpen)
+        if (IsOptionsOpen())
             CloseOptions();
 
         inventoryPanel.SetActive(true);
-        _currentOpenPanel = UIPanelType.Inventory;
+        _currentPanel = UIPanelType.Inventory;
 
-        if (pauseGameWhenOpen)
-            Time.timeScale = 0f;
+        PauseGame();
 
-        Debug.Log("Inventario abierto");
+        if (inventoryUI != null)
+            inventoryUI.OnOpenedByManager();
     }
 
     public void CloseInventory()
     {
-        if (inventoryPanel == null)
-            return;
-
         inventoryPanel.SetActive(false);
 
         if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null);
 
-        if (_currentOpenPanel == UIPanelType.Inventory)
-            _currentOpenPanel = UIPanelType.None;
+        _currentPanel = UIPanelType.None;
 
         ResumeGameIfNeeded();
+    }
 
-        Debug.Log("Inventario cerrado");
+    // =========================================================
+    // OPCIONES
+    // =========================================================
+    public void ToggleOptions()
+    {
+        if (optionsPanel == null)
+            return;
+
+        if (_currentPanel == UIPanelType.Options)
+            CloseOptions();
+        else
+            OpenOptions();
     }
 
     public void OpenOptions()
     {
-        if (optionsPanel == null)
-            return;
-
-        if (IsInventoryOpen)
+        if (IsInventoryOpen())
             CloseInventory();
 
         optionsPanel.SetActive(true);
-        _currentOpenPanel = UIPanelType.Options;
+        _currentPanel = UIPanelType.Options;
 
-        if (pauseGameWhenOpen)
-            Time.timeScale = 0f;
+        PauseGame();
 
-        OptionsMenuManager optionsMenu = optionsPanel.GetComponent<OptionsMenuManager>();
-        if (optionsMenu != null)
-            optionsMenu.OnOpenedByManager();
-
-        Debug.Log("Opciones abiertas");
+        var options = optionsPanel.GetComponent<OptionsMenuManager>();
+        if (options != null)
+            options.OnOpenedByManager();
     }
 
     public void CloseOptions()
     {
-        if (optionsPanel == null)
-            return;
-
-        OptionsMenuManager optionsMenu = optionsPanel.GetComponent<OptionsMenuManager>();
-        if (optionsMenu != null)
-            optionsMenu.OnClosedByManager();
+        var options = optionsPanel.GetComponent<OptionsMenuManager>();
+        if (options != null)
+            options.OnClosedByManager();
 
         optionsPanel.SetActive(false);
 
-        if (_currentOpenPanel == UIPanelType.Options)
-            _currentOpenPanel = UIPanelType.None;
+        _currentPanel = UIPanelType.None;
 
         ResumeGameIfNeeded();
-
-        Debug.Log("Opciones cerradas");
     }
 
-    public void CloseCurrentUI()
-    {
-        switch (_currentOpenPanel)
-        {
-            case UIPanelType.Inventory:
-                CloseInventory();
-                break;
+    // =========================================================
+    // ESTADO
+    // =========================================================
+    public bool IsInventoryOpen() => inventoryPanel != null && inventoryPanel.activeSelf;
+    public bool IsOptionsOpen() => optionsPanel != null && optionsPanel.activeSelf;
 
-            case UIPanelType.Options:
-                CloseOptions();
-                break;
-        }
+    // =========================================================
+    // PAUSA GLOBAL
+    // =========================================================
+    private void PauseGame()
+    {
+        if (!pauseGameWhenOpen)
+            return;
+
+        Time.timeScale = 0f;
+
     }
 
     private void ResumeGameIfNeeded()
     {
-        bool inventoryStillOpen = inventoryPanel != null && inventoryPanel.activeSelf;
-        bool optionsStillOpen = optionsPanel != null && optionsPanel.activeSelf;
+        if (IsInventoryOpen() || IsOptionsOpen())
+            return;
 
-        if (!inventoryStillOpen && !optionsStillOpen)
-            Time.timeScale = 1f;
+        Time.timeScale = 1f;
+
     }
 
     private void OnDestroy()
