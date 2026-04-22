@@ -33,7 +33,8 @@ public class OptionsMenuManager : MonoBehaviour
 
     void Start()
     {
-        UiOptions.SetActive(false);
+        if (UiOptions != null)
+            UiOptions.SetActive(false);
     }
 
     private void Update()
@@ -43,7 +44,7 @@ public class OptionsMenuManager : MonoBehaviour
 
         if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
         {
-            OnCloseClicked();
+            RequestClose();
         }
     }
 
@@ -60,11 +61,10 @@ public class OptionsMenuManager : MonoBehaviour
 
         if (CloseButton != null)
         {
-            CloseButton.clicked += OnCloseClicked;
+            CloseButton.clicked += RequestClose;
             CloseButton.focusable = true;
             CloseButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterClose);
             CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
-
             CloseButton.RegisterCallback<FocusInEvent>(_ => OnFocusEnterClose());
             CloseButton.RegisterCallback<FocusOutEvent>(_ => OnFocusExitClose());
         }
@@ -87,12 +87,11 @@ public class OptionsMenuManager : MonoBehaviour
     private void OnDisable()
     {
         if (Player != null)
-        {
             Player.UnPauseMenu();
-        }
+
         if (CloseButton != null)
         {
-            CloseButton.clicked -= OnCloseClicked;
+            CloseButton.clicked -= RequestClose;
             CloseButton.UnregisterCallback<MouseEnterEvent>(OnHoverEnterClose);
             CloseButton.UnregisterCallback<MouseLeaveEvent>(OnHoverExitClose);
         }
@@ -102,6 +101,26 @@ public class OptionsMenuManager : MonoBehaviour
 
         if (sliderMusic != null)
             sliderMusic.UnregisterValueChangedCallback(OnSliderMusicChanged);
+    }
+
+    public void OnOpenedByManager()
+    {
+        SetInitialFocus();
+    }
+
+    public void OnClosedByManager()
+    {
+    }
+
+    private void RequestClose()
+    {
+        if (_audioManager != null && effect != null && soundSource != null)
+            _audioManager.PlaySFX(effect, soundSource, 1f);
+
+        if (GameUIManager.Instance != null)
+            GameUIManager.Instance.CloseOptions();
+        else if (UiOptions != null)
+            UiOptions.SetActive(false);
     }
 
     public void SetInitialFocus()
@@ -121,7 +140,6 @@ public class OptionsMenuManager : MonoBehaviour
 
         root.Focus();
 
-        // Elige el primer control que quieras seleccionar
         if (sliderSound != null && sliderSound.canGrabFocus)
         {
             sliderSound.Focus();
@@ -138,12 +156,14 @@ public class OptionsMenuManager : MonoBehaviour
 
     void OnHoverEnterClose(MouseEnterEvent evt)
     {
-        CloseButton.style.backgroundColor = new StyleColor(Color.grey);
+        if (CloseButton != null)
+            CloseButton.style.backgroundColor = new StyleColor(Color.grey);
     }
 
     void OnHoverExitClose(MouseLeaveEvent evt)
     {
-        CloseButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
+        if (CloseButton != null)
+            CloseButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
     }
 
     void OnFocusEnterClose()
@@ -174,11 +194,5 @@ public class OptionsMenuManager : MonoBehaviour
 
         if (_audioManager != null)
             _audioManager.SetMusicVolume(volume, mixer);
-    }
-
-    private void OnCloseClicked()
-    {
-        _audioManager.PlaySFX(effect, soundSource, 1f);
-        UiOptions.SetActive(false);
     }
 }

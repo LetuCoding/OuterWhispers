@@ -23,12 +23,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject inventoryRoot;
 
     private InventorySlot selectedSlot;
-    private Player _player;
-
     private readonly List<SlotUI> uiSlots = new List<SlotUI>();
-
     private Coroutine _selectRoutine;
-    private bool _toggleLock;
 
     private void Start()
     {
@@ -38,9 +34,6 @@ public class InventoryUI : MonoBehaviour
 
         if (inventoryRoot != null)
             inventoryRoot.SetActive(false);
-
-        if (inventory != null && inventory.Owner != null)
-            _player = inventory.Owner;
 
         if (useButton != null)
             useButton.onClick.AddListener(UseSelectedItem);
@@ -60,29 +53,8 @@ public class InventoryUI : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_player != null)
-            _player.UnPauseMenu();
-    }
-
-    private void Update()
-    {
-        if (_player == null)
-            return;
-
-        // Esto asume que inventoryPressed viene como pulsación de un solo frame.
-        // Si en Player no está bien reseteado, el inventario toggleará varias veces.
-        if (_player.inventoryPressed && !_toggleLock)
-        {
-            StartCoroutine(ToggleInventoryCooldown());
-            ToggleInventory();
-        }
-    }
-
-    private IEnumerator ToggleInventoryCooldown()
-    {
-        _toggleLock = true;
-        yield return null;
-        _toggleLock = false;
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     private void OnInventoryChanged(Inventory inv)
@@ -90,9 +62,14 @@ public class InventoryUI : MonoBehaviour
         RefreshSlots();
 
         if (inventoryRoot != null && inventoryRoot.activeSelf)
-        {
             StartSelectFirstSlot();
-        }
+    }
+
+    public void OnOpenedByManager()
+    {
+        RefreshSlots();
+        ClearDetails();
+        StartSelectFirstSlot();
     }
 
     public void BuildSlots()
@@ -113,9 +90,7 @@ public class InventoryUI : MonoBehaviour
     public void LoadBuild()
     {
         foreach (Transform child in slotsParent)
-        {
             Destroy(child.gameObject);
-        }
 
         uiSlots.Clear();
         BuildSlots();
@@ -150,11 +125,6 @@ public class InventoryUI : MonoBehaviour
         {
             bool canUse = item is UsableItemData;
             useButton.gameObject.SetActive(canUse);
-
-            // IMPORTANTE:
-            // NO seleccionar aquí el botón.
-            // ShowDetails suele ser llamado desde OnSelect del slot,
-            // y cambiar la selección aquí provoca el conflicto con EventSystem.
         }
     }
 
@@ -165,12 +135,11 @@ public class InventoryUI : MonoBehaviour
 
         if (selectedSlot.item is UsableItemData usable)
         {
-            usable.Use(inventory.Owner._healthComponent);
+            if (inventory != null && inventory.Owner != null && inventory.Owner._healthComponent != null)
+                usable.Use(inventory.Owner._healthComponent);
 
             if (usable.ConsumeOnUse)
-            {
                 inventory.RemoveItem(selectedSlot);
-            }
 
             RefreshSlots();
             ClearDetails();
@@ -209,29 +178,6 @@ public class InventoryUI : MonoBehaviour
             useButton.gameObject.SetActive(false);
     }
 
-    private void ToggleInventory()
-    {
-        if (inventoryRoot == null)
-            return;
-
-        bool open = !inventoryRoot.activeSelf;
-        inventoryRoot.SetActive(open);
-
-        if (open)
-        {
-            RefreshSlots();
-            ClearDetails();
-            StartSelectFirstSlot();
-        }
-        else
-        {
-            if (EventSystem.current != null)
-                EventSystem.current.SetSelectedGameObject(null);
-        }
-
-        Debug.Log("Inventario toggle: " + inventoryRoot.activeSelf);
-    }
-
     private void StartSelectFirstSlot()
     {
         if (_selectRoutine != null)
@@ -242,7 +188,6 @@ public class InventoryUI : MonoBehaviour
 
     private IEnumerator SelectFirstSlotNextFrame()
     {
-        // Esperar más de un frame ayuda a evitar conflictos con el EventSystem
         yield return null;
         yield return null;
 
@@ -251,7 +196,6 @@ public class InventoryUI : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
 
-        // Primero intenta seleccionar el primer slot NO vacío
         foreach (var uiSlot in uiSlots)
         {
             if (uiSlot != null && !uiSlot.IsEmpty())
@@ -261,7 +205,6 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        // Si todos están vacíos, selecciona el primero que exista
         if (uiSlots.Count > 0 && uiSlots[0] != null)
         {
             EventSystem.current.SetSelectedGameObject(uiSlots[0].gameObject);
