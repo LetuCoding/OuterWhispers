@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private Transform slotsParent;
     [SerializeField] private SlotUI slotPrefab;
+
+    [Header("Grid")]
+    [SerializeField] private int columns = 4;
 
     [Header("Details Panel")]
     [SerializeField] private Image detailIcon;
@@ -23,24 +27,18 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject inventoryRoot;
 
     private InventorySlot selectedSlot;
-    private Player _player;
-
     private readonly List<SlotUI> uiSlots = new List<SlotUI>();
-
     private Coroutine _selectRoutine;
-    private bool _toggleLock;
 
     private void Start()
     {
         BuildSlots();
         RefreshSlots();
         ClearDetails();
+        ConfigureNavigation();
 
         if (inventoryRoot != null)
             inventoryRoot.SetActive(false);
-
-        if (inventory != null && inventory.Owner != null)
-            _player = inventory.Owner;
 
         if (useButton != null)
             useButton.onClick.AddListener(UseSelectedItem);
@@ -49,6 +47,46 @@ public class InventoryUI : MonoBehaviour
             inventory.EAddItem += OnInventoryChanged;
     }
 
+    private void Update()
+    {
+        if (inventoryRoot == null || !inventoryRoot.activeInHierarchy)
+            return;
+
+        if (EventSystem.current == null)
+            return;
+
+        GameObject currentSelected = EventSystem.current.currentSelectedGameObject;
+
+        // Botón círculo / B / Escape / Cancel
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            TryDeselectUseButton(currentSelected);
+            return;
+        }
+
+        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        {
+            TryDeselectUseButton(currentSelected);
+        }
+    }
+
+    private void TryDeselectUseButton(GameObject currentSelected)
+    {
+        if (useButton == null || currentSelected != useButton.gameObject)
+            return;
+
+        SlotUI selectedUI = FindUISlotBySlot(selectedSlot);
+
+        if (selectedUI != null && selectedUI.GetSelectable() != null)
+        {
+            EventSystem.current.SetSelectedGameObject(selectedUI.GetSelectable().gameObject);
+        }
+        else
+        {
+            StartSelectFirstSlot();
+        }
+    }
+    
     private void OnDestroy()
     {
         if (useButton != null)
@@ -60,39 +98,25 @@ public class InventoryUI : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_player != null)
-            _player.UnPauseMenu();
-    }
-
-    private void Update()
-    {
-        if (_player == null)
-            return;
-
-        // Esto asume que inventoryPressed viene como pulsación de un solo frame.
-        // Si en Player no está bien reseteado, el inventario toggleará varias veces.
-        if (_player.inventoryPressed && !_toggleLock)
-        {
-            StartCoroutine(ToggleInventoryCooldown());
-            ToggleInventory();
-        }
-    }
-
-    private IEnumerator ToggleInventoryCooldown()
-    {
-        _toggleLock = true;
-        yield return null;
-        _toggleLock = false;
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     private void OnInventoryChanged(Inventory inv)
     {
         RefreshSlots();
+        ConfigureNavigation();
 
         if (inventoryRoot != null && inventoryRoot.activeSelf)
-        {
             StartSelectFirstSlot();
-        }
+    }
+
+    public void OnOpenedByManager()
+    {
+        RefreshSlots();
+        ConfigureNavigation();
+        ClearDetails();
+        StartSelectFirstSlot();
     }
 
     public void BuildSlots()
@@ -101,6 +125,9 @@ public class InventoryUI : MonoBehaviour
 
         if (inventory == null || slotsParent == null || slotPrefab == null)
             return;
+
+        foreach (Transform child in slotsParent)
+            Destroy(child.gameObject);
 
         foreach (var slot in inventory.items)
         {
@@ -112,14 +139,9 @@ public class InventoryUI : MonoBehaviour
 
     public void LoadBuild()
     {
-        foreach (Transform child in slotsParent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        uiSlots.Clear();
         BuildSlots();
         RefreshSlots();
+        ConfigureNavigation();
     }
 
     public void ShowDetails(InventorySlot slot)
@@ -150,12 +172,9 @@ public class InventoryUI : MonoBehaviour
         {
             bool canUse = item is UsableItemData;
             useButton.gameObject.SetActive(canUse);
-
-            // IMPORTANTE:
-            // NO seleccionar aquí el botón.
-            // ShowDetails suele ser llamado desde OnSelect del slot,
-            // y cambiar la selección aquí provoca el conflicto con EventSystem.
         }
+
+        ConfigureNavigation();
     }
 
     public void UseSelectedItem()
@@ -165,15 +184,15 @@ public class InventoryUI : MonoBehaviour
 
         if (selectedSlot.item is UsableItemData usable)
         {
-            usable.Use(inventory.Owner._healthComponent);
+            if (inventory != null && inventory.Owner != null && inventory.Owner._healthComponent != null)
+                usable.Use(inventory.Owner._healthComponent);
 
             if (usable.ConsumeOnUse)
-            {
                 inventory.RemoveItem(selectedSlot);
-            }
 
             RefreshSlots();
             ClearDetails();
+            ConfigureNavigation();
 
             if (inventoryRoot != null && inventoryRoot.activeSelf)
                 StartSelectFirstSlot();
@@ -209,29 +228,6 @@ public class InventoryUI : MonoBehaviour
             useButton.gameObject.SetActive(false);
     }
 
-    private void ToggleInventory()
-    {
-        if (inventoryRoot == null)
-            return;
-
-        bool open = !inventoryRoot.activeSelf;
-        inventoryRoot.SetActive(open);
-
-        if (open)
-        {
-            RefreshSlots();
-            ClearDetails();
-            StartSelectFirstSlot();
-        }
-        else
-        {
-            if (EventSystem.current != null)
-                EventSystem.current.SetSelectedGameObject(null);
-        }
-
-        Debug.Log("Inventario toggle: " + inventoryRoot.activeSelf);
-    }
-
     private void StartSelectFirstSlot()
     {
         if (_selectRoutine != null)
@@ -242,7 +238,6 @@ public class InventoryUI : MonoBehaviour
 
     private IEnumerator SelectFirstSlotNextFrame()
     {
-        // Esperar más de un frame ayuda a evitar conflictos con el EventSystem
         yield return null;
         yield return null;
 
@@ -251,25 +246,91 @@ public class InventoryUI : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
 
-        // Primero intenta seleccionar el primer slot NO vacío
+        Selectable first = GetFirstSelectable();
+        if (first != null)
+            EventSystem.current.SetSelectedGameObject(first.gameObject);
+    }
+
+    private Selectable GetFirstSelectable()
+    {
         foreach (var uiSlot in uiSlots)
         {
-            if (uiSlot != null && !uiSlot.IsEmpty())
-            {
-                EventSystem.current.SetSelectedGameObject(uiSlot.gameObject);
-                yield break;
-            }
+            if (uiSlot != null && uiSlot.GetSelectable() != null)
+                return uiSlot.GetSelectable();
         }
 
-        // Si todos están vacíos, selecciona el primero que exista
-        if (uiSlots.Count > 0 && uiSlots[0] != null)
+        return null;
+    }
+
+    private void ConfigureNavigation()
+    {
+        for (int i = 0; i < uiSlots.Count; i++)
         {
-            EventSystem.current.SetSelectedGameObject(uiSlots[0].gameObject);
+            SlotUI slotUI = uiSlots[i];
+            if (slotUI == null)
+                continue;
+
+            Selectable current = slotUI.GetSelectable();
+            if (current == null)
+                continue;
+
+            Navigation nav = new Navigation();
+            nav.mode = Navigation.Mode.Explicit;
+
+            nav.selectOnLeft = GetSelectableAt(i - 1, sameRowOnly: true, currentIndex: i);
+            nav.selectOnRight = GetSelectableAt(i + 1, sameRowOnly: true, currentIndex: i);
+            nav.selectOnUp = GetSelectableAt(i - columns, sameRowOnly: false, currentIndex: i);
+            nav.selectOnDown = GetSelectableAt(i + columns, sameRowOnly: false, currentIndex: i);
+
+            current.navigation = nav;
         }
-        else if (useButton != null && useButton.gameObject.activeInHierarchy)
+
+        if (useButton != null)
         {
-            EventSystem.current.SetSelectedGameObject(useButton.gameObject);
+            Navigation buttonNav = new Navigation();
+            buttonNav.mode = Navigation.Mode.Explicit;
+
+            SlotUI selectedUI = FindUISlotBySlot(selectedSlot);
+            if (selectedUI != null)
+                buttonNav.selectOnUp = selectedUI.GetSelectable();
+
+            useButton.navigation = buttonNav;
         }
+    }
+
+    private Selectable GetSelectableAt(int index, bool sameRowOnly, int currentIndex)
+    {
+        if (index < 0 || index >= uiSlots.Count)
+            return null;
+
+        if (sameRowOnly)
+        {
+            int currentRow = currentIndex / columns;
+            int targetRow = index / columns;
+
+            if (currentRow != targetRow)
+                return null;
+        }
+
+        SlotUI slotUI = uiSlots[index];
+        if (slotUI == null)
+            return null;
+
+        return slotUI.GetSelectable();
+    }
+
+    private SlotUI FindUISlotBySlot(InventorySlot slot)
+    {
+        if (slot == null)
+            return null;
+
+        foreach (var uiSlot in uiSlots)
+        {
+            if (uiSlot != null && uiSlot.GetSlot() == slot)
+                return uiSlot;
+        }
+
+        return null;
     }
 
     public void FocusUseButton()

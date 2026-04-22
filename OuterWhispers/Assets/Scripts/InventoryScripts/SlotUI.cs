@@ -7,19 +7,15 @@ namespace InventoryScripts
     public class SlotUI : MonoBehaviour, ISelectHandler, IPointerClickHandler, ISubmitHandler
     {
         [SerializeField] private Image icon;
+        [SerializeField] private Button button;
 
         private InventorySlot slot;
         private InventoryUI inventoryUI;
-        private Button button;
 
         private void Awake()
         {
-            button = GetComponent<Button>();
-
-            if (button != null)
-            {
-                button.navigation = Navigation.defaultNavigation;
-            }
+            if (button == null)
+                button = GetComponent<Button>();
         }
 
         public void Setup(InventorySlot slot, InventoryUI ui)
@@ -31,9 +27,10 @@ namespace InventoryScripts
 
         public void UpdateUI()
         {
-            if (slot == null || slot.IsEmpty)
+            if (slot == null || slot.IsEmpty || slot.item == null)
             {
                 icon.enabled = false;
+                icon.sprite = null;
             }
             else
             {
@@ -44,40 +41,52 @@ namespace InventoryScripts
 
         public void OnSlotClicked()
         {
-            if (slot != null && !slot.IsEmpty)
-            {
-                inventoryUI.ShowDetails(slot);
-            }
+            SelectSlot();
         }
 
         public void OnSelect(BaseEventData eventData)
         {
-            if (slot != null && !slot.IsEmpty)
-            {
-                inventoryUI.ShowDetails(slot);
-            }
+            SelectSlot();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (slot != null && !slot.IsEmpty)
-            {
-                inventoryUI.ShowDetails(slot);
+            SelectSlot();
+
+            if (EventSystem.current != null)
                 EventSystem.current.SetSelectedGameObject(gameObject);
-            }
         }
 
         public void OnSubmit(BaseEventData eventData)
         {
-            if (slot != null && !slot.IsEmpty)
-            {
+            SelectSlot();
+
+            if (slot != null && !slot.IsEmpty && slot.item is UsableItemData)
+                inventoryUI.FocusUseButton();
+        }
+
+        private void SelectSlot()
+        {
+            if (slot != null && !slot.IsEmpty && inventoryUI != null)
                 inventoryUI.ShowDetails(slot);
-            }
         }
 
         public bool IsEmpty()
         {
             return slot == null || slot.IsEmpty;
+        }
+
+        public Selectable GetSelectable()
+        {
+            if (button == null)
+                button = GetComponent<Button>();
+
+            return button;
+        }
+
+        public InventorySlot GetSlot()
+        {
+            return slot;
         }
     }
 }

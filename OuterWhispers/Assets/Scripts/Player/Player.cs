@@ -263,13 +263,10 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             (Gamepad.current?.startButton.wasPressedThisFrame ?? false);
 
         if (pausePressed)
+        {
             TogglePauseMenu();
-
-        // =========================
-        // INVENTARIO
-        // =========================
-        if (inventoryPressed)
-            ToggleInventoryMenu();
+            Time.timeScale = 0f;
+        }
 
         GroundCheck();
         WallCheck();
@@ -371,27 +368,16 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
 
     private void TogglePauseMenu()
     {
-        // Si el inventario está abierto, primero lo cerramos
-        if (_isInventoryOpen)
-            ToggleInventoryMenu();
-
         _isPaused = !_isPaused;
 
         if (uiOptions != null)
         {
             uiOptions.SetActive(_isPaused);
-
             if (_isPaused)
             {
-                _playerInputActions.Player.Disable();
-
                 OptionsMenuManager options = uiOptions.GetComponent<OptionsMenuManager>();
                 if (options != null)
                     options.SetInitialFocus();
-            }
-            else
-            {
-                _playerInputActions.Player.Enable();
             }
         }
     }
@@ -404,29 +390,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
             uiOptions.SetActive(false);
 
         if (_playerInputActions != null)
-            _playerInputActions.Player.Enable();
-    }
-
-    // =========================================================================
-    // INVENTARIO
-    // =========================================================================
-
-    private void ToggleInventoryMenu()
-    {
-
-        // Si el pause está abierto, no abrir inventario
-        if (_isPaused) return;
-
-        _isInventoryOpen = !_isInventoryOpen;
-
-        if (_isInventoryOpen)
-        {
-            _playerInputActions.Player.Disable();
-        }
-        else
-        {
-            _playerInputActions.Player.Enable();
-        }
+            Time.timeScale = 1f;
     }
 
     // =========================================================================
@@ -435,8 +399,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
 
     public void FreezePlayer()
     {
-        _playerInputActions?.Disable();
-
+        Time.timeScale = 0f;
         if (_rigidbody2D != null)
         {
             _rigidbody2D.linearVelocity  = Vector2.zero;
@@ -447,8 +410,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
 
     public void UnfreezePlayer()
     {
-        _playerInputActions?.Enable();
-
+        Time.timeScale = 1f;
         if (_rigidbody2D != null)
         {
             _rigidbody2D.bodyType        = RigidbodyType2D.Dynamic;
