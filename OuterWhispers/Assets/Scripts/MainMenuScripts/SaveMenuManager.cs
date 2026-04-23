@@ -1,124 +1,270 @@
-using TMPro;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Zenject;
 
 public class SaveMenuManager : MonoBehaviour
 {
-    private bool isOpen = false;
-    private Button CloseButton;
-    public GameObject UiOptions;
-    private Button NoButton;
-    private Button YesButton;
+    private Button closeButton;
+    private Button noButton;
+    private Button yesButton;
     private Label saveText;
-    private IAudioManager _audioManager;
-    [Inject] private Player _player;
 
-    private OuterWhispersSaveSystem _saveSystem;
+    [Header("Root")]
+    [SerializeField] private GameObject uiOptions;
 
+    [Header("Save Settings")]
     [SerializeField] private string requiredItemName = "Ink";
-    
+
     [Header("Audio Sources")]
-    public AudioSource soundSource;
-    
+    [SerializeField] private AudioSource soundSource;
+
     [Header("SFX Clips")]
-    public AudioClip effect;
-    public AudioClip machineSound;
-    public AudioClip typingSound;
-    
+    [SerializeField] private AudioClip effect;
+    [SerializeField] private AudioClip machineSound;
+    [SerializeField] private AudioClip typingSound;
+
+    private IAudioManager audioManager;
+    [Inject] private Player player;
+
+    private OuterWhispersSaveSystem saveSystem;
+
     [Inject]
-    public void Construct(IAudioManager audioManager)
+    public void Construct(IAudioManager injectedAudioManager)
     {
-        _audioManager = audioManager;
+        audioManager = injectedAudioManager;
+    }
+
+    private void Awake()
+    {
+        if (uiOptions == null)
+            uiOptions = gameObject;
+    }
+
+    private void Start()
+    {
+        saveSystem = new OuterWhispersSaveSystem();
+
+        if (uiOptions != null)
+            uiOptions.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (uiOptions == null || !uiOptions.activeInHierarchy)
+            return;
+
+        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        {
+            OnCloseClicked();
+        }
     }
 
     public void Open()
     {
-        _audioManager.PlaySFX(machineSound, soundSource, 1f);
-        UiOptions.SetActive(true);
-        _player.FreezePlayer();
-    }
-    void Start()
-    {
-        UiOptions.SetActive(false);
-        _saveSystem = new OuterWhispersSaveSystem();
-    }
-    void OnEnable()
-    {
-        var uiDocument = GetComponent<UIDocument>();
-        var root = uiDocument.rootVisualElement;
-        CloseButton = root.Q<Button>("CloseButton");
-        NoButton = root.Q<Button>("NoButton");
-        YesButton = root.Q<Button>("YesButton");
-        saveText = root.Q<Label>("NoInkText");
+        if (GameUIManager.Instance != null)
+            GameUIManager.Instance.SaveUIOpened();
         
-        if (CloseButton != null) CloseButton.clicked += OnCloseClicked;
-        if (NoButton != null) NoButton.clicked += OnNoClicked;
-        if (YesButton != null) YesButton.clicked += OnYesClicked;
-        NoButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterNo);
-        NoButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitNo);
-        YesButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterYes);
-        YesButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitYes);
-        CloseButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterClose);
-        CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
+        if (audioManager != null && machineSound != null && soundSource != null)
+            audioManager.PlaySFX(machineSound, soundSource, 1f);
 
+        if (uiOptions != null)
+            uiOptions.SetActive(true);
+
+        if (player != null)
+            player.FreezePlayer();
+        SetInitialFocus();
     }
 
-    void OnHoverEnterNo(MouseEnterEvent evt)
+    private void OnEnable()
     {
-        NoButton.style.backgroundColor = new StyleColor(Color.grey);
+        UIDocument uiDocument = GetComponent<UIDocument>();
+        if (uiDocument == null)
+            return;
+        VisualElement root = uiDocument.rootVisualElement;
+        if (root == null)
+            return;
+
+        closeButton = root.Q<Button>("CloseButton");
+        noButton = root.Q<Button>("NoButton");
+        yesButton = root.Q<Button>("YesButton");
+        saveText = root.Q<Label>("NoInkText");
+
+        SetupButton(closeButton, OnCloseClicked, OnFocusEnterClose, OnFocusExitClose, OnHoverEnterClose, OnHoverExitClose);
+        SetupButton(noButton, OnNoClicked, OnFocusEnterNo, OnFocusExitNo, OnHoverEnterNo, OnHoverExitNo);
+        SetupButton(yesButton, OnYesClicked, OnFocusEnterYes, OnFocusExitYes, OnHoverEnterYes, OnHoverExitYes);
     }
-    void OnHoverExitNo(MouseLeaveEvent evt)
+
+    private void OnDisable()
     {
-        NoButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
+        TeardownButton(closeButton, OnCloseClicked, OnHoverEnterClose, OnHoverExitClose);
+        TeardownButton(noButton, OnNoClicked, OnHoverEnterNo, OnHoverExitNo);
+        TeardownButton(yesButton, OnYesClicked, OnHoverEnterYes, OnHoverExitYes);
     }
-    void OnHoverEnterYes(MouseEnterEvent evt)
+
+    private void SetupButton(
+        Button button,
+        System.Action clickAction,
+        System.Action focusEnterAction,
+        System.Action focusExitAction,
+        EventCallback<MouseEnterEvent> hoverEnter,
+        EventCallback<MouseLeaveEvent> hoverExit)
     {
-        YesButton.style.backgroundColor = new StyleColor(Color.grey);
+        if (button == null)
+            return;
+
+        button.focusable = true;
+        button.clicked += clickAction;
+
+        button.RegisterCallback<MouseEnterEvent>(hoverEnter);
+        button.RegisterCallback<MouseLeaveEvent>(hoverExit);
+        button.RegisterCallback<FocusInEvent>(_ => focusEnterAction());
+        button.RegisterCallback<FocusOutEvent>(_ => focusExitAction());
     }
-    void OnHoverExitYes(MouseLeaveEvent evt)
+
+    private void TeardownButton(
+        Button button,
+        System.Action clickAction,
+        EventCallback<MouseEnterEvent> hoverEnter,
+        EventCallback<MouseLeaveEvent> hoverExit)
     {
-        YesButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
+        if (button == null)
+            return;
+
+        button.clicked -= clickAction;
+        button.UnregisterCallback<MouseEnterEvent>(hoverEnter);
+        button.UnregisterCallback<MouseLeaveEvent>(hoverExit);
     }
-    void OnHoverEnterClose(MouseEnterEvent evt)
+
+    public void SetInitialFocus()
     {
-        CloseButton.style.backgroundColor = new StyleColor(Color.grey);
+        StartCoroutine(SetInitialFocusNextFrame());
     }
-    void OnHoverExitClose(MouseLeaveEvent evt)
+
+    private IEnumerator SetInitialFocusNextFrame()
     {
-        CloseButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
+        yield return null;
+
+        UIDocument uiDocument = GetComponent<UIDocument>();
+        if (uiDocument == null)
+            yield break;
+
+        VisualElement root = uiDocument.rootVisualElement;
+        if (root == null)
+            yield break;
+
+        root.Focus();
+
+        if (yesButton != null && yesButton.canGrabFocus)
+        {
+            yesButton.Focus();
+            yesButton.focusable = true;
+            yesButton.tabIndex = 0;
+        }
+        else if (noButton != null && noButton.canGrabFocus)
+        {
+            noButton.Focus();
+            noButton.focusable = true;
+            noButton.tabIndex = 1;
+        }
+        else if (closeButton != null && closeButton.canGrabFocus)
+        {
+            closeButton.Focus();
+            closeButton.focusable = true;
+            closeButton.tabIndex = 2;
+        }
     }
-    
+
+    private void SetButtonHighlighted(Button button, bool highlighted)
+    {
+        if (button == null)
+            return;
+
+        button.style.backgroundColor = highlighted
+            ? new StyleColor(Color.grey)
+            : new StyleColor(new Color(0f, 0f, 0f, 0f));
+    }
+
+    private void OnFocusEnterNo() => SetButtonHighlighted(noButton, true);
+    private void OnFocusExitNo() => SetButtonHighlighted(noButton, false);
+
+    private void OnFocusEnterYes() => SetButtonHighlighted(yesButton, true);
+    private void OnFocusExitYes() => SetButtonHighlighted(yesButton, false);
+
+    private void OnFocusEnterClose() => SetButtonHighlighted(closeButton, true);
+    private void OnFocusExitClose() => SetButtonHighlighted(closeButton, false);
+
+    private void OnHoverEnterNo(MouseEnterEvent evt) => SetButtonHighlighted(noButton, true);
+    private void OnHoverExitNo(MouseLeaveEvent evt) => SetButtonHighlighted(noButton, false);
+
+    private void OnHoverEnterYes(MouseEnterEvent evt) => SetButtonHighlighted(yesButton, true);
+    private void OnHoverExitYes(MouseLeaveEvent evt) => SetButtonHighlighted(yesButton, false);
+
+    private void OnHoverEnterClose(MouseEnterEvent evt) => SetButtonHighlighted(closeButton, true);
+    private void OnHoverExitClose(MouseLeaveEvent evt) => SetButtonHighlighted(closeButton, false);
+
     private void OnCloseClicked()
     {
-        saveText.text = " ";
-        _audioManager.PlaySFX(effect, soundSource, 1f);
-        UiOptions.SetActive(false);
-        _player.UnfreezePlayer();
+        if (GameUIManager.Instance != null)
+            GameUIManager.Instance.SaveUIClosed();
+        
+        player.UnfreezePlayer();
+        if (saveText != null)
+            saveText.text = " ";
+
+        if (audioManager != null && effect != null && soundSource != null)
+            audioManager.PlaySFX(effect, soundSource, 1f);
+
+        if (uiOptions != null)
+            uiOptions.SetActive(false);
+
+        if (player != null)
+            player.UnfreezePlayer();
     }
 
     private void OnNoClicked()
     {
-        saveText.text = " ";
-        _audioManager.PlaySFX(machineSound, soundSource, 1f);
-        UiOptions.SetActive(false);
-        _player.UnfreezePlayer();
-    }
-    private void OnYesClicked()
-    {
-        _player.UnfreezePlayer();
-        if (!_player.Inventory.CheckItemByName(requiredItemName))
-        {
-            saveText.text = "The typewriter needs ink";
-            return;
-        }
-        _player.Inventory.RemoveItemByName(requiredItemName);
-        _saveSystem.saveData(_player, _player.Inventory);
-        _audioManager.PlaySFX(typingSound, soundSource, 1f);
-        Debug.Log("Game Saved.");
-        UiOptions.SetActive(false);
+        if (GameUIManager.Instance != null)
+            GameUIManager.Instance.SaveUIClosed();
+        
+        if (saveText != null)
+            saveText.text = " ";
+
+        if (audioManager != null && machineSound != null && soundSource != null)
+            audioManager.PlaySFX(machineSound, soundSource, 1f);
+
+        if (uiOptions != null)
+            uiOptions.SetActive(false);
+
+        if (player != null)
+            player.UnfreezePlayer();
     }
 
+    private void OnYesClicked()
+    {
+        if (player == null || player.Inventory == null)
+            return;
+
+        if (!player.Inventory.CheckItemByName(requiredItemName))
+        {
+            if (saveText != null)
+                saveText.text = "The typewriter needs ink";
+            return;
+        }
+
+        player.Inventory.RemoveItemByName(requiredItemName);
+        saveSystem.saveData(player, player.Inventory);
+
+        if (audioManager != null && typingSound != null && soundSource != null)
+            audioManager.PlaySFX(typingSound, soundSource, 1f);
+
+        Debug.Log("Game Saved.");
+
+        if (uiOptions != null)
+            uiOptions.SetActive(false);
+
+        player.UnfreezePlayer();
+    }
 }

@@ -17,8 +17,9 @@ public class GameUIManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool pauseGameWhenOpen = true;
 
-    private bool _inputLock;
-    private UIPanelType _currentPanel = UIPanelType.None;
+    private bool inputLock;
+    private bool saveUIOpened;
+    private UIPanelType currentPanel = UIPanelType.None;
 
     private enum UIPanelType
     {
@@ -48,21 +49,18 @@ public class GameUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (_inputLock)
+        if (inputLock)
+            return;
+
+        if (saveUIOpened)
             return;
 
         if (Keyboard.current == null)
             return;
 
-        // =========================
-        // INPUT OPCIONES
-        // =========================
         bool escPressed = Keyboard.current.escapeKey.wasPressedThisFrame;
         bool startPressed = Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame;
 
-        // =========================
-        // INPUT INVENTARIO
-        // =========================
         bool bPressed = Keyboard.current.bKey.wasPressedThisFrame;
         bool dpadUpPressed = Gamepad.current != null && Gamepad.current.dpad.up.wasPressedThisFrame;
 
@@ -82,9 +80,26 @@ public class GameUIManager : MonoBehaviour
 
     private IEnumerator InputCooldown()
     {
-        _inputLock = true;
+        inputLock = true;
         yield return null;
-        _inputLock = false;
+        inputLock = false;
+    }
+
+    public void SaveUIOpened()
+    {
+        saveUIOpened = true;
+        PauseGame();
+    }
+
+    public void SaveUIClosed()
+    {
+        saveUIOpened = false;
+        ResumeGameIfNeeded();
+    }
+
+    public bool IsSaveUIOpened()
+    {
+        return saveUIOpened;
     }
 
     // =========================================================
@@ -95,7 +110,10 @@ public class GameUIManager : MonoBehaviour
         if (inventoryPanel == null)
             return;
 
-        if (_currentPanel == UIPanelType.Inventory)
+        if (saveUIOpened)
+            return;
+
+        if (currentPanel == UIPanelType.Inventory)
             CloseInventory();
         else
             OpenInventory();
@@ -103,11 +121,14 @@ public class GameUIManager : MonoBehaviour
 
     public void OpenInventory()
     {
+        if (saveUIOpened)
+            return;
+
         if (IsOptionsOpen())
             CloseOptions();
 
         inventoryPanel.SetActive(true);
-        _currentPanel = UIPanelType.Inventory;
+        currentPanel = UIPanelType.Inventory;
 
         PauseGame();
 
@@ -117,12 +138,18 @@ public class GameUIManager : MonoBehaviour
 
     public void CloseInventory()
     {
+        if (saveUIOpened)
+            return;
+
+        if (inventoryPanel == null)
+            return;
+
         inventoryPanel.SetActive(false);
 
         if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null);
 
-        _currentPanel = UIPanelType.None;
+        currentPanel = UIPanelType.None;
 
         ResumeGameIfNeeded();
     }
@@ -135,7 +162,10 @@ public class GameUIManager : MonoBehaviour
         if (optionsPanel == null)
             return;
 
-        if (_currentPanel == UIPanelType.Options)
+        if (saveUIOpened)
+            return;
+
+        if (currentPanel == UIPanelType.Options)
             CloseOptions();
         else
             OpenOptions();
@@ -143,11 +173,14 @@ public class GameUIManager : MonoBehaviour
 
     public void OpenOptions()
     {
+        if (saveUIOpened)
+            return;
+
         if (IsInventoryOpen())
             CloseInventory();
 
         optionsPanel.SetActive(true);
-        _currentPanel = UIPanelType.Options;
+        currentPanel = UIPanelType.Options;
 
         PauseGame();
 
@@ -158,13 +191,19 @@ public class GameUIManager : MonoBehaviour
 
     public void CloseOptions()
     {
+        if (saveUIOpened)
+            return;
+
+        if (optionsPanel == null)
+            return;
+
         var options = optionsPanel.GetComponent<OptionsMenuManager>();
         if (options != null)
             options.OnClosedByManager();
 
         optionsPanel.SetActive(false);
 
-        _currentPanel = UIPanelType.None;
+        currentPanel = UIPanelType.None;
 
         ResumeGameIfNeeded();
     }
@@ -172,8 +211,20 @@ public class GameUIManager : MonoBehaviour
     // =========================================================
     // ESTADO
     // =========================================================
-    public bool IsInventoryOpen() => inventoryPanel != null && inventoryPanel.activeSelf;
-    public bool IsOptionsOpen() => optionsPanel != null && optionsPanel.activeSelf;
+    public bool IsInventoryOpen()
+    {
+        return inventoryPanel != null && inventoryPanel.activeSelf;
+    }
+
+    public bool IsOptionsOpen()
+    {
+        return optionsPanel != null && optionsPanel.activeSelf;
+    }
+
+    public bool IsAnyUIOpen()
+    {
+        return saveUIOpened || IsInventoryOpen() || IsOptionsOpen();
+    }
 
     // =========================================================
     // PAUSA GLOBAL
@@ -184,16 +235,14 @@ public class GameUIManager : MonoBehaviour
             return;
 
         Time.timeScale = 0f;
-
     }
 
     private void ResumeGameIfNeeded()
     {
-        if (IsInventoryOpen() || IsOptionsOpen())
+        if (saveUIOpened || IsInventoryOpen() || IsOptionsOpen())
             return;
 
         Time.timeScale = 1f;
-
     }
 
     private void OnDestroy()
