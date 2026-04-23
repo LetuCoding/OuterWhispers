@@ -45,6 +45,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
     public bool jumpPressed;
     public bool jumpReleased;
     public bool dashPressed;
+    public bool dashHeld;
     public bool attackPressed;
     public bool shiftPressedThisFrame;
     public bool shiftHeld;
@@ -231,6 +232,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         jumpPressed   = _playerInputActions.Player.Jump.WasPressedThisFrame();
         jumpReleased  = _playerInputActions.Player.Jump.WasReleasedThisFrame();
         dashPressed   = _playerInputActions.Player.Dash.WasPressedThisFrame();
+        dashHeld    = _playerInputActions.Player.Dash.IsPressed();
         attackPressed = _playerInputActions.Player.Attack.WasPressedThisFrame();
         _moveInput    = _playerInputActions.Player.Move.ReadValue<Vector2>().x;
 
@@ -240,18 +242,7 @@ public class Player : MonoBehaviour, IEffectTarget, IPlayer
         inventoryPressed =
             (Keyboard.current?.bKey?.wasPressedThisFrame ?? false) ||
             (Gamepad.current?.dpad.up.wasPressedThisFrame ?? false);
-
-        // =========================
-        // SHIFT manual solo si lo necesitas para sprint u otra lógica
-        // =========================
-        shiftPressedThisFrame =
-            (Keyboard.current?.leftShiftKey?.wasPressedThisFrame ?? false) ||
-            (Keyboard.current?.rightShiftKey?.wasPressedThisFrame ?? false);
-
-        shiftHeld =
-            (Keyboard.current?.leftShiftKey?.isPressed ?? false) ||
-            (Keyboard.current?.rightShiftKey?.isPressed ?? false);
-
+        
         if (_moveInput != 0)
             _lastInput = _moveInput;
 

@@ -19,29 +19,20 @@ public class IdleState : PlayerState
 
     public override void LogicUpdate()
     {
-        // ── Sprint ──────────────────────────────────────────────────────────
-        // Shift pulsado este frame: dash lateral instantáneo desde parado
-        if (Player._isGrounded && Player.shiftPressedThisFrame)
-        {
-            Player._audioManager.StopWalk(Player.sfxSource);
-            fsm.ChangeState(Player.DashState);
-            return;
-        }
-
-        // Shift mantenido + movimiento: transición a sprint
-        if (Player._moveInput != 0f && Player.shiftHeld)
-        {
-            Player.footsetpPitch = 0.7f;
-            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
-            fsm.ChangeState(Player.SprintState);
-            return;
-        }
-
-        // ── Dash ─────────────────────────────────────────────────────────────
+        // ── Dash (tap) ──────────────────────────────────────────────────────
         if (Player.dashPressed)
         {
             Player._audioManager.StopWalk(Player.sfxSource);
             fsm.ChangeState(Player.DashState);
+            return;
+        }
+
+        // ── Sprint (hold) ───────────────────────────────────────────────────
+        if (Player._moveInput != 0f && Player.dashHeld)
+        {
+            Player.footsetpPitch = 0.7f;
+            Player._audioManager.PlayWalk(Player.footstep, Player.sfxSource, Player.footsetpPitch);
+            fsm.ChangeState(Player.SprintState);
             return;
         }
 
