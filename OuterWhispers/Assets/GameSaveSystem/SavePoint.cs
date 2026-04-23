@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class SavePoint : MonoBehaviour
@@ -15,6 +16,10 @@ public class SavePoint : MonoBehaviour
         if (!_playerInside) return;
 
         if (Input.GetKeyDown(KeyCode.E))
+        {
+            SaveMenuManager.Open();
+        }
+        if (Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame)
         {
             SaveMenuManager.Open();
         }

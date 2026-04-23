@@ -125,7 +125,6 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void ReturnToMenu()
     {
-        Debug.Log("Return to Menu");
         SceneManager.LoadScene("MainMenu");
     }
     public void OnOpenedByManager()
