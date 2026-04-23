@@ -2,12 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Zenject;
 
 public class OptionsMenuManager : MonoBehaviour
 {
     private Button CloseButton;
+    private Button ReturnButton;
     public GameObject UiOptions;
     public Player Player;
     private SliderInt sliderSound;
@@ -56,6 +58,7 @@ public class OptionsMenuManager : MonoBehaviour
         var root = uiDocument.rootVisualElement;
 
         CloseButton = root.Q<Button>("CloseButton");
+        ReturnButton = root.Q<Button>("ButtonReturn");
         sliderSound = root.Q<SliderInt>("SliderSound");
         sliderMusic = root.Q<SliderInt>("SliderMusic");
 
@@ -67,6 +70,17 @@ public class OptionsMenuManager : MonoBehaviour
             CloseButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitClose);
             CloseButton.RegisterCallback<FocusInEvent>(_ => OnFocusEnterClose());
             CloseButton.RegisterCallback<FocusOutEvent>(_ => OnFocusExitClose());
+ 
+        }
+
+        if (ReturnButton != null)
+        {
+            ReturnButton.clicked += ReturnToMenu;
+            ReturnButton.focusable = true;
+            ReturnButton.RegisterCallback<MouseEnterEvent>(OnHoverEnterReturn);
+            ReturnButton.RegisterCallback<MouseLeaveEvent>(OnHoverExitReturn);
+            ReturnButton.RegisterCallback<FocusInEvent>(_ => OnFocusEnterReturn());
+            ReturnButton.RegisterCallback<FocusOutEvent>(_ => OnFocusExitReturn());
         }
 
         if (sliderSound != null)
@@ -96,6 +110,12 @@ public class OptionsMenuManager : MonoBehaviour
             CloseButton.UnregisterCallback<MouseLeaveEvent>(OnHoverExitClose);
         }
 
+        if (ReturnButton != null)
+        {
+            ReturnButton.clicked += ReturnToMenu;
+            ReturnButton.UnregisterCallback<MouseEnterEvent>(OnHoverEnterReturn);
+            ReturnButton.UnregisterCallback<MouseLeaveEvent>(OnHoverExitReturn);
+        }
         if (sliderSound != null)
             sliderSound.UnregisterValueChangedCallback(OnSliderSoundChanged);
 
@@ -103,6 +123,11 @@ public class OptionsMenuManager : MonoBehaviour
             sliderMusic.UnregisterValueChangedCallback(OnSliderMusicChanged);
     }
 
+    private void ReturnToMenu()
+    {
+        Debug.Log("Return to Menu");
+        SceneManager.LoadScene("MainMenu");
+    }
     public void OnOpenedByManager()
     {
         SetInitialFocus();
@@ -152,6 +177,10 @@ public class OptionsMenuManager : MonoBehaviour
         {
             CloseButton.Focus();
         }
+        else if (ReturnButton != null && CloseButton.canGrabFocus)
+        {
+            ReturnButton.Focus();
+        }
     }
 
     void OnHoverEnterClose(MouseEnterEvent evt)
@@ -176,6 +205,30 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (CloseButton != null)
             CloseButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
+    }
+    
+    void OnHoverEnterReturn(MouseEnterEvent evt)
+    {
+        if (ReturnButton != null)
+            ReturnButton.style.backgroundColor = new StyleColor(Color.grey);
+    }
+
+    void OnHoverExitReturn(MouseLeaveEvent evt)
+    {
+        if (ReturnButton != null)
+            ReturnButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
+    }
+
+    void OnFocusEnterReturn()
+    {
+        if (ReturnButton != null)
+            ReturnButton.style.backgroundColor = new StyleColor(Color.grey);
+    }
+
+    void OnFocusExitReturn()
+    {
+        if (ReturnButton != null)
+            ReturnButton.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0));
     }
 
     private void OnSliderSoundChanged(ChangeEvent<int> evt)
