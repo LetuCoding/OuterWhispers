@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b87dac81406b86b709bf59f952a4d099, type: 3}
+  m_Name: KeyItem
+  m_EditorClassIdentifier: Assembly-CSharp::KeyItem
+  guid: e8cb9eec-8282-424f-a201-4f564b512f58
+  itemName: Note #5
+  description: "We saw the boss enter Chamber K7 carrying one of the fragments.\r\n\r\nSomething
+    was off\u2026 he didn\u2019t look like himself.\r\n\r\nNo one is going near that
+    chamber now. The air around it feels wrong.\r\n\r\nWe\u2019re keeping our distance.\r\n"
+  icon: {fileID: 7509403117698529453, guid: 945f2a5ccec718842a0f13fe94a2b967, type: 3}
+  itemType: 0

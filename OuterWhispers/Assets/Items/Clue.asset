@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b87dac81406b86b709bf59f952a4d099, type: 3}
+  m_Name: Clue
+  m_EditorClassIdentifier: Assembly-CSharp::KeyItem
+  guid: e11dcad1-28b3-4a4a-a5cc-66f913b47bbe
+  itemName: Note
+  description: 'Boss went down to drop the page in chamber K7.
+
+    
+
+    Told
+    us to bust the key and stash the pieces in the sewer. One piece goes west, one
+    goes east, last one northeast.
+
+    
+
+    Don''t go lookin'' for ''em. You
+    don''t wanna know.'
+  icon: {fileID: 7509403117698529453, guid: 945f2a5ccec718842a0f13fe94a2b967, type: 3}
+  itemType: 1
